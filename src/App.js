@@ -4,6 +4,7 @@ import {userState} from './store/store';
 import {useRecoilState} from 'recoil';
 import {Routes,Route} from 'react-router-dom';
 import Login from  './components/login/Login';
+import SignUp from  './components/signup/SignUp';
 
 
 
@@ -35,6 +36,7 @@ function subMit(){
   return ( 
         <Routes>
             <Route path='/' element={<p>dsfsdfds</p>} />
+            <Route path='/signup' element={<SignUp />} />
             <Route path='/login' element={<Login />} />
         </Routes>
   )
