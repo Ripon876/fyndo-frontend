@@ -22,16 +22,16 @@ function Login() {
 								<div className="card-front">
 									<div className="center-wrap">
 										<div className="section text-center">
-											<h4 className="mb-4 pb-3">Log In</h4>
+											<h4 className="mb-4 pb-3 text-white">Log In</h4>
 											<div className="form-group">
-												<input type="email" name="logemail" className="form-style" placeholder="Your Email" id="logemail" autocomplete="off">
+												<input type="email" name="logemail" className="form-style" placeholder="Your Email" id="logemail" autocomplete="off" />
 												<i className="input-icon uil uil-at"></i>
 											</div>	
 											<div className="form-group mt-2">
-												<input type="password" name="logpass" className="form-style" placeholder="Your Password" id="logpass" autocomplete="off">
+												<input type="password" name="logpass" className="form-style" placeholder="Your Password" id="logpass" autocomplete="off" />
 												<i className="input-icon uil uil-lock-alt"></i>
 											</div>
-											<a href="#" className="btn mt-4">submit</a>
+											<a href="#" className="subBtn mt-4">submit</a>
                             				<p className="mb-0 mt-4 text-center"><a href="#0" className="link">Forgot your password?</a></p>
 				      					</div>
 			      					</div>
@@ -39,20 +39,20 @@ function Login() {
 								<div className="card-back">
 									<div className="center-wrap">
 										<div className="section text-center">
-											<h4 className="mb-4 pb-3">Sign Up</h4>
+											<h4 className="mb-4 pb-3 text-white">Sign Up</h4>
 											<div className="form-group">
-												<input type="text" name="logname" className="form-style" placeholder="Your Full Name" id="logname" autocomplete="off">
+												<input type="text" name="logname" className="form-style" placeholder="Your Full Name" id="logname" autocomplete="off" />
 												<i className="input-icon uil uil-user"></i>
 											</div>	
 											<div className="form-group mt-2">
-												<input type="email" name="logemail" className="form-style" placeholder="Your Email" id="logemail" autocomplete="off">
+												<input type="email" name="logemail" className="form-style" placeholder="Your Email" id="logemail" autocomplete="off" />
 												<i className="input-icon uil uil-at"></i>
 											</div>	
 											<div className="form-group mt-2">
-												<input type="password" name="logpass" className="form-style" placeholder="Your Password" id="logpass" autocomplete="off">
+												<input type="password" name="logpass" className="form-style" placeholder="Your Password" id="logpass" autocomplete="off" />
 												<i className="input-icon uil uil-lock-alt"></i>
 											</div>
-											<a href="#" className="btn mt-4">submit</a>
+											<a href="#" className="subBtn mt-4">submit</a>
 				      					</div>
 			      					</div>
 			      				</div>

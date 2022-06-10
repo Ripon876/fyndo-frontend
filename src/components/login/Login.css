@@ -13,6 +13,7 @@ body{
 a {
 	cursor: pointer;
   transition: all 200ms linear;
+  text-decoration: none;
 }
 a:hover {
 	text-decoration: none;
@@ -231,7 +232,7 @@ h6 span{
     transition: all 200ms linear;
 }
 
-.btn{  
+.subBtn{  
   border-radius: 4px;
   height: 44px;
   font-size: 13px;

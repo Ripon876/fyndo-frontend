@@ -2,14 +2,15 @@ import React,{useState} from "react";
 import axios from 'axios';
 import {userState} from './store/store';
 import {useRecoilState} from 'recoil';
+import {Routes,Route} from 'react-router-dom';
+import Login from  './components/login/Login';
+
 
 
 
 function App() {
 
-
 const [user,setUser] = useRecoilState(userState);
-
 
 const [u, setU] = useState('');
 const [p, setP] = useState('');
@@ -32,34 +33,10 @@ function subMit(){
 }
 
   return ( 
-      <div>
-        <h1>hello world</h1>
-
-
-
-
-
-
-
-
-
-<div>
-  login
-<input type='text' onChange={ (e)=> { setU(e.target.value) }} />
-<input type='text' onChange={ (e)=> { setP(e.target.value) }} />
-
-
-<button onClick={subMit}>Submit</button>
-
-</div>
-
-
-
-
-
-
-      </div>
-       
+        <Routes>
+            <Route path='/' element={<p>dsfsdfds</p>} />
+            <Route path='/login' element={<Login />} />
+        </Routes>
   )
 }
 
