@@ -4,7 +4,7 @@ import {selector, atom} from 'recoil';
 
  const userState = atom({
 	key : 'userState',
-	default : 0
+	default : {}
 });
 
  const authToken = atom({

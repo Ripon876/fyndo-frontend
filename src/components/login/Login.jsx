@@ -1,26 +1,38 @@
 import React,{useState,useEffect} from 'react';
-import {Link} from 'react-router-dom';
+import {Link,useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import {authToken} from '../../store/store';
+import {useRecoilState} from 'recoil';
 import './Login.css';
+
+
+
+
 
 function Login() {
 
 const [username, setUn] = useState('');
 const [password, setPwd] = useState('');
+const [auth,setAuth] = useRecoilState(authToken);
+const navigate = useNavigate();
 
 
 const handleSubmit = (e) => {
 	e.preventDefault()
 	 if(username && password){
 
+		axios.post('http://localhost:5000/login',{username,password},{withCredentials: true })
+		.then((data)=> {
+			console.log(data.data)
+		    setAuth(data.data.token)
 
+		}).then(()=> {
+			console.log(Headers)
+		})
 
-axios.post('http://localhost:5000/login',{username,password},{withCredentials: true })
-.then((data)=> {
-	console.log(data.data)
-})
-
-
+		.then(()=> {
+			navigate('/');
+		})
 
 	 }
 }
