@@ -23,14 +23,9 @@ const handleSubmit = (e) => {
 
 		axios.post('http://localhost:5000/login',{username,password},{withCredentials: true })
 		.then((data)=> {
-			console.log(data.data)
 		    setAuth(data.data.token)
 
 		}).then(()=> {
-			console.log(Headers)
-		})
-
-		.then(()=> {
 			navigate('/');
 		})
 

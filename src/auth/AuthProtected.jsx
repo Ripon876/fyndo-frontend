@@ -1,14 +1,47 @@
-import {useEffect} from 'react';
-import {authToken} from '../store/store';
-import {useRecoilValue} from 'recoil';
+import {useEffect,useState} from 'react';
+// import {authToken} from '../store/store';
+// import {useRecoilState} from 'recoil';
+import {useNavigate} from 'react-router-dom';
+import axios from 'axios';
 
 
-function AuthProtected() {
-	return (
-		<div>
-			
-		</div>
-	)
+
+
+
+
+
+
+
+
+function AuthProtected({children}) {
+
+// const [auth,setAuth] = useRecoilState(authToken);
+
+const [isLoading, setIsLoading] = useState(true);
+const navigate = useNavigate();
+
+useEffect(() => {
+	 
+
+axios.get('http://localhost:5000/refreshtoken',{withCredentials: true })
+.then((data) => {
+ 
+
+	if(data.data.status){
+
+	// setAuth(data.data.token);
+	setIsLoading(false)
+
+	}else{
+		navigate('/login')
+	}
+})
+
+}, [])
+
+if(isLoading) return null;
+if(!isLoading) return <>{children}</>	 
+ 
 }
 
 export default AuthProtected
