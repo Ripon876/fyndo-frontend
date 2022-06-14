@@ -2,6 +2,10 @@ import React from 'react';
 import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
 import Sidebar from '../sidebar/Sidebar';
+import NewPost from '../newpost/NewPost';
+
+
+
 
 function Dashboard() {
 
@@ -19,9 +23,8 @@ const logOut = ()=> {
 
 	return (
 		<div>
-	    <Sidebar />
+	    <Sidebar l={logOut} />
 			<h1>this is the Dashboard</h1>
-			<button onClick={logOut} >Log out</button>
 		</div>
 	)
 }

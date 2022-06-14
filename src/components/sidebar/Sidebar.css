@@ -1,6 +1,7 @@
 a {
-  color: #fff;
+  color: black !important;
   text-decoration: none;
+  font-weight: 700;
 }
 
 .social {
@@ -9,41 +10,41 @@ a {
 }
 .social ul {
   padding: 0px;
-  transform: translate(-270px, 0);
+  transform: translate(-155px, 0);
 }
 .social ul li {
   display: block;
   margin: 5px;
-  background: rgba(0, 0, 0, 0.36);
-  width: 300px;
+  background: #1E1E1E;
+  width: 200px;
   text-align: right;
   padding: 10px;
   border-radius: 0 30px 30px 0;
-  transition: all 1s;
+  transition: all 0.5s;
 }
 .social ul li:hover {
-  transform: translate(110px, 0);
-  background: rgba(255, 255, 255, 0.4);
+  transform: translate(80px, 0);
 }
-.social ul li:hover a {
-  color: #000;
-}
-.social ul li:hover i {
+/*.social ul li:hover a {
+  color: #fff;
+}*/
+/*.social ul li:hover i {
   color: #fff;
   background: rgba(0, 0, 0, 0.36);
 
   transition: all 1s;
-}
+}*/
 .social ul li i {
   margin-left: 10px;
-  color: #000;
+  /*color: #000;*/
   background: #fff;
   padding: 10px;
   border-radius: 50%;
-  width: 20px;
-  height: 20px;
+  width: 40px;
+  /*height: 20px;*/
   font-size: 20px;
-  background: #ffffff;
+  color: #03DAC6;
+  background: rgba(0, 0, 0, 0.36);
   transform: rotate(0deg);
 }
 

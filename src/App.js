@@ -5,6 +5,7 @@ import Login from  './components/login/Login';
 import SignUp from  './components/signup/SignUp';
 import Dashboard from './components/dashboard/Dashboard';
 import AuthProtected from './auth/AuthProtected';
+import NotFound from './components/notfound/NotFound';
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
             
             <Route path='/signup' element={<SignUp />} />
             <Route path='/login' element={<Login />} />
+            <Route path='*' element={<NotFound />} />
         </Routes>
   )
 }
