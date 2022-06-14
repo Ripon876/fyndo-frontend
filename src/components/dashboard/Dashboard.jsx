@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
-
+import Sidebar from '../sidebar/Sidebar';
 
 function Dashboard() {
 
@@ -19,6 +19,7 @@ const logOut = ()=> {
 
 	return (
 		<div>
+	    <Sidebar />
 			<h1>this is the Dashboard</h1>
 			<button onClick={logOut} >Log out</button>
 		</div>
