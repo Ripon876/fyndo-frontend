@@ -3,12 +3,14 @@
     border-top-left-radius: 0.55rem!important;
     border-top-right-radius: 0.55rem!important;
 }
+.userName {
+    color: #9ca3af;
+}
 
-
-
-
-
-
+.postTime{
+     color: #777 !important;
+ font-size: 0.85714rem !important;
+}
 
 
 @media (min-width: 0) {

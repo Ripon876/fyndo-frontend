@@ -13,8 +13,8 @@ function Post() {
 	            	<img className="d-flex g-width-50 g-height-50 rounded-circle g-mt-3 g-mr-15" src="https://via.placeholder.com/50" alt="Image Description"  />
 	           </div>
            	   <div className='align-items-center d-flex row'>
-           	   	<h5>Name</h5>
-           	   	 <span className="g-color-gray-dark-v4 g-font-size-12">5 days ago</span>
+           	   	<h5 className='userName'>Name</h5>
+           	   	 <span className="postTime">5 days ago</span>
            	   </div>
            </div>
           
@@ -22,34 +22,14 @@ function Post() {
     
               <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue
                 felis in faucibus ras purus odio, vestibulum in vulputate at, tempus viverra turpis.</p>
-        {/*
-              <ul className="list-inline my-0">
-                <li className="list-inline-item g-mr-20">
-                  <a className="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover" href="#!">
-                    <i className="fa fa-thumbs-up g-pos-rel g-top-1 g-mr-3"></i>
-                    178
-                  </a>
-                </li>
-                <li className="list-inline-item g-mr-20">
-                  <a className="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover" href="#!">
-                    <i className="fa fa-thumbs-down g-pos-rel g-top-1 g-mr-3"></i>
-                    34
-                  </a>
-                </li>
-                <li className="list-inline-item ml-auto">
-                  <a className="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover" href="#!">
-                    <i className="fa fa-reply g-pos-rel g-top-1 g-mr-3"></i>
-                    Reply
-                  </a>
-                </li>
-              </ul>*/}
+     
 
 <div className="postEngagements">
 	<div className="d-flex justify-content-space-around">
 		<div className='col likes'>
-			 <i className="fa fa-thumbs-up g-pos-rel g-top-1 g-mr-3"></i> 178
+			 <i className="fa fa-thumbs-up"></i> 178
 		</div>
-		<div className="col comments text-end"> <i className="fa fa-message  g-top-1 g-mr-3"> </i> Comments</div>
+		<div className="col comments text-end"> <i className="fa fa-message"> </i> 4</div>
 	</div>
 </div>
 

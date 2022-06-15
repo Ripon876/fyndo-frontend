@@ -13,7 +13,7 @@ import axios from 'axios';
 
 
 
-function AuthProtected({children}) {
+function AuthProtected({children,path}) {
 
 // const [auth,setAuth] = useRecoilState(authToken);
 
@@ -33,7 +33,8 @@ axios.get('http://localhost:5000/refreshtoken',{withCredentials: true })
 	setIsLoading(false)
 
 	}else{
-		navigate('/login')
+		
+		navigate('/login',{ state: { prvUrl : path  } })
 	}
 })
 
