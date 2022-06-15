@@ -4,6 +4,7 @@ import {useNavigate} from 'react-router-dom';
 import Sidebar from '../sidebar/Sidebar';
 import NewPost from '../newpost/NewPost';
 import SearchBar from '../search/SearchBar';
+import Post from '../post/Post';
 
 
 
@@ -26,6 +27,7 @@ const logOut = ()=> {
 		<div>
 	    <SearchBar />
 	    <NewPost />
+	    <Post />
 	    <Sidebar l={logOut} />
 			{/*<h1>this is the Dashboard</h1>*/}
 		</div>

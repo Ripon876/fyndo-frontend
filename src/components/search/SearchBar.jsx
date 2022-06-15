@@ -4,16 +4,16 @@ import './SearchBar.css';
 function SearchBar() {
 	return (
 		<div>
-			<div class="container py-3">
+			<div className="container py-3">
 
-            <div class="row height d-flex justify-content-center align-items-center">
+            <div className="row height d-flex justify-content-center align-items-center">
 
-              <div class="col-md-6">
+              <div className="col-md-6">
 
-                <div class="form">
-                  <i class="fa fa-search"></i>
-                  <input type="text" class="form-control form-input" placeholder="Search anything..." />
-                  <span class="left-pan"><i class="fa fa-microphone"></i></span>
+                <div className="form">
+                  <i className="fa fa-search"></i>
+                  <input type="text" className="form-control form-input" placeholder="Search anything..." />
+                  <span className="left-pan"><i className="fa fa-microphone"></i></span>
                 </div>
                 
               </div>
