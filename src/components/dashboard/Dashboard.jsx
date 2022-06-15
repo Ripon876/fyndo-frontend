@@ -28,6 +28,12 @@ const logOut = ()=> {
 	    <SearchBar />
 	    <NewPost />
 	    <Post />
+	    <Post />
+	    <Post />
+	    <Post />
+	    <Post />
+	    <Post />
+	    <Post />
 	    <Sidebar l={logOut} />
 			{/*<h1>this is the Dashboard</h1>*/}
 		</div>
