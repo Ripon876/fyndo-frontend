@@ -1,5 +1,4 @@
 .card {
-    background: #fff;
     transition: .5s;
     border: 0;
     margin-bottom: 30px;
@@ -19,7 +18,9 @@
 
 .chat-app .chat {
     margin-left: 280px;
-    border-left: 1px solid #eaeaea
+    border-left: 1px solid #9ca3af;
+    height: 100%;
+
 }
 
 .people-list {
@@ -32,16 +33,17 @@
 .people-list .chat-list li {
     padding: 10px 15px;
     list-style: none;
-    border-radius: 3px
+    border-radius: 3px;
+    color: #9ca3af;
 }
 
 .people-list .chat-list li:hover {
-    background: #efefef;
-    cursor: pointer
+    background: #131313;
+    cursor: pointer;
 }
 
 .people-list .chat-list li.active {
-    background: #efefef
+    background: #131313;
 }
 
 .people-list .chat-list li .name {
@@ -70,7 +72,7 @@
 
 .chat .chat-header {
     padding: 15px 20px;
-    border-bottom: 2px solid #f4f7f6
+    border-bottom: 2px solid #9ca3af;
 }
 
 .chat .chat-header img {
@@ -85,12 +87,14 @@
 }
 
 .chat .chat-history {
+    height: 530px;
     padding: 20px;
-    border-bottom: 2px solid #fff
+    border-bottom: 2px solid #9ca3af;
 }
 
 .chat .chat-history ul {
-    padding: 0
+    padding: 0;
+    height: 100%;
 }
 
 .chat .chat-history ul li {
@@ -141,7 +145,9 @@
 }
 
 .chat .chat-history .my-message {
-    background: #efefef
+    background: #9ca3af;
+    color: black;
+    font-weight: bold;
 }
 
 .chat .chat-history .my-message:after {
@@ -153,7 +159,7 @@
     width: 0;
     position: absolute;
     pointer-events: none;
-    border-bottom-color: #efefef;
+    border-bottom-color: #9ca3af;
     border-width: 10px;
     margin-left: -10px
 }
@@ -169,7 +175,9 @@
 }
 
 .chat .chat-message {
-    padding: 20px
+    padding: 20px;
+    position: absolute;
+    bottom: 0;
 }
 
 .online,
@@ -236,7 +244,7 @@
     }
     .chat-app .chat-history {
         height: 600px;
-        overflow-x: auto
+        /*overflow-x: auto*/
     }
 }
 
@@ -247,6 +255,48 @@
     }
     .chat-app .chat-history {
         height: calc(100vh - 350px);
-        overflow-x: auto
+        /*overflow-x: auto*/
     }
+}
+
+
+/*  ====  */
+
+.messages .card{
+ background-color: #1e1e1e;
+ height: 90vh;
+
+}
+.chat-history ul{
+    overflow-y: scroll;
+}
+.chat-message {
+    width: 100%;
+}
+.msInput input{
+    height: 40px;
+    border-radius: 5px;
+    background: #131313;
+    outline: none;
+    border: none;
+    color: #9ca3af;
+    font-weight: bold;
+    padding: 5px 15px;
+    width: 100%;
+}
+
+.msInput {
+    width: 100%;
+}
+.sendBtn{
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translate(0, -50%);
+}
+
+.sendBtn button{
+        background: #131313;
+    color: #9ca3af;
+    border-radius: 50%;
 }

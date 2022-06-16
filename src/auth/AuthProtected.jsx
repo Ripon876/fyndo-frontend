@@ -6,13 +6,6 @@ import axios from 'axios';
 
 
 
-
-
-
-
-
-
-
 function AuthProtected({children,path}) {
 
 // const [auth,setAuth] = useRecoilState(authToken);
