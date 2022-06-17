@@ -83,7 +83,8 @@
 
 .chat .chat-header .chat-about {
     float: left;
-    padding-left: 10px
+    padding-left: 10px;
+    color: #9ca3af;
 }
 
 .chat .chat-history {

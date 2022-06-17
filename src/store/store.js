@@ -18,14 +18,28 @@ const thredAtom = atom({
 })
  
 
+const userAtom = atom({
+	key : 'c_user',
+	default : {}
+})
+
 const friendsAtom = atom({
 	key : 'friends',
 	default : []
 })
 
+
+const chatingWithAtom = atom({
+	key : 'catingWith',
+	default : {}
+})
+
+
  export {
  	userState,
  	authToken,
  	thredAtom,
- 	friendsAtom
+ 	userAtom,
+ 	friendsAtom,
+ 	chatingWithAtom
  }

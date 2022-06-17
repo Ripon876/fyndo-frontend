@@ -1,9 +1,10 @@
-import React,{useEffect,useState} from 'react';
-import User from  './User';
-import {thredAtom,authToken,friendsAtom} from '../../store/store';
+import React,{useEffect} from 'react';
+import {authToken,friendsAtom,userAtom} from '../../store/store';
 import {useRecoilValue,useRecoilState} from 'recoil';
 import jwt_decode from "jwt-decode";
 import axios from 'axios';
+import User from  './User';
+import ChatHeader  from './ChatHeader';
 import './Messages.css';
 
 
@@ -13,27 +14,15 @@ function Messages() {
 
 
 
-const thred  = useRecoilValue(thredAtom);
+
 const token  = useRecoilValue(authToken);
 const [friends,setFriends] = useRecoilState(friendsAtom);
-const [user, setUser] = useState({});
+const [user, setUser] = useRecoilState(userAtom);
 
 
-/*
-
-useEffect(() => {
-
-
-// console.log(user)
-     console.log(thred)
-
-
-}, [thred])
-*/
 
 useEffect(() => {
     
-
     var user = jwt_decode(token)
     setUser(user);
 
@@ -45,9 +34,7 @@ useEffect(() => {
 }, [])
 
 
-useEffect(() => {
-    console.log(friends)
-}, [friends])
+
 
 
 	return (
@@ -79,25 +66,7 @@ useEffect(() => {
                 </ul>
             </div>
             <div className="chat">
-                <div className="chat-header clearfix">
-                    <div className="row">
-                        <div className="col-lg-6">
-                            <a href="#" data-toggle="modal" data-target="#view_info">
-                                <img src="https://via.placeholder.com/50" alt="avatar" />
-                            </a>
-                            <div className="chat-about">
-                                <h6 className="m-b-0">Aiden Chavez</h6>
-                                <small>Last seen: 2 hours ago</small>
-                            </div>
-                        </div>
-                 {/*       <div className="col-lg-6 hidden-sm text-right">
-                            <a href="#" className="btn btn-outline-secondary"><i className="fa fa-camera"></i></a>
-                            <a href="#" className="btn btn-outline-primary"><i className="fa fa-image"></i></a>
-                            <a href="#" className="btn btn-outline-info"><i className="fa fa-cogs"></i></a>
-                            <a href="#" className="btn btn-outline-warning"><i className="fa fa-question"></i></a>
-                        </div>*/}
-                    </div>
-                </div>
+                <ChatHeader />
                 <div className="chat-history">
                     <ul className="m-b-0  px-4">
                         <li className="clearfix">
