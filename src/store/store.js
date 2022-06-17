@@ -12,8 +12,20 @@ import {selector, atom} from 'recoil';
 	default : ''
 });
 
+const thredAtom = atom({
+	key  : 'thred',
+	default : ''
+})
+ 
+
+const friendsAtom = atom({
+	key : 'friends',
+	default : []
+})
 
  export {
  	userState,
- 	authToken
+ 	authToken,
+ 	thredAtom,
+ 	friendsAtom
  }

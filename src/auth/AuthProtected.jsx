@@ -1,6 +1,6 @@
 import {useEffect,useState} from 'react';
-// import {authToken} from '../store/store';
-// import {useRecoilState} from 'recoil';
+import {authToken} from '../store/store';
+import {useRecoilState} from 'recoil';
 import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
 
@@ -8,7 +8,7 @@ import axios from 'axios';
 
 function AuthProtected({children,path}) {
 
-// const [auth,setAuth] = useRecoilState(authToken);
+const [auth,setAuth] = useRecoilState(authToken);
 
 const [isLoading, setIsLoading] = useState(true);
 const navigate = useNavigate();
@@ -22,7 +22,7 @@ axios.get('http://localhost:5000/refreshtoken',{withCredentials: true })
 
 	if(data.data.status){
 
-	// setAuth(data.data.token);
+	setAuth(data.data.token);
 	setIsLoading(false)
 
 	}else{

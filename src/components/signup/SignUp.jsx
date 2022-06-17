@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import {Link} from 'react-router-dom';
+import {Link,useNavigate} from 'react-router-dom';
 import axios from 'axios';
 
 function SignUp() {
@@ -12,8 +12,7 @@ const [first_name, setFn] = useState('');
 const [last_name, setLn] = useState('');
 const [username, setUn] = useState('');
 const [password, setPwd] = useState('');
-
-
+const navigate = useNavigate();
 
 const handleSubmit = (e) => {
 	e.preventDefault()
@@ -30,7 +29,8 @@ axios.post('http://localhost:5000/signup',
 	{withCredentials: true })
 
 .then((data)=> {
-	console.log(data.data)
+	
+	navigate('/login');
 })
 
 

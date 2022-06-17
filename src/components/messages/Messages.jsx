@@ -1,10 +1,55 @@
-import React from 'react';
+import React,{useEffect,useState} from 'react';
+import User from  './User';
+import {thredAtom,authToken,friendsAtom} from '../../store/store';
+import {useRecoilValue,useRecoilState} from 'recoil';
+import jwt_decode from "jwt-decode";
+import axios from 'axios';
 import './Messages.css';
 
 
 
 
 function Messages() {
+
+
+
+const thred  = useRecoilValue(thredAtom);
+const token  = useRecoilValue(authToken);
+const [friends,setFriends] = useRecoilState(friendsAtom);
+const [user, setUser] = useState({});
+
+
+/*
+
+useEffect(() => {
+
+
+// console.log(user)
+     console.log(thred)
+
+
+}, [thred])
+*/
+
+useEffect(() => {
+    
+
+    var user = jwt_decode(token)
+    setUser(user);
+
+    axios.get('http://localhost:5000/friends',{withCredentials: true })
+    .then((data)=> {
+        setFriends(data.data);
+    })
+
+}, [])
+
+
+useEffect(() => {
+    console.log(friends)
+}, [friends])
+
+
 	return (
 			<div className="container pt-5 messages">
 <div className="row">
@@ -18,20 +63,19 @@ function Messages() {
                     <input type="text" className="form-control" placeholder="Search..." />
                 </div>
                 <ul className="list-unstyled chat-list mt-2 mb-0">
-                    <li className="clearfix">
-                        <img src="https://via.placeholder.com/50" alt="avatar" />
-                        <div className="about">
-                            <div className="name">Vincent Porter</div>
-                            <div className="status"> <i className="fa fa-circle offline"></i> left 7 mins ago </div>                                            
-                        </div>
-                    </li>
-                    <li className="clearfix active">
-                        <img src="https://via.placeholder.com/50" alt="avatar" />
-                        <div className="about">
-                            <div className="name">Aiden Chavez</div>
-                            <div className="status"> <i className="fa fa-circle online"></i> online </div>
-                        </div>
-                    </li>       
+                  
+
+{friends?.map((friend)=> 
+
+
+<>
+    {user?.id !== friend._id  && <User user={friend} /> }
+</>
+
+)}
+
+
+
                 </ul>
             </div>
             <div className="chat">
