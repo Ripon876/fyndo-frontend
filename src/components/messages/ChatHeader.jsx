@@ -15,7 +15,7 @@ const [chatingWith,setChatingWith] = useRecoilState(chatingWithAtom);
 
 
 useEffect(() => {
-    // console.log(thred)
+    console.log(thred)
     // console.log(friends)
 
 
@@ -26,11 +26,11 @@ setChatingWith(user);
 
 }, [thred])
 
-
+/*
 useEffect(() => {
 	 console.log(chatingWith)
 }, [chatingWith])
-
+*/
 	return (
 		<div className="chat-header clearfix">
             <div className="row">
