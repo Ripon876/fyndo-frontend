@@ -1,7 +1,7 @@
 import React,{useEffect} from 'react'
 import {thredAtom,friendsAtom,chatingWithAtom} from '../../store/store';
 import {useRecoilValue,useRecoilState} from 'recoil';
-
+import {useNavigate} from 'react-router-dom';
 
 
 
@@ -12,7 +12,7 @@ function ChatHeader() {
 const thred  = useRecoilValue(thredAtom);
 const friends  = useRecoilValue(friendsAtom);
 const [chatingWith,setChatingWith] = useRecoilState(chatingWithAtom);
-
+const navigate = useNavigate();
 
 useEffect(() => {
     console.log(thred)
@@ -23,6 +23,18 @@ var user =  friends?.find((f)=> f._id.includes(thred.slice(thred.length/2,thred.
 
 // console.log(user)
 setChatingWith(user);
+
+
+if(thred){
+navigate({
+      pathname: '/messages',
+      search: `?thredId=${thred}`,
+});
+}
+
+
+
+
 
 }, [thred])
 
