@@ -15,7 +15,7 @@ const [chatingWith,setChatingWith] = useRecoilState(chatingWithAtom);
 const navigate = useNavigate();
 
 useEffect(() => {
-    console.log(thred)
+    // console.log(thred)
     // console.log(friends)
 
 

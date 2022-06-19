@@ -7,6 +7,7 @@ a {
 .social {
   position: fixed;
   top: 20px;
+  z-index: 9999999;
 }
 .social ul {
   padding: 0px;
