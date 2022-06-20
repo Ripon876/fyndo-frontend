@@ -6,8 +6,8 @@ import axios from 'axios';
 import User from  './User';
 import ChatHeader  from './ChatHeader';
 import Chat  from './Chat';
+import Input  from './Input';
 import './Messages.css';
-import { io } from "socket.io-client";
 
 
 
@@ -15,9 +15,6 @@ function Messages() {
 
 
 
-
-
-const socket = io('http://localhost:5000');
 
 
 
@@ -31,22 +28,15 @@ const [user, setUser] = useRecoilState(userAtom);
 useEffect(() => {
     
 
-
-
-
-socket.on("connection",()=> {
-    console.log('connected');
-})
-
-
-
-
     var user = jwt_decode(token)
     setUser(user);
 
     axios.get('http://localhost:5000/friends',{withCredentials: true })
     .then((data)=> {
-        setFriends(data.data);
+
+     var fns =  data?.data.filter((u)=> {  return u._id !== user.id    })
+     setFriends(fns);
+     
     })
 
 }, [])
@@ -86,43 +76,8 @@ socket.on("connection",()=> {
             <div className="chat">
                 <ChatHeader />
                 <Chat />
+                <Input />
              
-{/*                <div className="chat-message clearfix">
-                    <div className="input-group mb-0">
-                        <div className="input-group-prepend">
-                            <span className="input-group-text"><i className="fa fa-send"></i></span>
-                        </div>
-                        <input type="text" className="form-control" placeholder="Enter text here..." />                                    
-                    </div>
-                </div>*/}
-
-
-
-{/*<div className='msgInput'>
-<div className='d-flex'>
-        <div className="form-group">
-            <input type="text" className='form-control'   /> 
-        </div>
-        <div className="sendBtn">
-            <btton><i class="fa-solid fa-paper-plane-top"></i></btton>
-        </div>
-</div>
-
-</div>
-*/}
-
-<div className="msgInput">
-    <div className="d-flex position-relative">
-        <div className="msInput">
-            <input type="text" />
-        </div>
-        <div className="sendBtn">
-        <button><i class="fa-solid fa-paper-plane"></i></button>
-            
-        </div>
-    </div>
-</div>
-
 
 
 

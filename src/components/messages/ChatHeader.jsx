@@ -19,7 +19,8 @@ useEffect(() => {
     // console.log(friends)
 
 
-var user =  friends?.find((f)=> f._id.includes(thred.slice(thred.length/2,thred.length)) )
+// var user =  friends?.find((f)=> f._id.includes(thred.slice(thred.length/2,thred.length)) )
+var user =  friends?.find((f)=> f.threads.includes(thred));
 
 // console.log(user)
 setChatingWith(user);

@@ -15,7 +15,7 @@ function Chat() {
 const chatingWith = useRecoilValue(chatingWithAtom);
 
 
-console.log(chatingWith)
+// console.log(chatingWith)
 
 	return (
 		   <div className="chat-history">
@@ -26,9 +26,6 @@ console.log(chatingWith)
                                 <div className="message-data">
                                       <span className="message-data-time"></span>
                                 </div>
-
-
-                                
                                 <div className={`message ${  msg?.from.id  == chatingWith?._id ? 'other-message' : 'my-message float-right'}`}>{msg.message}</div>
                             </li>
                         )}

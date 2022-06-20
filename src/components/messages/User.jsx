@@ -2,7 +2,7 @@ import React,{useEffect} from 'react'
 import {useRecoilState,useRecoilValue} from 'recoil';
 import {thredAtom,userAtom} from '../../store/store';
 import { useSearchParams } from 'react-router-dom';
-
+import axios from 'axios';
 
 
 
@@ -24,9 +24,28 @@ useEffect(() => {
 
 const changeThred = () => {
 
-var thredId = c_user?.id.slice(c_user.id.length/2,c_user.id.length) + user._id.slice(user._id.length/2,user._id.length);
-setThred(thredId);
 
+axios.post('http://localhost:5000/thread',
+
+{
+users: [c_user.id,user._id]
+},
+
+
+{withCredentials: true })
+    .then((data)=> {
+        // setFriends(data.data);
+        console.log(data.data.id)
+        setThred(data.data.id);
+
+
+})
+
+
+
+/*var thredId = c_user?.id.slice(c_user.id.length/2,c_user.id.length) + user._id.slice(user._id.length/2,user._id.length);
+setThred(thredId);
+*/
 }
 
 
