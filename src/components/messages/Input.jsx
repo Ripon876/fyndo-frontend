@@ -1,19 +1,22 @@
 import {useState,useEffect} from 'react'
-import { io } from "socket.io-client";
-import {thredAtom,chatingWithAtom,userAtom} from '../../store/store';
+import {thredAtom,chatingWithAtom,userAtom,messeagesAtom} from '../../store/store';
 import {useRecoilValue,useRecoilState} from 'recoil';
 
 
 
 
-function Input() {
 
 
-const socket = io('http://localhost:5000');
-const [msg, setMsg] = useState('')
+function Input({socket}) {
+
+
+
+const [msg, setMsg] = useState('');
+const [messages,setMessages] = useRecoilState(messeagesAtom); 
 const thred  = useRecoilValue(thredAtom);
 const chatingWith  = useRecoilValue(chatingWithAtom);
 const user  = useRecoilValue(userAtom);
+
 
 
 
@@ -28,34 +31,49 @@ var message = {
 		id : chatingWith._id
 	},
 	from : {
-		name : 'MD Ripon Islam',
+		name : user.name,
 		username : user.username,
 		id : user.id
 	}
 }
-// console.log(message)
+// console.log(user)
 
-socket.emit('send_message',message)
-
+socket.emit('send_message',message);
+setMessages((prev)=>  [...prev,message] )
+setMsg('')
 }
 
 
-socket.on('connect',()=> {
-	console.log('connected')
 
-	 socket.emit('room', thred);
-})
+
 
 
 useEffect(() => {
-	console.log(user)
-}, [msg])
+	
+socket.on('receive_message',(data)=> {
+console.log(data)
+// setMessages(messages.concat(...messages,data));
+setMessages((prev)=>  [...prev,data] )
+// setMessages([...messages,data]);
+
+})
+
+
+socket.on('rip',(t)=> {
+	console.log(t)
+})
+
+
+
+console.log('changed')
+
+},[socket])
 
 	return (
 	<div className="msgInput">
 	    <div className="d-flex position-relative">
 	        <div className="msInput">
-	            <input type="text" onChange={(e)=> setMsg(e.target.value) } />
+	            <input type="text" value={msg} onChange={(e)=> setMsg(e.target.value) } />
 	        </div>
 	        <div className="sendBtn">
 	       		<button onClick={sendMsg}><i class="fa-solid fa-paper-plane"></i></button>

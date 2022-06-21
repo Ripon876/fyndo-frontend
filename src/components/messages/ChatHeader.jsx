@@ -39,11 +39,7 @@ navigate({
 
 }, [thred])
 
-/*
-useEffect(() => {
-	 console.log(chatingWith)
-}, [chatingWith])
-*/
+
 	return (
 		<div className="chat-header clearfix">
             <div className="row">

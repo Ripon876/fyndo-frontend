@@ -1,14 +1,17 @@
 import React,{useEffect} from 'react'
 import {useRecoilState,useRecoilValue} from 'recoil';
-import {thredAtom,userAtom} from '../../store/store';
+import {thredAtom,userAtom,messeagesAtom} from '../../store/store';
 import { useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 
 
 
-function User({user}) {
+
+function User({user,socket}) {
+
 
 const [thred,setThred] = useRecoilState(thredAtom); 
+const [messages,setMessages] = useRecoilState(messeagesAtom); 
 const c_user =  useRecoilValue(userAtom);
 const [searchParams,setSearchParams] = useSearchParams();
 
@@ -18,34 +21,27 @@ useEffect(() => {
         setThred(searchParams.get('thredId'))
     }
 
-
-}, [])
+}, []);
 
 
 const changeThred = () => {
 
-
 axios.post('http://localhost:5000/thread',
-
 {
 users: [c_user.id,user._id]
 },
 
-
 {withCredentials: true })
     .then((data)=> {
-        // setFriends(data.data);
-        console.log(data.data.id)
+
         setThred(data.data.id);
-
-
+        setMessages(data.data.messages);
+}).then(()=> {
+     socket.emit('room', thred);
 })
 
 
 
-/*var thredId = c_user?.id.slice(c_user.id.length/2,c_user.id.length) + user._id.slice(user._id.length/2,user._id.length);
-setThred(thredId);
-*/
 }
 
 

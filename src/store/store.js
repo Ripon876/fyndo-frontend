@@ -1,13 +1,13 @@
-import {selector, atom} from 'recoil';
+import {atom} from 'recoil';
 
 
 
- const userState = atom({
+const userState = atom({
 	key : 'userState',
 	default : {}
 });
 
- const authToken = atom({
+const authToken = atom({
 	key : 'authToken',
 	default : ''
 });
@@ -15,6 +15,21 @@ import {selector, atom} from 'recoil';
 const thredAtom = atom({
 	key  : 'thred',
 	default : ''
+})
+ 
+const incomingMsgAtom = atom({
+	key  : 'i_msg',
+	default : ''
+})
+ 
+const outgoingMsgAtom = atom({
+	key  : 'o_msg',
+	default : ''
+})
+
+const messeagesAtom = atom({
+	key  : 'messages',
+	default : []
 })
  
 
@@ -35,11 +50,15 @@ const chatingWithAtom = atom({
 })
 
 
+
  export {
  	userState,
  	authToken,
  	thredAtom,
  	userAtom,
  	friendsAtom,
- 	chatingWithAtom
+ 	chatingWithAtom,
+ 	incomingMsgAtom,
+ 	outgoingMsgAtom,
+ 	messeagesAtom
  }

@@ -1,5 +1,5 @@
-import React,{useEffect} from 'react';
-import {authToken,friendsAtom,userAtom} from '../../store/store';
+import React,{useEffect,useState} from 'react';
+import {authToken,friendsAtom,userAtom,socketAtom} from '../../store/store';
 import {useRecoilValue,useRecoilState} from 'recoil';
 import jwt_decode from "jwt-decode";
 import axios from 'axios';
@@ -8,13 +8,18 @@ import ChatHeader  from './ChatHeader';
 import Chat  from './Chat';
 import Input  from './Input';
 import './Messages.css';
+import { io } from "socket.io-client";
+
+
+
+
+
+ const socket = io('http://localhost:5000',{transports: ['websocket'], upgrade: false});
+
 
 
 
 function Messages() {
-
-
-
 
 
 
@@ -25,10 +30,12 @@ const [user, setUser] = useRecoilState(userAtom);
 
 
 
+
 useEffect(() => {
     
 
     var user = jwt_decode(token)
+    // console.log(user)
     setUser(user);
 
     axios.get('http://localhost:5000/friends',{withCredentials: true })
@@ -64,7 +71,7 @@ useEffect(() => {
 
 
 <>
-    {user?.id !== friend._id  && <User user={friend} /> }
+    {user?.id !== friend._id  && <User user={friend} socket={socket}/> }
 </>
 
 )}
@@ -76,7 +83,7 @@ useEffect(() => {
             <div className="chat">
                 <ChatHeader />
                 <Chat />
-                <Input />
+               <Input   socket={socket}/>
              
 
 
