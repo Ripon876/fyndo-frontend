@@ -15,9 +15,6 @@ const [chatingWith,setChatingWith] = useRecoilState(chatingWithAtom);
 const navigate = useNavigate();
 
 useEffect(() => {
-    // console.log(thred)
-    // console.log(friends)
-
 
 // var user =  friends?.find((f)=> f._id.includes(thred.slice(thred.length/2,thred.length)) )
 var user =  friends?.find((f)=> f.threads.includes(thred));

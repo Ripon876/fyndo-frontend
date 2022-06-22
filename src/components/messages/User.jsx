@@ -36,8 +36,7 @@ users: [c_user.id,user._id]
 
         setThred(data.data.id);
         setMessages(data.data.messages);
-}).then(()=> {
-     socket.emit('room', thred);
+        socket.emit('room', data.data.id);
 })
 
 

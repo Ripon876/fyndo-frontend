@@ -1,7 +1,7 @@
 import {useState,useEffect} from 'react'
 import {thredAtom,chatingWithAtom,userAtom,messeagesAtom} from '../../store/store';
 import {useRecoilValue,useRecoilState} from 'recoil';
-
+import { useSearchParams } from 'react-router-dom';
 
 
 
@@ -16,7 +16,7 @@ const [messages,setMessages] = useRecoilState(messeagesAtom);
 const thred  = useRecoilValue(thredAtom);
 const chatingWith  = useRecoilValue(chatingWithAtom);
 const user  = useRecoilValue(userAtom);
-
+const [searchParams,setSearchParams] = useSearchParams();
 
 
 
@@ -40,21 +40,30 @@ var message = {
 
 socket.emit('send_message',message);
 setMessages((prev)=>  [...prev,message] )
-setMsg('')
+setMsg('');
+
 }
 
 
+function getThreadId(){ 
 
+    let params = new URLSearchParams(document.location.search);
+    return params.get('thredId') 
+}
 
 
 
 useEffect(() => {
 	
 socket.on('receive_message',(data)=> {
-console.log(data)
-// setMessages(messages.concat(...messages,data));
-setMessages((prev)=>  [...prev,data] )
-// setMessages([...messages,data]);
+
+
+
+console.log(data.threadId ,' : ',getThreadId())
+if(data.threadId === getThreadId()){
+	setMessages((prev)=>  [...prev,data] )
+}
+
 
 })
 
