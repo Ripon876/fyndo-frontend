@@ -28,11 +28,10 @@ navigate({
       pathname: '/messages',
       search: `?thredId=${thred}`,
 });
+
+
+
 }
-
-
-
-
 
 }, [thred])
 
@@ -46,7 +45,7 @@ navigate({
                     </a>
                     <div className="chat-about">
                         <h6 className="m-b-0">{chatingWith?.first_name} {chatingWith?.last_name}</h6>
-                        <small>Last seen: 2 hours ago</small>
+                      {chatingWith && <small>Last seen: 2 hours ago</small>}   
                     </div>
                 </div>
             </div>

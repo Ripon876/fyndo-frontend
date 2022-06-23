@@ -57,20 +57,16 @@ useEffect(() => {
 	
 socket.on('receive_message',(data)=> {
 
-
-
-console.log(data.threadId ,' : ',getThreadId())
-if(data.threadId === getThreadId()){
-	setMessages((prev)=>  [...prev,data] )
-}
-
+	if(data.threadId === getThreadId()){
+		setMessages((prev)=>  [...prev,data] )
+	}
 
 })
 
 
-socket.on('rip',(t)=> {
-	console.log(t)
-})
+// socket.on('rip',(t)=> {
+// 	console.log(t)
+// })
 
 
 

@@ -18,7 +18,18 @@ const [searchParams,setSearchParams] = useSearchParams();
 useEffect(() => {
 
     if(searchParams.get('thredId') && searchParams.get('thredId').length !== 0){
-        setThred(searchParams.get('thredId'))
+        setThred(searchParams.get('thredId'));
+
+axios.post('http://localhost:5000/thread',
+{
+users: [c_user.id,user._id]
+},
+
+{withCredentials: true })
+    .then((data)=> {
+        setMessages(data.data.messages);
+        socket.emit('room', data.data.id);
+})
     }
 
 }, []);
