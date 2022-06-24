@@ -22,7 +22,9 @@ const scrollToBottom = () => {
 }
 
 useEffect(() => {
-    scrollToBottom()
+    scrollToBottom();
+    console.log(messages);
+    console.log(chatingWith)
 }, [messages]);
 
 

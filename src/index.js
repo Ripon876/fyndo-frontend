@@ -12,13 +12,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 ReactDOM.render(
-  <React.StrictMode>
     <RecoilRoot>
       <Router>
         <App />
       </Router>
-    </RecoilRoot>
-  </React.StrictMode>,
+    </RecoilRoot>,
   document.getElementById('root')
 );
 

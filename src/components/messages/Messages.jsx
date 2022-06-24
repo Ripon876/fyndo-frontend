@@ -1,5 +1,5 @@
 import React,{useEffect,useState} from 'react';
-import {authToken,friendsAtom,userAtom,socketAtom} from '../../store/store';
+import {authToken,friendsAtom,userAtom,socketAtom,thredAtom,messeagesAtom,chatingWithAtom} from '../../store/store';
 import {useRecoilValue,useRecoilState} from 'recoil';
 import jwt_decode from "jwt-decode";
 import axios from 'axios';
@@ -28,12 +28,21 @@ const token  = useRecoilValue(authToken);
 const [friends,setFriends] = useRecoilState(friendsAtom);
 const [user, setUser] = useRecoilState(userAtom);
 
+const [thred,setThred] = useRecoilState(thredAtom); 
+const [messages,setMessages] = useRecoilState(messeagesAtom); 
+const c_user =  useRecoilValue(userAtom);
+const [chatingWith,setChatingWith] = useRecoilState(chatingWithAtom);
 
+function getThreadId(){ 
+
+    let params = new URLSearchParams(document.location.search);
+    return params.get('thredId') 
+}
 
 
 useEffect(() => {
     
-
+    let myFriends;
     var user = jwt_decode(token)
     // console.log(user)
     setUser(user);
@@ -43,13 +52,47 @@ useEffect(() => {
 
      var fns =  data?.data.filter((u)=> {  return u._id !== user.id    })
      setFriends(fns);
-     
+     myFriends = fns;
+    }).then(()=> {
+
+        if(getThreadId() && getThreadId().length !== 0){
+        setThred(getThreadId());
+       // console.log(getThreadId())
+
+        axios.post('http://localhost:5000/thread?id='+ getThreadId(),
+        {
+        users: [c_user.id,user._id]
+        },
+
+        {withCredentials: true })
+        .then((data)=> {
+
+                setMessages(data.data.messages);
+                // setThred(data.data.id);
+
+                var user =  myFriends?.find((f)=> f.threads.includes(data.data.id));
+                // console.log(myFriends)
+                setChatingWith(user);
+                socket.emit('room', data.data.id);
+
+        })
+    }
     })
+
+
+
+
 
 }, [])
 
+/*
+
+useEffect(() => {
 
 
+   
+
+}, []);*/
 
 
 	return (

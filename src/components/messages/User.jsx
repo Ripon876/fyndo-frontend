@@ -15,41 +15,37 @@ const [messages,setMessages] = useRecoilState(messeagesAtom);
 const c_user =  useRecoilValue(userAtom);
 const [searchParams,setSearchParams] = useSearchParams();
 
-useEffect(() => {
 
-    if(searchParams.get('thredId') && searchParams.get('thredId').length !== 0){
-        setThred(searchParams.get('thredId'));
+function getThreadId(){ 
 
-axios.post('http://localhost:5000/thread',
-{
-users: [c_user.id,user._id]
-},
+    let params = new URLSearchParams(document.location.search);
+    return params.get('thredId') 
+}
 
-{withCredentials: true })
-    .then((data)=> {
-        setMessages(data.data.messages);
-        socket.emit('room', data.data.id);
-})
+/*useEffect(() => {
+ 
+    if(getThreadId() && getThreadId().length !== 0){
+     setThred(getThreadId());
     }
 
-}, []);
+}, [])
+*/
 
 
 const changeThred = () => {
 
-axios.post('http://localhost:5000/thread',
-{
-users: [c_user.id,user._id]
-},
+    axios.post('http://localhost:5000/thread',
+    {
+    users: [c_user.id,user._id]
+    },
 
-{withCredentials: true })
-    .then((data)=> {
-
-        setThred(data.data.id);
-        setMessages(data.data.messages);
-        socket.emit('room', data.data.id);
-})
-
+    {withCredentials: true })
+        .then((data)=> {
+ 
+            setThred((id)=> data.data.id);
+            setMessages(data.data.messages);
+            socket.emit('room', data.data.id);
+    })
 
 
 }
