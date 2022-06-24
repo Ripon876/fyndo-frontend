@@ -57,7 +57,7 @@ useEffect(() => {
 
         if(getThreadId() && getThreadId().length !== 0){
         setThred(getThreadId());
-       // console.log(getThreadId())
+    
 
         axios.post('http://localhost:5000/thread?id='+ getThreadId(),
         {
@@ -68,10 +68,9 @@ useEffect(() => {
         .then((data)=> {
 
                 setMessages(data.data.messages);
-                // setThred(data.data.id);
-
+            
                 var user =  myFriends?.find((f)=> f.threads.includes(data.data.id));
-                // console.log(myFriends)
+              
                 setChatingWith(user);
                 socket.emit('room', data.data.id);
 
