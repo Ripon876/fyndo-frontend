@@ -22,18 +22,13 @@ function getThreadId(){
     return params.get('thredId') 
 }
 
-/*useEffect(() => {
- 
-    if(getThreadId() && getThreadId().length !== 0){
-     setThred(getThreadId());
-    }
-
-}, [])
-*/
 
 
 const changeThred = () => {
+// console.log(thred)
 
+
+socket.emit('leave_room',thred);
     axios.post('http://localhost:5000/thread',
     {
     users: [c_user.id,user._id]
@@ -42,13 +37,15 @@ const changeThred = () => {
     {withCredentials: true })
         .then((data)=> {
  
-            setThred((id)=> data.data.id);
+            setThred(data.data.id);
             setMessages(data.data.messages);
-            socket.emit('room', data.data.id);
+            socket.emit('room', {thread : data.data.id,uId : c_user.id});
+            // console.log(data.data.id)
     })
 
 
 }
+
 
 
 
@@ -57,7 +54,7 @@ const changeThred = () => {
             <img src="https://via.placeholder.com/50" alt="avatar" />
             <div className="about">
                 <div className="name">{user?.first_name} {user.last_name}</div>
-                <div className="status"> <i className="fa fa-circle offline"></i> left 7 mins ago </div>                                            
+                {/*<div className="status"> <i className="fa fa-circle offline"></i> left 7 mins ago </div>                                            */}
             </div>
         </li>
 	)

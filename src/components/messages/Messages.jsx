@@ -69,10 +69,10 @@ useEffect(() => {
 
                 setMessages(data.data.messages);
             
-                var user =  myFriends?.find((f)=> f.threads.includes(data.data.id));
+                var chating_withuser =  myFriends?.find((f)=> f.threads.includes(data.data.id));
               
-                setChatingWith(user);
-                socket.emit('room', data.data.id);
+                setChatingWith(chating_withuser);
+                socket.emit('room', {thread : data.data.id,uId : user.id});
 
         })
     }
@@ -84,14 +84,16 @@ useEffect(() => {
 
 }, [])
 
-/*
-
 useEffect(() => {
+    
+console.log('updated')
+socket.on('receive_message_not_seen',(data)=> {
+    console.log('this message not seen yet : ',data)
+})
 
 
-   
+}, [socket])
 
-}, []);*/
 
 
 	return (

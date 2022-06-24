@@ -35,8 +35,7 @@ var message = {
 		username : user.username,
 		id : user.id
 	}
-}
-// console.log(user)
+};
 
 socket.emit('send_message',message);
 setMessages((prev)=>  [...prev,message] )
@@ -64,9 +63,6 @@ socket.on('receive_message',(data)=> {
 })
 
 
-// socket.on('rip',(t)=> {
-// 	console.log(t)
-// })
 
 
 

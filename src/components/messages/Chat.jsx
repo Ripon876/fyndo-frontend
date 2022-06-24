@@ -23,8 +23,8 @@ const scrollToBottom = () => {
 
 useEffect(() => {
     scrollToBottom();
-    console.log(messages);
-    console.log(chatingWith)
+    // console.log(messages);
+    // console.log(chatingWith)
 }, [messages]);
 
 
