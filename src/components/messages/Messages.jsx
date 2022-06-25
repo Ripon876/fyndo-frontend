@@ -1,5 +1,5 @@
 import React,{useEffect,useState} from 'react';
-import {authToken,friendsAtom,userAtom,socketAtom,thredAtom,messeagesAtom,chatingWithAtom} from '../../store/store';
+import {authToken,friendsAtom,userAtom,socketAtom,thredAtom,messeagesAtom,chatingWithAtom,unseenMsgAtom} from '../../store/store';
 import {useRecoilValue,useRecoilState} from 'recoil';
 import jwt_decode from "jwt-decode";
 import axios from 'axios';
@@ -27,6 +27,7 @@ function Messages() {
 const token  = useRecoilValue(authToken);
 const [friends,setFriends] = useRecoilState(friendsAtom);
 const [user, setUser] = useRecoilState(userAtom);
+const [unseenMsg, setUnseenMsg] = useRecoilState(unseenMsgAtom);
 
 const [thred,setThred] = useRecoilState(thredAtom); 
 const [messages,setMessages] = useRecoilState(messeagesAtom); 
@@ -39,10 +40,10 @@ function getThreadId(){
     return params.get('thredId') 
 }
 
-
+let myFriends;
 useEffect(() => {
     
-    let myFriends;
+    
     var user = jwt_decode(token)
     // console.log(user)
     setUser(user);
@@ -89,6 +90,12 @@ useEffect(() => {
 console.log('updated')
 socket.on('receive_message_not_seen',(data)=> {
     console.log('this message not seen yet : ',data)
+    var newUnseenMsg = {
+        id : data.from.id,
+        msg : data.msg
+    }
+    setUnseenMsg(newUnseenMsg);
+    // console.log(myFriends)
 })
 
 

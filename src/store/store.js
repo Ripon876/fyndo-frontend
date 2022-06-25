@@ -17,15 +17,7 @@ const thredAtom = atom({
 	default : ''
 })
  
-const incomingMsgAtom = atom({
-	key  : 'i_msg',
-	default : ''
-})
- 
-const outgoingMsgAtom = atom({
-	key  : 'o_msg',
-	default : ''
-})
+
 
 const messeagesAtom = atom({
 	key  : 'messages',
@@ -49,6 +41,14 @@ const chatingWithAtom = atom({
 	default : {}
 })
 
+const unseenMsgAtom = atom({
+	key : 'unseenMsg',
+	default : { 
+      id: '',
+      msg : ''
+    }
+})
+
 
 
  export {
@@ -58,7 +58,6 @@ const chatingWithAtom = atom({
  	userAtom,
  	friendsAtom,
  	chatingWithAtom,
- 	incomingMsgAtom,
- 	outgoingMsgAtom,
- 	messeagesAtom
+ 	messeagesAtom,
+ 	unseenMsgAtom
  }
