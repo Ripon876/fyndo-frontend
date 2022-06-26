@@ -14,3 +14,12 @@ code {
 body{
   background-color: #121212 !important;
 }
+.t-btn{
+    background: #121212 !important;
+    color: #9ca3af !important;
+    font-weight: bold !important;
+    border: none !important;
+}
+.form-control:focus {
+    box-shadow: 0 0 0 0.25rem rgb(156 163 175 / 18%) !important;
+}

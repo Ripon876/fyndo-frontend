@@ -1,3 +1,17 @@
 .profileImg{
     border-radius: 50%;
 }
+.modal-content{
+    background: #1e1e1e !important;
+    color: #9ca3af !important;
+}
+.closeModal{
+    cursor: pointer;
+}
+
+.modal input{
+        background: #121212 !important;
+}
+.modal  textarea{
+        background: #121212 !important;
+}
