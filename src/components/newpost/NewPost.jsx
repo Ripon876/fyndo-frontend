@@ -26,7 +26,7 @@ const closeModal = () => {
             </div>
           </div>
 		</div>
-    {showModal &&  <Form close={closeModal} /> }
+    {showModal && <Form close={closeModal} /> }
     </>
 		)
 }
