@@ -1,5 +1,5 @@
 import React,{useEffect,useState} from 'react';
-import {authToken,friendsAtom,userAtom,socketAtom,thredAtom,messeagesAtom,chatingWithAtom,unseenMsgAtom} from '../../store/store';
+import {authToken,friendsAtom,userAtom,thredAtom,messeagesAtom,chatingWithAtom,unseenMsgAtom} from '../../store/store';
 import {useRecoilValue,useRecoilState} from 'recoil';
 import jwt_decode from "jwt-decode";
 import axios from 'axios';
@@ -8,13 +8,14 @@ import ChatHeader  from './ChatHeader';
 import Chat  from './Chat';
 import Input  from './Input';
 import './Messages.css';
-import { io } from "socket.io-client";
+// import { io } from "socket.io-client";
+import socket from '../../socket/socket';
 
 
 
 
 
- const socket = io('http://localhost:5000',{transports: ['websocket'], upgrade: false});
+ // const socket = io('http://localhost:5000',{transports: ['websocket'], upgrade: false});
 
 
 
@@ -23,11 +24,11 @@ function Messages() {
 
 
 
-
 const token  = useRecoilValue(authToken);
 const [friends,setFriends] = useRecoilState(friendsAtom);
 const [user, setUser] = useRecoilState(userAtom);
 const [unseenMsg, setUnseenMsg] = useRecoilState(unseenMsgAtom);
+
 
 const [thred,setThred] = useRecoilState(thredAtom); 
 const [messages,setMessages] = useRecoilState(messeagesAtom); 
@@ -41,9 +42,11 @@ function getThreadId(){
 }
 
 let myFriends;
+
 useEffect(() => {
-    
-    
+
+
+
     var user = jwt_decode(token)
     // console.log(user)
     setUser(user);
@@ -79,11 +82,10 @@ useEffect(() => {
     }
     })
 
-
-
-
-
 }, [])
+
+
+
 
 useEffect(() => {
     
@@ -95,11 +97,14 @@ socket.on('receive_message_not_seen',(data)=> {
         msg : data.msg
     }
     setUnseenMsg(newUnseenMsg);
-    // console.log(myFriends)
 })
 
 
 }, [socket])
+
+
+
+
 
 
 
@@ -118,15 +123,14 @@ socket.on('receive_message_not_seen',(data)=> {
                 <ul className="list-unstyled chat-list mt-2 mb-0">
                   
 
-{friends?.map((friend)=> 
+                {friends?.map((friend)=> 
 
 
-<>
-    {user?.id !== friend._id  && <User user={friend} socket={socket}/> }
-</>
+                <>
+                    {user?.id !== friend._id  && <User user={friend} socket={socket}/> }
+                </>
 
-)}
-
+                )}
 
 
                 </ul>
@@ -136,9 +140,6 @@ socket.on('receive_message_not_seen',(data)=> {
                 <Chat />
                <Input   socket={socket}/>
              
-
-
-
             </div>
         </div>
     </div>

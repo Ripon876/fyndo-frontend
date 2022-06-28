@@ -1,18 +1,30 @@
-import {useState} from 'react';
+import {useState,useEffect} from 'react';
 import {Fade} from 'react-reveal';
 import EmojiPopUp from './EmojiPopUp';
-
+import {useRecoilValue,useRecoilState} from 'recoil';
+import socket from '../../socket/socket';
 
 
 function Form({close}) {
 
 const [input, setInput] = useState("");
 
+
+
 const addEmoji = (e) => {  
     setInput(input + e.native);  
   
   };
 
+
+const post = () => {
+	console.log('posted')
+	console.log(input)
+}
+
+useEffect(() => {
+	console.log(socket)
+}, [])
 
 
 
@@ -28,10 +40,10 @@ const addEmoji = (e) => {
 								<div className="mb-3">
 								<label for="exampleInputPassword1" className="form-label">Write what you want</label>
                
-                <EmojiPopUp f={addEmoji} />
+             	 				<EmojiPopUp f={addEmoji} />
 								<textarea onChange={(e) => setInput(  e.target.value)} className='form-control' id="" cols="30" rows="10" value={input} />
 								</div>
-								<button type="submit" className="btn t-btn">Post</button>
+								<button  onClick={post} className="btn t-btn">Post</button>
 							</div>
 						</div>
 					</div>

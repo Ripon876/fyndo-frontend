@@ -50,7 +50,6 @@ const unseenMsgAtom = atom({
 })
 
 
-
  export {
  	userState,
  	authToken,
