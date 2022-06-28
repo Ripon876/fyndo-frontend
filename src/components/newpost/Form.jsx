@@ -5,9 +5,11 @@ import {userAtom,authToken} from '../../store/store';
 import {useRecoilValue,useRecoilState} from 'recoil';
 import socket from '../../socket/socket';
 import jwt_decode from "jwt-decode";
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
 
-
+const MySwal = withReactContent(Swal)
 
 function Form({close}) {
 
@@ -30,7 +32,26 @@ var postData = {
 	content : input
 }
 
-socket.emit('post',postData);
+socket.emit('post',postData,(res) => {
+
+	if(res.status){
+
+		const Toast = MySwal.mixin({
+		  toast: true,
+		  position: 'top-end',
+		  showConfirmButton: false,
+		  timer: 3000
+		})
+
+		Toast.fire({
+		  type: 'success',
+		  title: 'Post created successfully'
+		})
+	}
+
+});
+
+
 
 
 }
