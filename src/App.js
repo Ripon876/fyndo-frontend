@@ -5,6 +5,7 @@ import Login from  './components/login/Login';
 import SignUp from  './components/signup/SignUp';
 import Dashboard from './components/dashboard/Dashboard';
 import MessagesPage from './pages/MessagesPage';
+import ProfilePage from './pages/ProfilePage';
 import AuthProtected from './auth/AuthProtected';
 import NotFound from './components/notfound/NotFound';
 
@@ -17,6 +18,7 @@ function App() {
        
           <Route path='/' element={ <AuthProtected path='/' ><Dashboard /></AuthProtected>} />
           <Route path='/messages' element={ <AuthProtected path='/messages'><MessagesPage /></AuthProtected>} />
+          <Route path='/profile' element={ <AuthProtected path='/profile'><ProfilePage /></AuthProtected>} />
         
             
             <Route path='/signup' element={<SignUp />} />

@@ -24,6 +24,7 @@ const logOut = ()=> {
 			<nav className="social">
 	            <ul>
 		            <li><Link to="/">Home <i class="fa-solid fa-house"></i></Link></li>
+		            <li><Link to="/profile">Profile <i class="fa-solid fa-user"></i></Link></li>
 		            <li><Link to="/messages">Messages <i class="fa-brands fa-facebook-messenger"></i></Link></li>
 		            <li><Link to="/videos">Video <i class="fa-solid fa-video"></i></Link></li>
 		            <li><Link to="/settings">Settings <i class="fa-solid fa-bars"></i></Link></li>
