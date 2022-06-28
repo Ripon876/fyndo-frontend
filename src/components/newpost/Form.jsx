@@ -1,21 +1,27 @@
 import {useState,useEffect} from 'react';
 import {Fade} from 'react-reveal';
 import EmojiPopUp from './EmojiPopUp';
-import {userAtom,authToken} from '../../store/store';
+import {userAtom,authToken,postsAtom} from '../../store/store';
 import {useRecoilValue,useRecoilState} from 'recoil';
 import socket from '../../socket/socket';
 import jwt_decode from "jwt-decode";
-import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
-
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 
 const MySwal = withReactContent(Swal)
 
+
+
+
+
 function Form({close}) {
+
 
 const [input, setInput] = useState("");   
 const c_user =  useRecoilValue(userAtom);
 const token =  useRecoilValue(authToken);
+const [posts, setPost] = useRecoilState(postsAtom)
+
  var user = jwt_decode(token)
 
 const addEmoji = (e) => {  
@@ -36,6 +42,10 @@ socket.emit('post',postData, async(res) => {
 
 	if(res.status){
 
+
+console.log(res.post)
+
+
         setInput('');
         close();
 		const Toast = MySwal.mixin({
@@ -55,6 +65,9 @@ socket.emit('post',postData, async(res) => {
 		  icon : 'success',
 		  title: 'Post created successfully'
 		})
+
+setPost((prvPosts) => [res.post,...posts] );  
+
 	}
 
 });
