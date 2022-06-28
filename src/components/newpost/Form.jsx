@@ -32,19 +32,25 @@ var postData = {
 	content : input
 }
 
-socket.emit('post',postData,(res) => {
+socket.emit('post',postData, async(res) => {
 
 	if(res.status){
 
 		const Toast = MySwal.mixin({
 		  toast: true,
 		  position: 'top-end',
+		  iconColor: '#9ca3af',
 		  showConfirmButton: false,
-		  timer: 3000
+		  timer: 2500,
+		  customClass: {
+			   popup: 'colored-toast'
+			},
+		 timerProgressBar: true
 		})
 
-		Toast.fire({
+		await Toast.fire({
 		  type: 'success',
+		  icon : 'success',
 		  title: 'Post created successfully'
 		})
 	}

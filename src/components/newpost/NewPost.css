@@ -31,3 +31,25 @@
     top: 5% !important;
 
 }
+
+.colored-toast .swal2-icon-success {
+  background-color: #1e1e1e !important;
+  color: #9ca3af !important;
+  /*background: #1e1e1e !important;*/
+}
+.colored-toast {
+  background-color: #1e1e1e !important;
+  color: #9ca3af !important;
+  background: #1e1e1e !important;
+}
+
+.swal2-timer-progress-bar {
+  
+    background: rgb(156 163 175) !important;
+}
+
+.swal2-icon.swal2-success .swal2-success-ring {
+
+    border: 0.25em solid rgb(156 163 175 / 36%) !important;
+ 
+}
