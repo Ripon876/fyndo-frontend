@@ -1,15 +1,20 @@
 import {useState,useEffect} from 'react';
 import {Fade} from 'react-reveal';
 import EmojiPopUp from './EmojiPopUp';
+import {userAtom,authToken} from '../../store/store';
 import {useRecoilValue,useRecoilState} from 'recoil';
 import socket from '../../socket/socket';
+import jwt_decode from "jwt-decode";
+
+
 
 
 function Form({close}) {
 
-const [input, setInput] = useState("");
-
-
+const [input, setInput] = useState("");   
+const c_user =  useRecoilValue(userAtom);
+const token =  useRecoilValue(authToken);
+ var user = jwt_decode(token)
 
 const addEmoji = (e) => {  
     setInput(input + e.native);  
@@ -18,13 +23,17 @@ const addEmoji = (e) => {
 
 
 const post = () => {
-	console.log('posted')
-	console.log(input)
+	 
+
+var postData = {
+	creator : user.id,
+	content : input
 }
 
-useEffect(() => {
-	console.log(socket)
-}, [])
+socket.emit('post',postData);
+
+
+}
 
 
 
