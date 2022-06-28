@@ -1,4 +1,8 @@
 import React from 'react'
+import Moment from 'react-moment';
+
+
+
 
 function Post({post}) {
 
@@ -30,7 +34,7 @@ function Post({post}) {
 */
 
 
-
+// console.log(post)
 
 
 	return (
@@ -45,7 +49,7 @@ function Post({post}) {
 					           </div>
 				           	   <div className='align-items-center d-flex row'>
 				           	   	<h5 className='userName'>{post?.creator.first_name} {post?.creator.last_name}</h5>
-				           	   	 <span className="postTime">5 days ago</span>
+				           	   	 <span className="postTime"><Moment fromNow>{post?.creationDate}</Moment></span>
 				           	   </div>
 				           </div>
 				          

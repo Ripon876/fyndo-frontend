@@ -19,8 +19,8 @@ useEffect(() => {
 	
 console.log(user);
    socket.emit('getPost',user.id,(data)=> {
-   	// console.log(data)
-   	setPost(data);
+   	console.log(data)
+   	setPost(data.reverse());
    })
 
 }, [])
