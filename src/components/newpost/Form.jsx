@@ -36,9 +36,8 @@ socket.emit('post',postData, async(res) => {
 
 	if(res.status){
 
-
         setInput('');
-        close()
+        close();
 		const Toast = MySwal.mixin({
 		  toast: true,
 		  position: 'top-end',

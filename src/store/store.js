@@ -50,6 +50,11 @@ const unseenMsgAtom = atom({
 })
 
 
+const postsAtom = atom({
+	key : 'posts',
+	default : []
+})
+
  export {
  	userState,
  	authToken,
@@ -58,5 +63,6 @@ const unseenMsgAtom = atom({
  	friendsAtom,
  	chatingWithAtom,
  	messeagesAtom,
- 	unseenMsgAtom
+ 	unseenMsgAtom,
+ 	postsAtom
  }
