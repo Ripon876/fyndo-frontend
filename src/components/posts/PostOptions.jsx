@@ -1,13 +1,27 @@
-import {useState} from 'react';
+import {useState,useEffect} from 'react';
 import {Fade} from 'react-reveal';
 import ClickOutside from 'react-click-outside';
+import socket from '../../socket/socket';
 
 
 
-
-function PostOptions() {
+function PostOptions({id}) {
 
 const [show, setShow] = useState(false);
+
+
+const deletePost = () => {
+	socket.emit('deletePost',id,(data) => {
+		console.log(data)
+	})
+}
+
+const editPost = () => {
+	socket.emit('editPost',id,(data) => {
+		console.log(data)
+	})
+}
+
 
 
 	return (
@@ -19,9 +33,9 @@ const [show, setShow] = useState(false);
 		<Fade duration={500} >
 			<div className="post-options-list position-absolute">
 				<ul class="list-group">
-					<li class="list-group-item"><i class="fa-solid fa-pen-to-square"></i> Edit</li>
+					<li class="list-group-item" onClick={editPost} ><i class="fa-solid fa-pen-to-square"></i> Edit</li>
 					<li class="list-group-item"><i class="fa-solid fa-share"></i> Share</li>
-					<li class="list-group-item"><i class="fa-solid fa-trash-can"></i> Delete</li>
+					<li class="list-group-item" onClick={deletePost} ><i class="fa-solid fa-trash-can"></i> Delete</li>
 				</ul>
 			</div>
 		</Fade>

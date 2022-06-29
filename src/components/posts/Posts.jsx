@@ -5,6 +5,10 @@ import socket from '../../socket/socket';
 import {authToken,postsAtom} from '../../store/store';
 import {useRecoilValue,useRecoilState} from 'recoil';
 import jwt_decode from "jwt-decode";
+import InfiniteScroll from "react-infinite-scroll-component";
+
+
+
 
 function Posts() {
 
