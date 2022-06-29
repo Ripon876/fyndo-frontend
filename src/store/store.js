@@ -15,31 +15,31 @@ const authToken = atom({
 const thredAtom = atom({
 	key  : 'thred',
 	default : ''
-})
+});
  
 
 
 const messeagesAtom = atom({
 	key  : 'messages',
 	default : []
-})
+});
  
 
 const userAtom = atom({
 	key : 'c_user',
 	default : {}
-})
+});
 
 const friendsAtom = atom({
 	key : 'friends',
 	default : []
-})
+});
 
 
 const chatingWithAtom = atom({
 	key : 'catingWith',
 	default : {}
-})
+});
 
 const unseenMsgAtom = atom({
 	key : 'unseenMsg',
@@ -47,13 +47,18 @@ const unseenMsgAtom = atom({
       id: '',
       msg : ''
     }
-})
+});
 
 
 const postsAtom = atom({
 	key : 'posts',
 	default : []
-})
+});
+
+const userPostsAtom = atom({
+	key: 'userPosts',
+	default: []
+});
 
  export {
  	userState,
@@ -64,5 +69,6 @@ const postsAtom = atom({
  	chatingWithAtom,
  	messeagesAtom,
  	unseenMsgAtom,
- 	postsAtom
+ 	postsAtom,
+ 	userPostsAtom
  }

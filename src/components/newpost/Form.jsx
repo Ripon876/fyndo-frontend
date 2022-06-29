@@ -1,7 +1,7 @@
 import {useState,useEffect} from 'react';
 import {Fade} from 'react-reveal';
 import EmojiPopUp from './EmojiPopUp';
-import {userAtom,authToken,postsAtom} from '../../store/store';
+import {userAtom,authToken,postsAtom,userPostsAtom} from '../../store/store';
 import {useRecoilValue,useRecoilState} from 'recoil';
 import socket from '../../socket/socket';
 import jwt_decode from "jwt-decode";
@@ -11,13 +11,14 @@ import Toast from '../../utils/ToastAlert';
 
 
 
-function Form({close}) {
+function Form({close,profile}) {
 
 
 const [input, setInput] = useState("");   
 const c_user =  useRecoilValue(userAtom);
 const token =  useRecoilValue(authToken);
-const [posts, setPost] = useRecoilState(postsAtom)
+const [posts, setPost] = useRecoilState(postsAtom);
+const [userPosts, setUserPost] = useRecoilState(userPostsAtom);
 
  var user = jwt_decode(token)
 
@@ -40,7 +41,7 @@ socket.emit('post',postData, async(res) => {
 	if(res.status){
 
 
-console.log(res.post)
+// console.log(res.post)
 
 
         setInput('');
@@ -53,6 +54,12 @@ console.log(res.post)
 		})
 
 	setPost((prvPosts) => [res.post,...posts] );  
+
+if(profile){
+	setUserPost((prvPosts) => [res.post,...userPosts])
+}
+
+
 
 	}
 

@@ -1,11 +1,11 @@
 import {useEffect,useState} from 'react';
 import socket from '../../socket/socket';
-import {authToken} from  '../../store/store';
-import {useRecoilValue} from  'recoil';
+import {authToken,userPostsAtom} from  '../../store/store';
+import {useRecoilValue,useRecoilState} from  'recoil';
 import jwt_decode from "jwt-decode";
 import './Profile.css';
 import Post from '../posts/Post';
-
+import NewPost  from '../newpost/NewPost';
 
 
 
@@ -15,14 +15,14 @@ function Profile() {
 
 const token = useRecoilValue(authToken);
 const user = jwt_decode(token);
-const [userPosts, setUserPosts] = useState([]);
+const [userPosts, setUserPosts] = useRecoilState(userPostsAtom);
 const [userData, setUserData] = useState({});
 
 useEffect(() => {
 
 	socket.emit('getProfileInfo',user.id,(data)=> {
 		let {post,...ud} = data?.data;
-	    setUserPosts(post);
+	    setUserPosts(post.reverse());
 		setUserData(ud);
 		// console.log(post)
 	})
@@ -57,7 +57,7 @@ const removePost = (id)=> {
 			</div>
 		</div>
 		<div className='my-2 mb-5 pt-4 text-center userName'>
-			<h1>Jhone Doe</h1>
+			<h1>{userData?.first_name} {userData?.last_name}</h1>
 		</div>
 			
 
@@ -71,7 +71,7 @@ const removePost = (id)=> {
 		
 	</div>
 	<div className="col-8">
-	
+	<NewPost profile   />
 		{userPosts?.map((post)=>
 
 		  <Post post={post} profile  rp={removePost} />
