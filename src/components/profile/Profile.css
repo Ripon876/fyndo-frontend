@@ -1,0 +1,7 @@
+.coverFadeBottom{
+/*	background: linear-gradient(0deg, #121212, #cccccc);
+    height: 75px;*/
+    background: linear-gradient(0deg, #121212, #cccccc00);
+    height: 100%;
+    bottom: -7px !important;
+}

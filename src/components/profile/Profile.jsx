@@ -3,7 +3,7 @@ import socket from '../../socket/socket';
 import {authToken} from  '../../store/store';
 import {useRecoilValue} from  'recoil';
 import jwt_decode from "jwt-decode";
-
+import './Profile.css';
 
 
 
@@ -27,8 +27,25 @@ useEffect(() => {
 
 
 	return (
-		<div>
-			<h1>this is the profile page</h1>
+		<div className='profile py-4' >
+			
+<div className="container">
+	<div className="row">
+		<div className="col-10 m-auto">
+		<div className="profileHeader">
+			<div className='coverPhoto position-relative'>
+				<img src="https://via.placeholder.com/650x300" className='img-fluid w-100' alt="Cover Photo" />
+			    <div className='bottom-0 coverFadeBottom position-absolute w-100'></div>
+			</div>
+		</div>
+			<h1>dfdsfdsfd</h1>
+		</div>
+	</div>
+</div>
+
+
+
+
 		</div>
 	)
 }
