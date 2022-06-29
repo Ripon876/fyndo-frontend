@@ -22,8 +22,6 @@ import socket from '../../socket/socket';
 
 function Messages() {
 
-
-
 const token  = useRecoilValue(authToken);
 const [friends,setFriends] = useRecoilState(friendsAtom);
 const [user, setUser] = useRecoilState(userAtom);
@@ -89,7 +87,7 @@ useEffect(() => {
 
 useEffect(() => {
     
-console.log('updated')
+// console.log('updated')
 socket.on('receive_message_not_seen',(data)=> {
     console.log('this message not seen yet : ',data)
     var newUnseenMsg = {

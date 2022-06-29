@@ -44,6 +44,18 @@ setMsg('');
 }
 
 
+
+const send_Msg = (e) => {
+	if(e.key === 'Enter'){
+		sendMsg()
+	}
+}
+
+
+
+
+
+
 function getThreadId(){ 
 
     let params = new URLSearchParams(document.location.search);
@@ -74,7 +86,7 @@ console.log('changed')
 	<div className="msgInput">
 	    <div className="d-flex position-relative">
 	        <div className="msInput">
-	            <input type="text" value={msg} onChange={(e)=> setMsg(e.target.value) } />
+	            <input type="text" value={msg} onChange={(e)=> setMsg(e.target.value) }  onKeyPress={(e)=> { send_Msg(e)}} />
 	        </div>
 	        <div className="sendBtn">
 	       		<button onClick={sendMsg}><i class="fa-solid fa-paper-plane"></i></button>

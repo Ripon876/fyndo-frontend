@@ -67,19 +67,12 @@ useEffect(() => {
 		
 	</div>
 	<div className="col-8">
-    	{/*<div className='userPosts px-4 py-2 rounded-top'>
-		    <h1>posts</h1>
-	    </div>*/}
+	
+		{userPosts?.map((post)=>
 
+		  <Post post={post} profile />
 
-
-{userPosts?.map((post)=>
-
-  <Post post={post} profile />
-
-)}
-
-
+		)}
 
 	</div>
 </div>
