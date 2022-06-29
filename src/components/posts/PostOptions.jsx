@@ -2,17 +2,34 @@ import {useState,useEffect} from 'react';
 import {Fade} from 'react-reveal';
 import ClickOutside from 'react-click-outside';
 import socket from '../../socket/socket';
+import Toast from '../../utils/ToastAlert';
 
 
 
-function PostOptions({id}) {
+
+
+function PostOptions({id,rp}) {
 
 const [show, setShow] = useState(false);
 
 
+
+
+
 const deletePost = () => {
+
+
 	socket.emit('deletePost',id,(data) => {
-		console.log(data)
+		if(data.status){
+	        Toast({
+			  type: 'success',
+			  icon : 'success',
+			  title: 'Post deleted successfully'
+			})
+			rp(id);
+		}
+
+
 	})
 }
 

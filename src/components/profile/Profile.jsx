@@ -30,12 +30,16 @@ useEffect(() => {
 }, [])
 
 
-useEffect(() => {
+/*useEffect(() => {
 	 console.log(userPosts)
 }, [])
+*/
 
+const removePost = (id)=> {
+  const posts = userPosts.filter((post) =>  post._id !== id );
 
-
+  setUserPosts(posts)
+}
 
 	return (
 		<div className='profile py-4' >
@@ -70,7 +74,7 @@ useEffect(() => {
 	
 		{userPosts?.map((post)=>
 
-		  <Post post={post} profile />
+		  <Post post={post} profile  rp={removePost} />
 
 		)}
 

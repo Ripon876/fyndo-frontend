@@ -4,7 +4,7 @@ import PostOptions from './PostOptions';
 
 
 
-function Post({post,profile}) {
+function Post({post,profile,rp}) {
 
 
 
@@ -68,7 +68,7 @@ function Post({post,profile}) {
 							</div>
 				            </div>
 
-				        {profile &&  <PostOptions id={post._id} />} 
+				        {profile &&  <PostOptions id={post._id} rp={rp} />} 
 
 				        </div>
 				    </div>
