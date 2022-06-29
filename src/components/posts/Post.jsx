@@ -4,7 +4,7 @@ import Moment from 'react-moment';
 
 
 
-function Post({post}) {
+function Post({post,profile}) {
 
 
 
@@ -39,9 +39,9 @@ function Post({post}) {
 
 	return (
 			<>
-			<div className="container">
+			<div className={profile ? '' : 'container'}>
 				<div className="row justify-content-center">
-				    <div className="col-md-6 col-sm-9">
+				    <div className={profile ? '' : 'col-md-6 col-sm-9' }>
 				        <div className="media g-mb-30 media-comment postContainer">
 				           <div className='d-flex py-3 ps-4'>
 					           <div className="ppimg">
