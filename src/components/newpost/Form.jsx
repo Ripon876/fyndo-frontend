@@ -5,10 +5,7 @@ import {userAtom,authToken,postsAtom} from '../../store/store';
 import {useRecoilValue,useRecoilState} from 'recoil';
 import socket from '../../socket/socket';
 import jwt_decode from "jwt-decode";
-import Swal from 'sweetalert2';
-import withReactContent from 'sweetalert2-react-content';
-
-const MySwal = withReactContent(Swal)
+import Toast from '../../utils/ToastAlert';
 
 
 
@@ -48,25 +45,14 @@ console.log(res.post)
 
         setInput('');
         close();
-		const Toast = MySwal.mixin({
-		  toast: true,
-		  position: 'top-end',
-		  iconColor: '#9ca3af',
-		  showConfirmButton: false,
-		  timer: 2500,
-		  customClass: {
-			   popup: 'colored-toast'
-			},
-		 timerProgressBar: true
-		})
-
-		await Toast.fire({
+		
+		await Toast({
 		  type: 'success',
 		  icon : 'success',
 		  title: 'Post created successfully'
 		})
 
-setPost((prvPosts) => [res.post,...posts] );  
+	setPost((prvPosts) => [res.post,...posts] );  
 
 	}
 
