@@ -59,3 +59,38 @@
     background: #1e1e1e;
     color: #9ca3af;
 }
+
+.postOptionIcon{
+    font-size: 30px;
+    color: #121212;
+    font-weight: bold;
+}
+
+
+.postOption{
+    top: 10px;
+    right: 15px;
+    cursor: pointer;
+}
+
+
+.post-options-list {
+    right: 0;
+    top: 0;
+    width: 100px;
+}
+.post-options-list ul li {
+    background: #121212;
+    color: #9ca3af;
+    border-bottom: 2px solid #9ca3af8c;
+    transition: 0.3s;
+}
+
+.post-options-list ul li:last-child{
+    border: none !important;
+}
+
+.post-options-list ul li:hover{
+    background: #000000d6;
+}
+

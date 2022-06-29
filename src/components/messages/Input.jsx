@@ -75,9 +75,6 @@ socket.on('receive_message',(data)=> {
 })
 
 
-
-
-
 console.log('changed')
 
 },[socket])

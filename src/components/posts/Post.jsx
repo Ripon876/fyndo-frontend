@@ -1,6 +1,6 @@
 import React from 'react'
 import Moment from 'react-moment';
-
+import PostOptions from './PostOptions';
 
 
 
@@ -42,7 +42,7 @@ function Post({post,profile}) {
 			<div className={profile ? '' : 'container'}>
 				<div className="row justify-content-center">
 				    <div className={profile ? '' : 'col-md-6 col-sm-9' }>
-				        <div className="media g-mb-30 media-comment postContainer">
+				        <div className="g-mb-30 media media-comment position-relative postContainer">
 				           <div className='d-flex py-3 ps-4'>
 					           <div className="ppimg">
 					            	<img className="d-flex g-width-50 g-height-50 rounded-circle g-mt-3 g-mr-15" src="https://via.placeholder.com/50" alt="Image Description"  />
@@ -66,8 +66,10 @@ function Post({post,profile}) {
 									<div className="col comments text-end"> <i className="fa fa-message"> </i> 4</div>
 								</div>
 							</div>
-
 				            </div>
+
+				        {profile &&  <PostOptions  />} 
+
 				        </div>
 				    </div>
 				</div>
