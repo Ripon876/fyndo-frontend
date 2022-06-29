@@ -13,3 +13,11 @@
     transform: translate(-50%, 0);
     width: 25%;
 }
+.bio{
+	background: #1e1e1e;
+    color: #9ca3af;
+}
+.userPosts{
+	background: #1e1e1e;
+    color: #9ca3af;
+}

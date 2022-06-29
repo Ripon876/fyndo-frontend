@@ -41,7 +41,29 @@ useEffect(() => {
 				<img src="https://via.placeholder.com/200x200" alt=""  className='rounded-circle w-100' />
 			</div>
 		</div>
-			<h1>dfdsfdsfd</h1>
+		<div className='my-2 mb-5 pt-4 text-center userName'>
+			<h1>Jhone Doe</h1>
+		</div>
+			
+
+
+
+<div className="row">
+	<div className="col-4">
+	    <div className="bio p-2">
+		    <h1>bio</h1>
+	    </div>
+		
+	</div>
+	<div className="col-8">
+    	<div className='userPosts px-4 py-2 rounded-top'>
+		    <h1>posts</h1>
+	    </div>
+	</div>
+</div>
+
+
+
 		</div>
 	</div>
 </div>
