@@ -3,7 +3,7 @@ import {Fade} from 'react-reveal';
 import ClickOutside from 'react-click-outside';
 import socket from '../../socket/socket';
 import Toast from '../../utils/ToastAlert';
-
+import EditPost from '../editpost/EditPost';
 
 
 
@@ -11,7 +11,7 @@ import Toast from '../../utils/ToastAlert';
 function PostOptions({id,rp}) {
 
 const [show, setShow] = useState(false);
-
+const [edit, setEdit] = useState(false);
 
 
 
@@ -45,17 +45,26 @@ const editPost = () => {
 		<div class="float-end position-absolute postOption">
 			<i class="fa-solid fa-ellipsis postOptionIcon" onClick={()=> { setShow(true)}} ></i>
 
+
+
+
 {show &&    
 	<ClickOutside onClickOutside={()=> { setShow(false) }}>
 		<Fade duration={500} >
 			<div className="post-options-list position-absolute">
 				<ul class="list-group">
-					<li class="list-group-item" onClick={editPost} ><i class="fa-solid fa-pen-to-square"></i> Edit</li>
+					<li class="list-group-item"onClick={()=> { setEdit(true)}} ><i class="fa-solid fa-pen-to-square"></i> Edit</li>
 					<li class="list-group-item"><i class="fa-solid fa-share"></i> Share</li>
 					<li class="list-group-item" onClick={deletePost} ><i class="fa-solid fa-trash-can"></i> Delete</li>
 				</ul>
 			</div>
 		</Fade>
+    </ClickOutside>
+}
+
+{edit &&    
+	<ClickOutside onClickOutside={()=> { setEdit(false) }}>
+		<EditPost  id={id} />
     </ClickOutside>
 }
 		</div>
