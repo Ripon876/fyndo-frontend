@@ -90,7 +90,8 @@
 .chat .chat-history {
     height: 530px;
     padding: 20px;
-    border-bottom: 2px solid #9ca3af;
+    /*border-bottom: 2px solid #131313; */
+    box-shadow: inset 0px -4px 9px 0px #131313;
 }
 
 .chat .chat-history ul {
