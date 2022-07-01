@@ -11,14 +11,14 @@ import Toast from '../../utils/ToastAlert';
 
 
 
-function EditPost({id}) {
+function EditPost({id,setShowModal}) {
 
-const [showModal, setShowModal] = useState(false);
+// const [showModal, setShowModal] = useState(false);
 const [input, setInput] = useState("");   
 /*const c_user =  useRecoilValue(userAtom);
 const token =  useRecoilValue(authToken);
-const [posts, setPost] = useRecoilState(postsAtom);
-const [userPosts, setUserPost] = useRecoilState(userPostsAtom);*/
+const [posts, setPost] = useRecoilState(postsAtom);*/
+const [userPosts, setUserPost] = useRecoilState(userPostsAtom);
 
  // var user = jwt_decode(token)
 
@@ -46,8 +46,37 @@ useEffect(() => {
 
 
 const editPost = () => {
-	socket.emit('editPost',id,(res)=> {
+
+	socket.emit('editPost',id,input,(res)=> {
 		console.log(res);
+        
+        if(res.status){
+        	var posts = [...userPosts];
+      		const index = posts.findIndex((post)=>  post._id  === res.post._id ) ;
+      		posts.splice(index,1,res.post)
+      		// console.log(posts);
+
+      		setUserPost(posts);
+ 			setShowModal(false);
+
+      		 Toast({
+			  type: 'success',
+			  icon : 'success',
+			  title: 'Post Edited successfully'
+			})
+
+        }else{
+        	setShowModal(false);
+        	Toast({
+			  type: 'error',
+			  icon : 'error',
+			  title: 'Something went wrong'
+			})
+        }
+
+
+
+
 	})
 }
 
@@ -66,11 +95,10 @@ const editPost = () => {
 							<div>
 								<div className="mb-3">
 								<label for="exampleInputPassword1" className="form-label">Edit Your Post</label>
-               
              	 				<EmojiPopUp f={addEmoji} />
 								<textarea autoFocus  onChange={(e) => setInput(  e.target.value)} className='form-control' id="" cols="30" rows="10" value={input} />
 								</div>
-								<button  className="btn t-btn">Save</button>
+								<button onClick={editPost}  className="btn t-btn">Save</button>
 							</div>
 						</div>
 					</div>

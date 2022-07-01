@@ -64,7 +64,7 @@ const editPost = () => {
 
 {edit &&    
 	<ClickOutside onClickOutside={()=> { setEdit(false) }}>
-		<EditPost  id={id} />
+		<EditPost  id={id} setShowModal={setEdit} />
     </ClickOutside>
 }
 		</div>
