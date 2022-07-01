@@ -316,7 +316,7 @@
 }
 
 .sendBtn button{
-        background: #131313;
+    background: #131313;
     color: #9ca3af;
-    border-radius: 50%;
+    border: none;
 }
