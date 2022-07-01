@@ -79,7 +79,7 @@ i.clearImg {
 
 
 .uploader label {
-  float: left;
+  /*float: left;*/
   clear: both;
   width: 100%;
   padding: 2rem 1.5rem;

@@ -1,17 +1,55 @@
 import {useEffect,useState} from 'react';
 import './Utils.css';
-import {compress,decompress} from 'lz-string';
+import {compressToUTF16,decompressFromUTF16} from 'lz-string';
 import Toast from './ToastAlert';
 import {fileAtom} from '../store/store';
 import {useRecoilState} from 'recoil';
 import { Bars } from  'react-loader-spinner'
+import {Fade} from 'react-reveal';
+import ClickOutside from 'react-click-outside';
+import socket from '../socket/socket';
 
 
-function FileUploader() {
+function FileUploader({su,u,t,cw,sm}) {
 
 const [file, setFile] = useRecoilState(fileAtom);
 const [showLoader, setShowLoader] = useState(false);
 
+
+
+
+const sendPhoto = () => {
+
+
+/*console.log(cw)
+console.log(t)
+console.log(u)*/
+
+
+
+var message = {
+	threadId : t,
+	type: 'image',
+	msg : file,
+	to : {
+		name : cw.first_name + ' ' +  cw.last_name,
+		username : cw.username,
+		id : cw._id
+	},
+	from : {
+		name : u.name,
+		username : u.username,
+		id : u.id
+	}
+};
+
+// console.log(message)
+
+socket.emit('send_message',message);
+// sm(message,'img')
+sm((prev)=>  [...prev,message] )
+ su(false)
+};
 
 
 
@@ -37,16 +75,11 @@ function readURL() {
 	if (file) {
 		var reader = new FileReader();
 		reader.onload = function(e) {
+		// console.log(e.target.result.length)
+		var compressed = compressToUTF16(e.target.result);
+		// console.log(compressed.length)
 
-// console.log(e.target.result.length)
-
-var compressed = compress(e.target.result);
-
-// console.log(compressed.length)
-
-
-setFile(compressed);
-
+		setFile(compressed);
 
 		}
 		reader.readAsDataURL(file); 
@@ -65,6 +98,11 @@ const  clearImg = () => {
 
 
 
+
+
+
+
+
 useEffect(() => {
 if(file != ''){
 
@@ -75,12 +113,16 @@ if(file != ''){
 }, [file])
 
 	return (
-
+<Fade duration={500} >
 		<div className='uploaderContainer'>
 
 
 
 		<div className='h-100 position-relative w-100'>
+
+		 <ClickOutside onClickOutside={()=> { su(false)}}>
+
+
 			<div id="file-upload-form" className="uploader">
 			  <input id="file-upload" onChange={(e) => { getImg(e.target.files[0])
               }} type="file" name="fileUpload" accept="image/*" />
@@ -94,7 +136,7 @@ if(file != ''){
 
 				{file && 
 				 	<div className='demoImg'>
-				 		<img id="file-image" src={decompress(file)} alt="Preview" className="" />
+				 		<img id="file-image" src={decompressFromUTF16(file)} alt="Preview" className="" />
 
 				 	</div>
 				}   
@@ -106,7 +148,7 @@ if(file != ''){
               			<>
               				<i className="fa fa-download" aria-hidden="true"></i>
               				<div>Select a Image</div>
-              				<span id="file-upload-btn" className="btn btn-primary">Select a file</span>
+              				{/* <span id="file-upload-btn" className="btn btn-primary">Select a file</span>*/}
               			</>
 			   
 			     }  
@@ -118,12 +160,19 @@ if(file != ''){
 				}
 			    
 			    </div>
-
-			    
 			  </label>
+				{file &&  <span id="file-upload-btn" onClick={sendPhoto} className="btn btn-primary">Send</span> }
 			</div>
+
+
+
+
+</ClickOutside>
+
 		</div>
 		</div>
+
+		</Fade>
 	)
 }
 

@@ -2,7 +2,7 @@ import {useEffect,useRef} from 'react';
 import {thredAtom,friendsAtom,chatingWithAtom,incomingMsgAtom,messeagesAtom} from '../../store/store';
 import {useRecoilValue,useRecoilState} from 'recoil';
 import sm from './sm';
-
+import {decompressFromUTF16} from 'lz-string';
 
 
 
@@ -23,6 +23,7 @@ const scrollToBottom = () => {
 
 useEffect(() => {
     scrollToBottom();
+    scrollToBottom();
     // console.log(messages);
     // console.log(chatingWith)
 }, [messages]);
@@ -38,10 +39,20 @@ useEffect(() => {
                                 <div className="message-data">
                                       <span className="message-data-time"></span>
                                 </div>
-                                <div className={`message ${  msg?.from?.id  == chatingWith?._id ? 'other-message' : 'my-message float-right'}`}>{msg.msg}</div>
+                                <div className={`message  ${  msg?.from?.id  == chatingWith?._id ? 'other-message' : 'my-message float-right'}`}>
+
+                                {msg.type == 'text' ?  msg.msg  : 
+                                <>
+
+                                 <img src={decompressFromUTF16(msg?.msg)}  className='img-fluid' />
+
+                                </>
+                                }
+
+                                </div>
                             </li>
                         )}
- <div ref={messagesEndRef} />
+                        <div ref={messagesEndRef} />
                     </ul>
                 </div>
 	)

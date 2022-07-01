@@ -4,7 +4,7 @@ import {useRecoilValue,useRecoilState} from 'recoil';
 import { useSearchParams } from 'react-router-dom';
 import FileUploader from '../../utils/FileUploader'
 
-
+ 
 
 
 
@@ -13,6 +13,7 @@ function Input({socket}) {
 
 
 const [msg, setMsg] = useState('');
+const [showUploader, setShowUploader] = useState(false);
 const [messages,setMessages] = useRecoilState(messeagesAtom); 
 const thred  = useRecoilValue(thredAtom);
 const chatingWith  = useRecoilValue(chatingWithAtom);
@@ -25,6 +26,7 @@ const sendMsg = () => {
 
 var message = {
 	threadId : thred,
+	type: 'text',
 	msg : msg,
 	to : {
 		name : chatingWith.first_name + ' ' +  chatingWith.last_name,
@@ -82,11 +84,12 @@ console.log('changed')
 
 	return (
 		<>
-		<FileUploader />
+		{showUploader && <FileUploader  su={setShowUploader} u={user} t={thred}  cw={chatingWith} sm={setMessages} /> }
+		
 	<div className="msgInput">
 	    <div className="d-flex position-relative">
 	        <div>
-	            <h1 className="fileChoserIcon p-1 mx-2"><i class="fa-solid fa-plus"></i></h1>
+	            <h1 className="fileChoserIcon p-1 mx-2" onClick={()=> { setShowUploader(true)}}><i class="fa-solid fa-plus"></i></h1>
 	        </div>  
 	        <div className="msInput">
 	            <input type="text" value={msg} onChange={(e)=> setMsg(e.target.value) }  onKeyPress={(e)=> { send_Msg(e)}} />
