@@ -86,19 +86,19 @@ console.log('changed')
 		<>
 		{showUploader && <FileUploader  su={setShowUploader} u={user} t={thred}  cw={chatingWith} sm={setMessages} /> }
 		
-	<div className="msgInput">
-	    <div className="d-flex position-relative">
-	        <div>
-	            <h1 className="fileChoserIcon p-1 mx-2" onClick={()=> { setShowUploader(true)}}><i class="fa-solid fa-plus"></i></h1>
-	        </div>  
-	        <div className="msInput">
-	            <input type="text" value={msg} onChange={(e)=> setMsg(e.target.value) }  onKeyPress={(e)=> { send_Msg(e)}} />
-	        </div>
-	        <div className="sendBtn">
-	       		<button onClick={sendMsg}><i class="fa-solid fa-paper-plane"></i></button>
-	        </div>
-	    </div>
-	</div>
+		<div className="msgInput p-3">
+		    <div className="d-flex position-relative">
+		        <div>
+		            <h1 className="fileChoserIcon p-1 mx-2" onClick={()=> { setShowUploader(true)}}><i class="fa-solid fa-plus"></i></h1>
+		        </div>  
+		        <div className="msInput">
+		            <input type="text" value={msg} onChange={(e)=> setMsg(e.target.value) }  onKeyPress={(e)=> { send_Msg(e)}} />
+		        </div>
+		        <div className="sendBtn">
+		       		<button onClick={sendMsg}><i class="fa-solid fa-paper-plane"></i></button>
+		        </div>
+		    </div>
+		</div>
 	</>
 	)
 }
