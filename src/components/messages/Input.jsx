@@ -82,6 +82,9 @@ console.log('changed')
 	return (
 	<div className="msgInput">
 	    <div className="d-flex position-relative">
+	        <div>
+	            <h1 className="fileChoserIcon p-1 mx-2"><i class="fa-solid fa-plus"></i></h1>
+	        </div>  
 	        <div className="msInput">
 	            <input type="text" value={msg} onChange={(e)=> setMsg(e.target.value) }  onKeyPress={(e)=> { send_Msg(e)}} />
 	        </div>

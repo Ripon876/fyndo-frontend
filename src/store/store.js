@@ -60,6 +60,14 @@ const userPostsAtom = atom({
 	default: []
 });
 
+
+const fileAtom = atom({
+	key : 'file',
+	default : ''
+})
+
+
+
  export {
  	userState,
  	authToken,
@@ -70,5 +78,6 @@ const userPostsAtom = atom({
  	messeagesAtom,
  	unseenMsgAtom,
  	postsAtom,
- 	userPostsAtom
+ 	userPostsAtom,
+ 	fileAtom
  }

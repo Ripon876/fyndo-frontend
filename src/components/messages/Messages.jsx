@@ -10,7 +10,7 @@ import Input  from './Input';
 import './Messages.css';
 // import { io } from "socket.io-client";
 import socket from '../../socket/socket';
-
+import FileUploader from '../../utils/FileUploader'
 
 
 
@@ -108,6 +108,7 @@ socket.on('receive_message_not_seen',(data)=> {
 
 	return (
 			<div className="container pt-5 messages">
+            {/* <FileUploader /> */}
 <div className="row">
     <div className="col-lg-12">
         <div className="card chat-app">

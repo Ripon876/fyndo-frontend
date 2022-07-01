@@ -320,3 +320,8 @@
     color: #9ca3af;
     border: none;
 }
+.fileChoserIcon{
+    color: #9ca3af;
+    font-size: 25px;
+    cursor: pointer;
+}
