@@ -10,7 +10,6 @@ import Input  from './Input';
 import './Messages.css';
 // import { io } from "socket.io-client";
 import socket from '../../socket/socket';
-import FileUploader from '../../utils/FileUploader'
 
 
 

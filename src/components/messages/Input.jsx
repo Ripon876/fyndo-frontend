@@ -2,6 +2,7 @@ import {useState,useEffect} from 'react'
 import {thredAtom,chatingWithAtom,userAtom,messeagesAtom} from '../../store/store';
 import {useRecoilValue,useRecoilState} from 'recoil';
 import { useSearchParams } from 'react-router-dom';
+import FileUploader from '../../utils/FileUploader'
 
 
 
@@ -80,6 +81,8 @@ console.log('changed')
 },[socket])
 
 	return (
+		<>
+		<FileUploader />
 	<div className="msgInput">
 	    <div className="d-flex position-relative">
 	        <div>
@@ -93,6 +96,7 @@ console.log('changed')
 	        </div>
 	    </div>
 	</div>
+	</>
 	)
 }
 

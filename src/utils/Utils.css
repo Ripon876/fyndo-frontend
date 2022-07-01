@@ -20,6 +20,27 @@
   color: #5f6982;
 }
 */
+.fileLoadingAnm div {
+  justify-content: center;
+}
+
+.demoImg {
+  display: grid;
+  justify-content: center;
+}
+
+i.clearImg {
+    font-size: 20px;
+    background: #131313;
+    padding: 9px;
+    width: 35px;
+    text-align: center;
+    border-radius: 50%;
+    cursor: pointer;
+    margin: auto;
+    color: #9ca3af;
+}
+
 
 
 .uploaderContainer {
@@ -38,6 +59,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    text-align: center;
 }
 
 
