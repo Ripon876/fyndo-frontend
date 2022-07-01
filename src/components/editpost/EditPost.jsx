@@ -57,7 +57,7 @@ const editPost = () => {
       		// console.log(posts);
 
       		setUserPost(posts);
- 			setShowModal(false);
+ 					setShowModal(false);
 
       		 Toast({
 			  type: 'success',

@@ -21,25 +21,25 @@ const [userData, setUserData] = useState({});
 useEffect(() => {
 
 	socket.emit('getProfileInfo',user.id,(data)=> {
-		let {post,...ud} = data?.data;
+			let {post,...ud} = data?.data;
 	    setUserPosts(post.reverse());
-		setUserData(ud);
+			setUserData(ud);
 		// console.log(post)
 	})
 
 }, [])
 
 
-/*useEffect(() => {
-	 console.log(userPosts)
-}, [])
-*/
+
 
 const removePost = (id)=> {
   const posts = userPosts.filter((post) =>  post._id !== id );
 
   setUserPosts(posts)
 }
+
+
+
 
 	return (
 		<div className='profile py-4' >
@@ -65,8 +65,9 @@ const removePost = (id)=> {
 
 <div className="row">
 	<div className="col-4">
-	    <div className="bio p-2">
-		    <h1>bio</h1>
+	    <div className="bio p-2 border-start">
+		    <h5 className='ps-2'>Intro</h5>
+		    <p className='font-monospace text-center'>hello world!</p>
 	    </div>
 		
 	</div>
