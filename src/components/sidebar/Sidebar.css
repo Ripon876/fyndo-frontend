@@ -5,6 +5,7 @@ a {
 }
 
 .social {
+  width: 100px;
   position: fixed;
   top: 20px;
   z-index: 9999999;
