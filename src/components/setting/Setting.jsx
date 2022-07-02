@@ -4,7 +4,7 @@ import socket  from '../../socket/socket';
 import {authToken,postsAtom} from '../../store/store';
 import {useRecoilValue,useRecoilState} from 'recoil';
 import jwt_decode from "jwt-decode";
-
+import Toast from '../../utils/ToastAlert';
 
 
 
@@ -44,9 +44,20 @@ const saveBasicInfo = () => {
 		socket.emit('saveBasicInfo',user.id,basicInfo,(res)=> {
 			if(res.status){
 				setBasicInfo({
-				first_name : res.data?.first_name,
-				last_name :  res.data?.last_name,
-				bio :  res.data?.bio ?  res.data?.bio : ''
+					first_name : res.data?.first_name,
+					last_name :  res.data?.last_name,
+					bio :  res.data?.bio ?  res.data?.bio : ''
+				});
+				Toast({
+					type: 'success',
+					icon : 'success',
+					title : 'Basic Information updated'
+				})
+			}else{
+				Toast({
+					type: 'error',
+					icon : 'error',
+					title : 'Something went wrong'
 				})
 			}
 		})
