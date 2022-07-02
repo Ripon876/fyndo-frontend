@@ -7,14 +7,17 @@ import {decompressFromUTF16} from 'lz-string';
 
 
 
-
-
 function Chat() {
 
 
 const chatingWith = useRecoilValue(chatingWithAtom);
 const messages = useRecoilValue(messeagesAtom);
 const messagesEndRef = useRef(null);
+
+
+ const listInnerRef = useRef();
+
+
 
 
 const scrollToBottom = () => {
@@ -29,11 +32,35 @@ useEffect(() => {
 }, [messages]);
 
 
+const fetchMoreData = () => {
+    console.log('fetching')
+}
+
+
+
+
+
+const handleScroll = (e) => {
+
+  
+    if (e.target.scrollTop  === 0) { 
+        console.log("at the top now")
+    }
+
+
+
+}
+
+
+
 
 	return (
 		   <div className="chat-history">
-                    <ul className="m-b-0  px-4">
+                    <ul className="m-b-0  px-4"  onScroll={handleScroll} ref={listInnerRef} >
                     
+
+
+
                         {  chatingWith && messages?.map((msg) => 
                             <li className="clearfix">
                                 <div className="message-data">
@@ -52,6 +79,11 @@ useEffect(() => {
                                 </div>
                             </li>
                         )}
+
+
+
+
+
                         <div ref={messagesEndRef} />
                     </ul>
                 </div>
