@@ -1,8 +1,10 @@
-import {useEffect,useRef} from 'react';
+import {useEffect,useRef,useState} from 'react';
 import {thredAtom,friendsAtom,chatingWithAtom,incomingMsgAtom,messeagesAtom} from '../../store/store';
 import {useRecoilValue,useRecoilState} from 'recoil';
 import sm from './sm';
 import {decompressFromUTF16} from 'lz-string';
+import socket from '../../socket/socket';
+import Toast from  '../../utils/ToastAlert';
 
 
 
@@ -11,9 +13,10 @@ function Chat() {
 
 
 const chatingWith = useRecoilValue(chatingWithAtom);
-const messages = useRecoilValue(messeagesAtom);
+const thred = useRecoilValue(thredAtom);
+const [messages,setMessages] = useRecoilState(messeagesAtom);
 const messagesEndRef = useRef(null);
-
+const [pnum,setPnum] = useState(1);
 
  const listInnerRef = useRef();
 
@@ -25,31 +28,45 @@ const scrollToBottom = () => {
 }
 
 useEffect(() => {
-    scrollToBottom();
-    scrollToBottom();
-    // console.log(messages);
-    // console.log(chatingWith)
+    // scrollToBottom();
+    // scrollToBottom();
 }, [messages]);
-
-
-const fetchMoreData = () => {
-    console.log('fetching')
-}
-
-
-
 
 
 const handleScroll = (e) => {
 
-  
     if (e.target.scrollTop  === 0) { 
         console.log("at the top now")
+        setPnum((prevNum) => prevNum + 1)
     }
 
 
-
 }
+
+
+useEffect(() => {
+    if(pnum !== 1){
+
+    socket.emit('getOldMessages',thred,pnum,(res) => {
+        if(res.status){
+            setMessages((prev)=>  [...res.messages,...prev] )
+        }else{
+            console.log(res)
+
+Toast({
+    type: res.type,
+    icon : res.type,
+    title : res.msg
+})
+
+        }
+    })
+
+
+
+    }
+
+}, [pnum])
 
 
 
