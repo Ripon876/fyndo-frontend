@@ -24,7 +24,9 @@ const location = useLocation();
 useEffect(() => {
 
 	socket.emit('getProfileInfo',getUserId(),(data)=> {
+
 			let {post,...ud} = data?.data;
+			// console.log(ud)
 			setUserData(ud);
 	})
 
@@ -54,7 +56,7 @@ function getUserId(){
 
 
 			<div className="row">
-				<ProfileInfo />
+				<ProfileInfo user={userData} />
 				<ProfilePosts />
 			</div>
 
