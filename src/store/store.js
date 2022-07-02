@@ -1,4 +1,4 @@
-import {atom} from 'recoil';
+import {atom,selector} from 'recoil';
 
 
 
@@ -22,6 +22,16 @@ const thredAtom = atom({
 const messeagesAtom = atom({
 	key  : 'messages',
 	default : []
+});
+
+
+
+const lastMsgAtom = selector({
+	key  : 'lm',
+	get : ({get}) => {
+		 const msgs = get(messeagesAtom);
+		 return msgs.at(-1);
+	},
 });
  
 
@@ -79,5 +89,6 @@ const fileAtom = atom({
  	unseenMsgAtom,
  	postsAtom,
  	userPostsAtom,
- 	fileAtom
+ 	fileAtom,
+ 	lastMsgAtom
  }

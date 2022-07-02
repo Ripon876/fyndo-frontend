@@ -8,7 +8,7 @@ import FileUploader from '../../utils/FileUploader'
 
 
 
-function Input({socket}) {
+function Input({messagesEndRef,socket}) {
 
 
 
@@ -19,6 +19,8 @@ const thred  = useRecoilValue(thredAtom);
 const chatingWith  = useRecoilValue(chatingWithAtom);
 const user  = useRecoilValue(userAtom);
 const [searchParams,setSearchParams] = useSearchParams();
+
+
 
 
 
@@ -41,7 +43,8 @@ var message = {
 };
 
 socket.emit('send_message',message);
-setMessages((prev)=>  [...prev,message] )
+setMessages((prev)=>  [...prev,message] );
+scrollToBottom();
 setMsg('');
 
 }
@@ -65,22 +68,35 @@ function getThreadId(){
     return params.get('thredId') 
 }
 
-
+const scrollToBottom = () => {
+	console.log('scrolling')
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+}
 
 useEffect(() => {
 	
 socket.on('receive_message',(data)=> {
 
 	if(data.threadId === getThreadId()){
-		setMessages((prev)=>  [...prev,data] )
+		scrollToBottom();
+		setMessages((prev)=>  [...prev,data] );
+		
 	}
 
-})
+});
 
-
-console.log('changed')
 
 },[socket])
+
+
+useEffect(() => {
+	scrollToBottom();
+	scrollToBottom();
+}, [])
+
+
+
+
 
 	return (
 		<>

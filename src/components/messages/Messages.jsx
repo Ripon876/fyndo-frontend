@@ -1,4 +1,4 @@
-import React,{useEffect,useState} from 'react';
+import {useEffect,useState,useRef} from 'react';
 import {authToken,friendsAtom,userAtom,thredAtom,messeagesAtom,chatingWithAtom,unseenMsgAtom} from '../../store/store';
 import {useRecoilValue,useRecoilState} from 'recoil';
 import jwt_decode from "jwt-decode";
@@ -25,7 +25,7 @@ const token  = useRecoilValue(authToken);
 const [friends,setFriends] = useRecoilState(friendsAtom);
 const [user, setUser] = useRecoilState(userAtom);
 const [unseenMsg, setUnseenMsg] = useRecoilState(unseenMsgAtom);
-
+const messagesEndRef = useRef(null);
 
 const [thred,setThred] = useRecoilState(thredAtom); 
 const [messages,setMessages] = useRecoilState(messeagesAtom); 
@@ -135,8 +135,8 @@ socket.on('receive_message_not_seen',(data)=> {
             </div>
             <div className="chat">
                 <ChatHeader />
-                <Chat />
-               <Input   socket={socket}/>
+                <Chat messagesEndRef={messagesEndRef} />
+               <Input  messagesEndRef={messagesEndRef}  socket={socket}/>
              
             </div>
         </div>
