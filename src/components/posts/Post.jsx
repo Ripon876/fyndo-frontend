@@ -1,40 +1,18 @@
 import React from 'react'
 import Moment from 'react-moment';
 import PostOptions from './PostOptions';
+import{Link} from 'react-router-dom';
+import {authToken,userPostsAtom} from  '../../store/store';
+import {useRecoilValue,useRecoilState} from  'recoil';
+import jwt_decode from "jwt-decode";
 
 
 
-function Post({post,profile,rp}) {
+function Post({post,profile,showOptions,rp}) {
 
+const token = useRecoilValue(authToken);
+const user = jwt_decode(token);
 
-
-/*
-{
-    "_id": "62baefc69cd7d33b70786162",
-    "creator": {
-        "_id": "62b0d52940bdf8edf9b5acc3",
-        "first_name": "MD Ripon",
-        "last_name": "Islam",
-        "username": "ripon",
-        "password": "$2b$10$byPPcFX7QjHsLFof46gCIOOeCPA2kvcibhYkbV6tvqjdssu3fh2gS",
-        "education": [],
-        "post": [
-            "62baefc69cd7d33b70786162"
-        ],
-        "threads": [
-            "62b0d54c40bdf8edf9b5acd0",
-            "62b0d61340bdf8edf9b5ace5"
-        ],
-        "__v": 3
-    },
-    "content": "HI ! 😋",
-    "creationDate": "2022-06-28T12:08:10.812Z",
-    "__v": 0
-}
-*/
-
-
-// console.log(post)
 
 
 	return (
@@ -45,11 +23,15 @@ function Post({post,profile,rp}) {
 				        <div className="g-mb-30 media media-comment position-relative postContainer">
 				           <div className='d-flex py-3 ps-4'>
 					           <div className="ppimg">
+					           	<Link to={`/profile?id=${post?.creator?._id}`} >
 					            	<img className="d-flex g-width-50 g-height-50 rounded-circle g-mt-3 g-mr-15" src="https://via.placeholder.com/50" alt="Image Description"  />
+					         	</Link>
 					           </div>
 				           	   <div className='align-items-center d-flex row'>
-				           	   	<h5 className='userName'>{post?.creator.first_name} {post?.creator.last_name}</h5>
-				           	   	 <span className="postTime"><Moment fromNow>{post?.creationDate}</Moment></span>
+					           	    <Link to={`/profile?id=${post?.creator?._id}`} >
+					           	   		<h5 className='userName'>{post?.creator.first_name} {post?.creator.last_name}</h5>
+					           	    </Link>
+				           	   	    <span className="postTime"><Moment fromNow>{post?.creationDate}</Moment></span>
 				           	   </div>
 				           </div>
 				          
@@ -68,7 +50,7 @@ function Post({post,profile,rp}) {
 							</div>
 				            </div>
 
-				        {profile &&  <PostOptions id={post._id} rp={rp} />} 
+				        { showOptions  &&   <PostOptions id={post._id} rp={rp} />} 
 
 				        </div>
 				    </div>
