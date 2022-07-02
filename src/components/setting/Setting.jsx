@@ -1,30 +1,77 @@
-import React from 'react';
+import {useState,useEffect} from 'react';
 import './Setting.css';
+import socket  from '../../socket/socket';
+import {authToken,postsAtom} from '../../store/store';
+import {useRecoilValue,useRecoilState} from 'recoil';
+import jwt_decode from "jwt-decode";
+
 
 function Setting() {
+
+
+
+const token =  useRecoilValue(authToken);
+const user = jwt_decode(token);
+const [basicInfo, setBasicInfo] = useState({
+	first_name : '',
+	last_name : '',
+	bio : ''
+})
+
+const saveBasicInfo = () => {
+
+
+}
+
+
+useEffect(() => {
+	
+socket.emit('getUserInfo',user.id,(res) => {
+	if(res.status){
+		setBasicInfo({
+			first_name : res.data?.first_name,
+			last_name :  res.data?.last_name,
+			bio :  res.data?.bio ?  res.data?.bio : ''
+		})
+	}
+	console.log(res)
+})
+
+
+
+}, [])
+
+useEffect(() => {
+	console.log(basicInfo)
+}, [basicInfo])
+
+
 	return (
 		<div className='settings py-4'>
 			
 			<div className="container">
 			    <div className="row">
 					<div className="col-10 m-auto">
-						<h1>Settings page</h1> 
-						<form className='col-8'>
-						  <div className="mb-3">
-						    <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
-						    <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
-						    <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
-						  </div>
-						  <div className="mb-3">
-						    <label for="exampleInputPassword1" className="form-label">Password</label>
-						    <input type="password" className="form-control" id="exampleInputPassword1" />
-						  </div>
-						  <div className="mb-3 form-check">
-						    <input type="checkbox" className="form-check-input" id="exampleCheck1" />
-						    <label className="form-check-label" for="exampleCheck1">Check me out</label>
-						  </div>
-						  <button type="submit" className="btn btn-primary">Submit</button>
-						</form>
+						<div className="row">
+						
+							<div className='col-8 settingSections p-5'>
+							    <h4 className='border-start ps-2 mb-4'><strong>Basic Info</strong></h4>
+							    <div className="mb-3">
+								  	<label  className="form-label">Name</label>
+								  	<div className='d-flex gap-3'>
+								  	  	<input type="text" defaultValue={basicInfo?.first_name} onChange={(e) => { setBasicInfo({...basicInfo,first_name : e.target.value}) }}   className="form-control"  placeholder='First Name' />
+								    	<input type="text" defaultValue={basicInfo?.last_name}  onChange={(e) => { setBasicInfo({...basicInfo,last_name : e.target.value}) }} className="form-control"  placeholder='Last Name' />
+								  	</div>  
+							 	</div>
+							  	<div className="mb-3">
+							  	  <label  className="form-label">Intro</label>
+					
+							 	   <textarea  className="form-control" onChange={(e) => { setBasicInfo({...basicInfo,bio : e.target.value}) }}   defaultValue={basicInfo?.bio} placeholder='bio'  cols="30" rows="4"></textarea>
+
+							 	</div>
+							 	 <button type="submit" className="btn formSubBtn">Save</button>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>

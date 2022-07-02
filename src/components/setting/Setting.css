@@ -1,0 +1,21 @@
+.settingSections {
+    color: #9ca3af;
+    font-weight: bold;
+    background: #1e1e1e;
+}
+
+.settingSections input {
+    background: #121212 !important;
+}
+.settingSections textarea {
+    background: #121212 !important;
+}
+
+.formSubBtn {
+    background: #9ca3af !important;
+    color: #121212 !important;
+    font-weight: bold !important;
+}
+.btn:focus {
+    box-shadow: 4px 1px 15px 0px rgb(18 18 18) !important;
+}
