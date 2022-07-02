@@ -6,6 +6,8 @@ import {useRecoilValue,useRecoilState} from 'recoil';
 import jwt_decode from "jwt-decode";
 
 
+
+
 function Setting() {
 
 
@@ -18,15 +20,10 @@ const [basicInfo, setBasicInfo] = useState({
 	bio : ''
 })
 
-const saveBasicInfo = () => {
-
-
-}
-
-
 useEffect(() => {
 	
 socket.emit('getUserInfo',user.id,(res) => {
+
 	if(res.status){
 		setBasicInfo({
 			first_name : res.data?.first_name,
@@ -34,16 +31,31 @@ socket.emit('getUserInfo',user.id,(res) => {
 			bio :  res.data?.bio ?  res.data?.bio : ''
 		})
 	}
-	console.log(res)
+	
 })
-
-
 
 }, [])
 
-useEffect(() => {
-	console.log(basicInfo)
-}, [basicInfo])
+
+
+const saveBasicInfo = () => {
+
+	if(Object.values(basicInfo).some((i ) => i !== '' )){
+		socket.emit('saveBasicInfo',user.id,basicInfo,(res)=> {
+			if(res.status){
+				setBasicInfo({
+				first_name : res.data?.first_name,
+				last_name :  res.data?.last_name,
+				bio :  res.data?.bio ?  res.data?.bio : ''
+				})
+			}
+		})
+	}
+
+}
+
+
+
 
 
 	return (
@@ -69,7 +81,7 @@ useEffect(() => {
 							 	   <textarea  className="form-control" onChange={(e) => { setBasicInfo({...basicInfo,bio : e.target.value}) }}   defaultValue={basicInfo?.bio} placeholder='bio'  cols="30" rows="4"></textarea>
 
 							 	</div>
-							 	 <button type="submit" className="btn formSubBtn">Save</button>
+							 	 <button type="submit" onClick={saveBasicInfo} className="btn formSubBtn">Save</button>
 							</div>
 						</div>
 					</div>
