@@ -5,7 +5,7 @@ import sm from './sm';
 import {decompressFromUTF16} from 'lz-string';
 import socket from '../../socket/socket';
 import Toast from  '../../utils/ToastAlert';
-
+import { TailSpin } from  'react-loader-spinner'
 
 
 
@@ -18,7 +18,7 @@ const [messages,setMessages] = useRecoilState(messeagesAtom);
 const [pnum,setPnum] = useState(1);
 const listInnerRef = useRef();
 const lm = useRecoilValue(lastMsgAtom);
-
+const [msgLoader,setMsgLoader] = useState(false);
 
 
 
@@ -50,19 +50,20 @@ const handleScroll = (e) => {
 
 useEffect(() => {
     if(pnum !== 1){
-
-    socket.emit('getOldMessages',thred,pnum,(res) => {
-        if(res.status){
-            setMessages((prev)=>  [...res.messages,...prev] )
-        }else{
-            Toast({
-                type: res.type,
-                icon : res.type,
-                title : res.msg
-            })
-        }
-    })
-
+        setMsgLoader(true);
+        socket.emit('getOldMessages',thred,pnum,(res) => {
+            if(res.status){
+                setMsgLoader(false);
+                setMessages((prev)=>  [...res.messages,...prev] )
+            }else{
+                setMsgLoader(false);
+                Toast({
+                    type: res.type,
+                    icon : res.type,
+                    title : res.msg
+                })
+            }
+        })
     }
 
 }, [pnum])
@@ -72,7 +73,9 @@ useEffect(() => {
 	return (
 		   <div className="chat-history">
                     <ul className="m-b-0  px-4"  onScroll={handleScroll} ref={listInnerRef} >
-                    
+                    <div className='msgLoadingAnm'>
+                       {msgLoader && <TailSpin color="#9CA3AF" height={80} width={80} />} 
+                    </div> 
 
                         {  chatingWith && messages?.map((msg) => 
                             <li className="clearfix">

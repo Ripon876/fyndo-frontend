@@ -329,3 +329,9 @@
     font-size: 25px;
     cursor: pointer;
 }
+
+.msgLoadingAnm div{
+    display: flex;
+    width: 30px;
+    margin: auto;
+}
