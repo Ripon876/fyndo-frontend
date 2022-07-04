@@ -48,11 +48,11 @@ const handleSubmit = (e) => {
 										<form  onSubmit={handleSubmit}>
 											<h4 className="mb-4 pb-3 text-white">Log In</h4>
 											<div className="form-group">
-												<input type="text"  className="form-style" placeholder="Your Username" onChange={(e)=> { setUn(e.target.value) }}  autoComplete="off" />
+												<input type="text"  className="form-style" placeholder="Username" onChange={(e)=> { setUn(e.target.value) }}  autoComplete="off" />
 												<i className="input-icon uil uil-at"></i>
 											</div>	
 											<div className="form-group mt-2">
-												<input type="password"   className="form-style" placeholder="Your Password" onChange={(e)=> { setPwd(e.target.value) }}  autoComplete="off" />
+												<input type="password"   className="form-style" placeholder="Password" onChange={(e)=> { setPwd(e.target.value) }}  autoComplete="off" />
 												<i className="input-icon uil uil-lock-alt"></i>
 											</div>
 											<button type="submit" className="subBtn mt-4">submit</button>

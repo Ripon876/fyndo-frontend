@@ -56,11 +56,11 @@ axios.post('http://localhost:5000/signup',
 											<h4 className="mb-4 pb-3 text-white">Sign Up</h4>
 											<form onSubmit={handleSubmit}>
 											<div className="form-group">
-												<input type="text"   className="form-style" onChange={(e)=> { setFn(e.target.value) }}  placeholder="Your First Name"  />
+												<input type="text"   className="form-style" onChange={(e)=> { setFn(e.target.value) }}  placeholder="First Name"  />
 												<i className="input-icon uil uil-user"></i>
 											</div>	
 											<div className="form-group  mt-2">
-												<input type="text"   className="form-style" onChange={(e)=> { setLn(e.target.value) }}  placeholder="Your Last Name"  />
+												<input type="text"   className="form-style" onChange={(e)=> { setLn(e.target.value) }}  placeholder="Last Name"  />
 												<i className="input-icon uil uil-user"></i>
 											</div>	
 											<div className="form-group mt-2">
@@ -68,7 +68,7 @@ axios.post('http://localhost:5000/signup',
 												<i className="input-icon uil uil-at"></i>
 											</div>	
 											<div className="form-group mt-2">
-												<input type="password"   className="form-style" onChange={(e)=> { setPwd(e.target.value) }}  placeholder="Your Password"  />
+												<input type="password"   className="form-style" onChange={(e)=> { setPwd(e.target.value) }}  placeholder="Password"  />
 												<i className="input-icon uil uil-lock-alt"></i>
 											</div>
 											<button type="submit" className="subBtn mt-4">submit</button>
