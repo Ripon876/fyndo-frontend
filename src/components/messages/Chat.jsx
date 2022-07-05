@@ -6,7 +6,7 @@ import {decompressFromUTF16} from 'lz-string';
 import socket from '../../socket/socket';
 import Toast from  '../../utils/ToastAlert';
 import { TailSpin } from  'react-loader-spinner'
-
+import PopUp from './PopUp';
 
 
 function Chat({messagesEndRef}) {
@@ -19,7 +19,8 @@ const [pnum,setPnum] = useState(1);
 const listInnerRef = useRef();
 const lm = useRecoilValue(lastMsgAtom);
 const [msgLoader,setMsgLoader] = useState(false);
-
+const [showPopUp,setShowPopUp] = useState(false);
+const [selectedImg,setSelectedImg] = useState('');
 
 
 
@@ -70,8 +71,19 @@ useEffect(() => {
 
 
 
+
+/*useEffect(() => {
+    
+
+
+}, [selectedImg])*/
+
+
+
 	return (
 		   <div className="chat-history">
+
+{showPopUp  && <PopUp  imgSrc={selectedImg} /> }   
                     <ul className="m-b-0  px-4"  onScroll={handleScroll} ref={listInnerRef} >
                     <div className='msgLoadingAnm'>
                        {msgLoader && <TailSpin color="#9CA3AF" height={80} width={80} />} 
@@ -87,7 +99,7 @@ useEffect(() => {
                                 {msg.type == 'text' ?  msg.msg  : 
                                 <>
                                        
-                                 <img src={decompressFromUTF16(msg?.msg)}  className='img-fluid' />
+                                 <img src={decompressFromUTF16(msg?.msg)} onClick={(e)=> { setSelectedImg(e.target.src); setShowPopUp(!showPopUp) } } className='img-fluid' />
 
                                 </>
                                 }
