@@ -4,7 +4,7 @@ import axios from 'axios';
 import {authToken} from '../../store/store';
 import {useRecoilState} from 'recoil';
 import './Login.css';
-
+import Toast from '../../utils/ToastAlert';
 
 
 
@@ -18,17 +18,27 @@ const navigate = useNavigate();
 const {state} = useLocation();
 
 
-const handleSubmit = (e) => {
+const handleSubmit = async (e) => {
 	e.preventDefault()
 	 if(username && password){
 
+
 		axios.post('http://localhost:5000/login',{username,password},{withCredentials: true })
 		.then((data)=> {
-		    setAuth(data.data.token)
-
+		    setAuth(data.data.token);
 		}).then(()=> {
 			state?.prvUrl ? navigate(state.prvUrl) : navigate('/');
+		}).catch((err)=> {
+			if(err && err.response.status === 401){
+				 Toast({
+				 	type : 'warning',
+				 	icon : 'warning',
+				 	title : 'Please create a account first'
+				 })
+			}
 		})
+
+
 
 	 }
 }

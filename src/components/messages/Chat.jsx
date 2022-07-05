@@ -57,6 +57,7 @@ useEffect(() => {
         socket.emit('getOldMessages',thred,pnum,(res) => {
             if(res.status){
                 setMsgLoader(false);
+                console.log(res.messages)
                 setMessages((prev)=>  [...res.messages,...prev] )
             }else{
                 setMsgLoader(false);
