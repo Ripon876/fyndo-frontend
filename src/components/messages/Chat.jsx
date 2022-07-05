@@ -30,7 +30,9 @@ const scrollToBottom = () => {
 }
 
 
-
+const closePopUP = () => {
+    setShowPopUp()
+}
 
 useEffect(() => {
     scrollToBottom();
@@ -83,7 +85,7 @@ useEffect(() => {
 	return (
 		   <div className="chat-history">
 
-{showPopUp  && <PopUp  imgSrc={selectedImg} /> }   
+{showPopUp  && <PopUp  imgSrc={selectedImg}  closePopUP={closePopUP} /> }   
                     <ul className="m-b-0  px-4"  onScroll={handleScroll} ref={listInnerRef} >
                     <div className='msgLoadingAnm'>
                        {msgLoader && <TailSpin color="#9CA3AF" height={80} width={80} />} 
