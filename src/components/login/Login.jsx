@@ -27,7 +27,11 @@ const handleSubmit = async (e) => {
 		.then((data)=> {
 		    setAuth(data.data.token);
 		}).then(()=> {
+
 			state?.prvUrl ? navigate(state.prvUrl) : navigate('/');
+
+
+			
 		}).catch((err)=> {
 			if(err && err.response.status === 401){
 				 Toast({
