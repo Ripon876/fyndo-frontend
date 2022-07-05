@@ -1,12 +1,11 @@
 import React,{useState} from 'react';
 import {Link,useNavigate} from 'react-router-dom';
 import axios from 'axios';
+import Toast from '../../utils/ToastAlert';
+
+
 
 function SignUp() {
-
-
-
-
 
 const [first_name, setFn] = useState('');
 const [last_name, setLn] = useState('');
@@ -18,21 +17,37 @@ const handleSubmit = (e) => {
 	e.preventDefault()
 	 if(first_name && password && username){
 
+		axios.post('http://localhost:5000/signup',
+			{
+			first_name,
+			last_name,
+			username,
+			password
+			},
+			{withCredentials: true })
 
-axios.post('http://localhost:5000/signup',
-	{
-	first_name,
-	last_name,
-	username,
-	password
-	},
-	{withCredentials: true })
-
-.then((data)=> {
-	
-	navigate('/login');
-})
-
+		.then((data)=> {
+			Toast({
+				 	type : 'success',
+				 	icon : 'success',
+				 	title : 'Signup Successful'
+				 })
+			navigate('/login');
+		}).catch((err)=> {
+			if(err && err.response.status === 406){
+				 Toast({
+				 	type : 'warning',
+				 	icon : 'warning',
+				 	title : 'Username already exits'
+				 })
+			}else{
+				 Toast({
+				 	type : 'error',
+				 	icon : 'error',
+				 	title : 'Something went wrong'
+				 })
+			}
+		})
 
 
 	 }
