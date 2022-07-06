@@ -3,7 +3,7 @@ import {thredAtom,chatingWithAtom,userAtom,messeagesAtom} from '../../store/stor
 import {useRecoilValue,useRecoilState} from 'recoil';
 import { useSearchParams } from 'react-router-dom';
 import FileUploader from '../../utils/FileUploader'
-
+import EmojiPopUp from '../../utils/EmojiPopUp';
  
 
 
@@ -22,37 +22,43 @@ const [searchParams,setSearchParams] = useSearchParams();
 
 
 
-
+const emojiRegex = /\p{Emoji}/u;
 
 const sendMsg = () => {
 
-var message = {
-	threadId : thred,
-	type: 'text',
-	msg : msg,
-	to : {
-		name : chatingWith.first_name + ' ' +  chatingWith.last_name,
-		username : chatingWith.username,
-		id : chatingWith._id
-	},
-	from : {
-		name : user.name,
-		username : user.username,
-		id : user.id
+
+
+let m = msg.replaceAll('(:', '🙂');
+
+	if(msg !== ''){
+
+		var message = {
+			threadId : thred,
+			type: (msg.length === 2 && emojiRegex.test(m)) ? 'emoji' : 'text',
+			msg : m,
+			to : {
+				name : chatingWith.first_name + ' ' +  chatingWith.last_name,
+				username : chatingWith.username,
+				id : chatingWith._id
+			},
+			from : {
+				name : user.name,
+				username : user.username,
+				id : user.id
+			}
+		};
+
+		socket.emit('send_message',message);
+		setMessages((prev)=>  [...prev,message] );
+		scrollToBottom();
+		setMsg('');
+
 	}
-};
-
-socket.emit('send_message',message);
-setMessages((prev)=>  [...prev,message] );
-scrollToBottom();
-setMsg('');
-
 }
 
 
-
 const send_Msg = (e) => {
-	if(e.key === 'Enter'){
+	if(e.key === 'Enter' && msg !== ''){
 		sendMsg()
 	}
 }
@@ -95,30 +101,39 @@ useEffect(() => {
 }, [])
 
 
+const addEmoji = (e) => {  
+    setMsg(msg + e.native);  
+  
+  };
+
+
 
 
 
 	return (
 		<>
 		{showUploader && <FileUploader  su={setShowUploader} u={user} t={thred}  cw={chatingWith} sm={setMessages} /> }
+	    { chatingWith && 
+			<div className="msgInput p-3">
+			    <div className="d-flex position-relative">
+			        <div>
+			            <h1 className="fileChoserIcon p-1 mx-2" onClick={()=> { setShowUploader(true)}}><i class="fa-solid fa-plus"></i></h1>
+			        </div>  
+			        <div className="msInput">
+			            <input type="text" value={msg} onChange={(e)=> setMsg(e.target.value) }  onKeyPress={(e)=> { send_Msg(e)}} />
+			        </div>
+	  				<div className="addEmoji sendBtn">
+				       	<button>
+							<EmojiPopUp  f={addEmoji}><i class="fa-solid fa-face-grin"></i> </EmojiPopUp>
+				       	</button>
+				    </div>
+				    <div className="sendBtn">
+				        <button onClick={sendMsg}><i class="fa-solid fa-paper-plane"></i></button>
+				    </div>
 		
-		<div className="msgInput p-3">
-		    <div className="d-flex position-relative">
-		        <div>
-		            <h1 className="fileChoserIcon p-1 mx-2" onClick={()=> { setShowUploader(true)}}><i class="fa-solid fa-plus"></i></h1>
-		        </div>  
-		        <div className="msInput">
-		            <input type="text" value={msg} onChange={(e)=> setMsg(e.target.value) }  onKeyPress={(e)=> { send_Msg(e)}} />
-		        </div>
-		        <div className="addEmoji sendBtn">
-		       		<button><i class="fa-solid fa-face-grin"></i></button>
-		        </div>
-		        <div className="sendBtn">
-		       		<button onClick={sendMsg}><i class="fa-solid fa-paper-plane"></i></button>
-		        </div>
-		        
-		    </div>
-		</div>
+			    </div>
+			</div>
+		}
 	</>
 	)
 }
