@@ -365,3 +365,17 @@
     left: 90% !important;
     transform: translate(0, -50%);
 }
+
+.addEmoji button button{
+    margin-left: -10px !important;
+    margin-top: 5px !important;
+}
+.emoji {
+    background: transparent !important;
+    font-size: 60px !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+.emoji::after {
+    border: none !important;
+}

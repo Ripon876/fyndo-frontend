@@ -1,6 +1,6 @@
 import {useState,useEffect} from 'react';
 import {Fade} from 'react-reveal';
-import EmojiPopUp from './EmojiPopUp';
+import EmojiPopUp from '../../utils/EmojiPopUp';
 import {userAtom,authToken,postsAtom,userPostsAtom} from '../../store/store';
 import {useRecoilValue,useRecoilState} from 'recoil';
 import socket from '../../socket/socket';
