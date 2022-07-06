@@ -366,7 +366,7 @@
     transform: translate(0, -50%);
 }
 
-.addEmoji button button{
+.addEmoji span button{
     margin-left: -10px !important;
     margin-top: 5px !important;
 }

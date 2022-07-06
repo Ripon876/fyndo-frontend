@@ -69,13 +69,11 @@ const send_Msg = (e) => {
 
 
 function getThreadId(){ 
-
     let params = new URLSearchParams(document.location.search);
     return params.get('thredId') 
 }
 
 const scrollToBottom = () => {
-	console.log('scrolling')
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
 }
 
@@ -117,18 +115,18 @@ const addEmoji = (e) => {
 			<div className="msgInput p-3">
 			    <div className="d-flex position-relative">
 			        <div>
-			            <h1 className="fileChoserIcon p-1 mx-2" onClick={()=> { setShowUploader(true)}}><i class="fa-solid fa-plus"></i></h1>
+			            <h1 className="fileChoserIcon p-1 mx-2" onClick={()=> { setShowUploader(true)}}><i className="fa-solid fa-plus"></i></h1>
 			        </div>  
 			        <div className="msInput">
 			            <input type="text" value={msg} onChange={(e)=> setMsg(e.target.value) }  onKeyPress={(e)=> { send_Msg(e)}} />
 			        </div>
 	  				<div className="addEmoji sendBtn">
-				       	<button>
-							<EmojiPopUp  f={addEmoji}><i class="fa-solid fa-face-grin"></i> </EmojiPopUp>
-				       	</button>
+				       	<span>
+							<EmojiPopUp  f={addEmoji}><i className="fa-solid fa-face-grin"></i> </EmojiPopUp>
+				       	</span>
 				    </div>
 				    <div className="sendBtn">
-				        <button onClick={sendMsg}><i class="fa-solid fa-paper-plane"></i></button>
+				        <button onClick={sendMsg}><i className="fa-solid fa-paper-plane"></i></button>
 				    </div>
 		
 			    </div>

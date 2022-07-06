@@ -8,13 +8,7 @@ import ChatHeader  from './ChatHeader';
 import Chat  from './Chat';
 import Input  from './Input';
 import './Messages.css';
-// import { io } from "socket.io-client";
 import socket from '../../socket/socket';
-
-
-
-
- // const socket = io('http://localhost:5000',{transports: ['websocket'], upgrade: false});
 
 
 
@@ -42,10 +36,7 @@ let myFriends;
 
 useEffect(() => {
 
-
-
-    var user = jwt_decode(token)
-    // console.log(user)
+    var user = jwt_decode(token);
     setUser(user);
 
     axios.get('http://localhost:5000/friends',{withCredentials: true })
@@ -56,7 +47,8 @@ useEffect(() => {
      myFriends = fns;
     }).then(()=> {
 
-        if(getThreadId() && getThreadId().length !== 0){
+
+    if(getThreadId() && getThreadId().length !== 0){
         setThred(getThreadId());
     
 
@@ -86,7 +78,6 @@ useEffect(() => {
 
 useEffect(() => {
     
-// console.log('updated')
 socket.on('receive_message_not_seen',(data)=> {
     console.log('this message not seen yet : ',data)
     var newUnseenMsg = {

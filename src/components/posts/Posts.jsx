@@ -21,16 +21,11 @@ const [posts, setPost] = useRecoilState(postsAtom)
 
 useEffect(() => {
 	
-// console.log(user);
    socket.emit('getPost',user.id,(data)=> {
-   	// console.log(data)
-   	setPost(data.reverse());
+      	setPost(data.reverse());
    })
 
 }, [])
-
-// console.log(socket)
-
 
 
 	return (

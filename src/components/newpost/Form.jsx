@@ -29,46 +29,34 @@ const addEmoji = (e) => {
 
 
 const post = () => {
-	 
+		 
 
-var postData = {
-	creator : user.id,
-	content : input
-}
-
-socket.emit('post',postData, async(res) => {
-
-	if(res.status){
-
-
-// console.log(res.post)
-
-
-        setInput('');
-        close();
-		
-		await Toast({
-		  type: 'success',
-		  icon : 'success',
-		  title: 'Post created successfully'
-		})
-
-	setPost((prvPosts) => [res.post,...posts] );  
-
-if(profile){
-	setUserPost((prvPosts) => [res.post,...userPosts])
-}
-
-
-
+	var postData = {
+		creator : user.id,
+		content : input
 	}
 
-});
+	socket.emit('post',postData, async(res) => {
 
+		if(res.status){
 
+	        setInput('');
+	        close();
+			
+			await Toast({
+			  type: 'success',
+			  icon : 'success',
+			  title: 'Post created successfully'
+			})
 
+		setPost((prvPosts) => [res.post,...posts] );  
 
-}
+			if(profile){
+				setUserPost((prvPosts) => [res.post,...userPosts])
+			}
+		}
+	});
+};
 
 
 

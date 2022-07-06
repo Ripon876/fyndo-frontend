@@ -26,13 +26,8 @@ useEffect(() => {
 	socket.emit('getProfileInfo',getUserId(),(data)=> {
 
 			let {post,...ud} = data?.data;
-			// console.log(ud)
 			setUserData(ud);
 	})
-
-
-
-
 
 }, [location])
 
@@ -47,27 +42,17 @@ function getUserId(){
 
 	return (
 		<div className='profile py-4' >
-			
-<div className="container">
-	<div className="row">
-		<div className="col-10 m-auto">
-				
-			<ProfileHeader user={userData} />
-
-
-			<div className="row">
-				<ProfileInfo user={userData} />
-				<ProfilePosts />
+			<div className="container">
+				<div className="row">
+					<div className="col-10 m-auto">
+						<ProfileHeader user={userData} />
+						<div className="row">
+							<ProfileInfo user={userData} />
+							<ProfilePosts />
+						</div>
+					</div>
+				</div>
 			</div>
-
-
-		</div>
-	</div>
-</div>
-
-
-
-
 		</div>
 	)
 }

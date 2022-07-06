@@ -13,25 +13,18 @@ import Toast from '../../utils/ToastAlert';
 
 function EditPost({id,setShowModal}) {
 
-// const [showModal, setShowModal] = useState(false);
+
 const [input, setInput] = useState("");   
-/*const c_user =  useRecoilValue(userAtom);
-const token =  useRecoilValue(authToken);
-const [posts, setPost] = useRecoilState(postsAtom);*/
 const [userPosts, setUserPost] = useRecoilState(userPostsAtom);
 
- // var user = jwt_decode(token)
 
 const addEmoji = (e) => {  
     setInput(input + e.native);  
-  
   };
 
 const getPost = ()=> {
 	socket.emit('getPostToEdit',id,(post)=> {
-       
         setInput(post.content)
-
 	})
 }
 
@@ -60,25 +53,23 @@ const editPost = () => {
  					setShowModal(false);
 
       		 Toast({
-			  type: 'success',
-			  icon : 'success',
-			  title: 'Post Edited successfully'
-			})
+					  type: 'success',
+					  icon : 'success',
+					  title: 'Post Edited successfully'
+					})
 
         }else{
         	setShowModal(false);
         	Toast({
-			  type: 'error',
-			  icon : 'error',
-			  title: 'Something went wrong'
-			})
+					  type: 'error',
+					  icon : 'error',
+					  title: 'Something went wrong'
+					})
         }
 
 
-
-
-	})
-}
+	});
+};
 
 
 

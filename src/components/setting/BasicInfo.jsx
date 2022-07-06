@@ -25,7 +25,6 @@ useEffect(() => {
 socket.emit('getUserInfo',user.id,(res) => {
 
 	if(res.status){
-console.log(res.data)
 
 		setBasicInfo({
 			first_name : res.data?.first_name,

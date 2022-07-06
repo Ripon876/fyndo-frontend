@@ -13,7 +13,6 @@ const closeModal = () => {
 } 
 
 
-console.log(profile)
 
 	return (
     <>

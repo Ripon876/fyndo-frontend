@@ -13,8 +13,6 @@ function Post({post,profile,showOptions,rp}) {
 const token = useRecoilValue(authToken);
 const user = jwt_decode(token);
 
-
-
 	return (
 			<>
 			<div className={profile ? '' : 'container'}>

@@ -7,16 +7,6 @@ import Toast from '../../utils/ToastAlert';
 
 
 
-
-/*
-	contacts : {
-		phone_num : String,
-		email : String,
-		address : String
-	}
-*/
-
-
 function Contacts() {
 
 
