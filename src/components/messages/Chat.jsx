@@ -97,15 +97,16 @@ useEffect(() => {
                                 <div className="message-data">
                                       <span className="message-data-time"></span>
                                 </div>
-                                <div className={`message  ${  msg?.from?.id  == chatingWith?._id ? 'other-message' : 'my-message float-right'}`}>
+                                <div className={`message  ${  msg?.from?.id  == chatingWith?._id ? 'other-message' : 'my-message float-right'} ${msg.type === 'emoji' ? 'emoji' : ''} `}>
 
-                                {msg.type == 'text' ?  msg.msg  : 
+                                {msg.type === 'text' ?  msg.msg  : 
                                 <>
                                        
                                  <img src={decompressFromUTF16(msg?.msg)} onClick={(e)=> { setSelectedImg(e.target.src); setShowPopUp(!showPopUp) } } className='img-fluid' />
 
                                 </>
                                 }
+                                {msg.type === 'emoji'  ? msg.msg : ''}
 
                                 </div>
                             </li>

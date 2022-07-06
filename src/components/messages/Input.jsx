@@ -110,9 +110,13 @@ useEffect(() => {
 		        <div className="msInput">
 		            <input type="text" value={msg} onChange={(e)=> setMsg(e.target.value) }  onKeyPress={(e)=> { send_Msg(e)}} />
 		        </div>
+		        <div className="addEmoji sendBtn">
+		       		<button><i class="fa-solid fa-face-grin"></i></button>
+		        </div>
 		        <div className="sendBtn">
 		       		<button onClick={sendMsg}><i class="fa-solid fa-paper-plane"></i></button>
 		        </div>
+		        
 		    </div>
 		</div>
 	</>

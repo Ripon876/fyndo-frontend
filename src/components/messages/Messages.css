@@ -306,21 +306,28 @@
     color: #9ca3af;
     font-weight: bold;
     padding: 5px 15px;
-    width: 100%;
+    width: 94%;
 }
 
 .msInput {
     width: 100%;
 }
-.sendBtn{
+/*.sendBtn{
     position: absolute;
     right: 10px;
     top: 50%;
     transform: translate(0, -50%);
+}*/
+.sendBtn{
+    position: absolute;
+    right: 5px;
+    font-size: 20px;
+    top: 45%;
+    transform: translate(0, -50%);
 }
 
 .sendBtn button{
-    background: #131313;
+    background: #29222200;
     color: #9ca3af;
     border: none;
 }
@@ -350,4 +357,11 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+.addEmoji{
+    position: absolute;
+    right: 10px;
+    top: 45% !important;
+    left: 90% !important;
+    transform: translate(0, -50%);
 }
