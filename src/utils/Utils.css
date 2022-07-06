@@ -205,3 +205,12 @@ i.clearImg {
   background:  #9ca3af;
   color: #121212;
 }
+
+
+.emojiInmsg{
+    left: -325px !important;
+    top: -435px !important;
+}
+.emojiPicker section#root div#preview {
+  display: none !important;
+}
