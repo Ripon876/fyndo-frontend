@@ -1,7 +1,7 @@
 
 function ProfileInfo({user}) {
 
-
+console.log(user?.education)
 	return (
 			<div className="col-4">
 			    <div className="bio p-2 border-start mt-0">
@@ -16,7 +16,10 @@ function ProfileInfo({user}) {
 			    </div>
 			    <div className="bio p-2 border-start">
 				    <h5 className='ps-2'>Education</h5>
-				    <p className='font-monospace text-start ps-1'>Lorem ipsum dolor sit amet consectetur - <span>status</span> </p>
+				    {user?.education?.map((institute)=> 
+				    	<p className='font-monospace text-start ps-1'><span>{institute.status === '1'  ?  'Curenntly in' : 'Studied  in'}</span>  <strong>{institute.name}</strong>  </p>
+				    )}
+				  
 			    </div>
 				
 			</div>
