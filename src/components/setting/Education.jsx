@@ -15,7 +15,7 @@ function Education() {
 const [formsList, setFormsList] = useState([]);
 const token =  useRecoilValue(authToken);
 const user = jwt_decode(token);
-
+const [institutes, setInstitutes] = useState([])
 
 
 const onAddBtnClick = () => {
@@ -63,6 +63,19 @@ const handleSubmit = (e) => {
 }
 
 
+useEffect(() => {
+	
+socket.emit('getUserInfo',user.id,(res) => {
+
+	if(res.status){
+		setInstitutes(res.data.education)
+	}
+	
+})
+
+}, [])
+
+
 
 
 
@@ -75,8 +88,11 @@ const handleSubmit = (e) => {
 						
 							<form onSubmit={handleSubmit}>
 							    <div className="mb-3">
-								 
-								  <Institute />  
+								
+								{institutes?.map((institute)=> 
+ 									<Institute  institute={institute}/> 
+								)}
+								  
 							 	
 								  {formsList && formsList}
 							 	</div>
