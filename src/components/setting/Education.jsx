@@ -19,7 +19,7 @@ const [institutes, setInstitutes] = useState([])
 
 
 const onAddBtnClick = () => {
-    setFormsList(formsList.concat(<Institute key={formsList.length} newForm />));
+    setFormsList(formsList.concat(<Institute key={formsList.length}  />));
 };
 
 
