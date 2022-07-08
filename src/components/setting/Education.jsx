@@ -42,9 +42,21 @@ const handleSubmit = (e) => {
 	// console.log(parseData(values))
 
 
-// socket.emit('saveEducationInfo',user.id,parseData(values),(res)=> {
-// 	console.log(res)
-// });
+	socket.emit('saveEducationInfo',user.id,parseData(values),(res)=> {
+			if(res.status){
+					Toast({
+						type: 'success',
+						icon : 'success',
+						title : 'Education updated'
+					})
+				}else{
+					Toast({
+						type: 'error',
+						icon : 'error',
+						title : 'Something went wrong'
+					})
+				};
+	});
 
 
 
