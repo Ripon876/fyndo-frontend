@@ -23,34 +23,28 @@ const onAddBtnClick = () => {
 };
 
 
-
 const parseData = (arr) => {
     var parsedData = [];
-    for (var i = 0; i < arr.length / 2;i++){
+    for (var i = 0; i < arr.length / 2 + 1;i++){
         
     parsedData[i] = {name: arr[i][1],status: arr[i+1][1]};
-        
+    i++;
     }
-        return parsedData;
+        return parsedData.filter((i)=> i);
 }
-
-
 
 
 const handleSubmit = (e) => {
 	e.preventDefault()
 	
 	const data = new FormData(e.target);
-	 const values = [...data.entries()];
-    console.log();
-    // console.log(Object.assign({}, values))
+	const values = [...data.entries()];
+	// console.log(parseData(values))
 
 
-
-
-socket.emit('saveEducationInfo',user.id,parseData(values),(res)=> {
-	console.log(res)
-});
+// socket.emit('saveEducationInfo',user.id,parseData(values),(res)=> {
+// 	console.log(res)
+// });
 
 
 
