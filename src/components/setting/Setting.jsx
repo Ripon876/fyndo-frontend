@@ -1,7 +1,7 @@
 import './Setting.css';
 import BasicInfo from './BasicInfo';
 import Contacts from './Contacts';
-
+import Education from './Education';
 
 function Setting() {
 
@@ -12,6 +12,7 @@ function Setting() {
 			<div className="container">
 			    <BasicInfo />
 			    <Contacts />
+			    <Education />
 			</div>
 		</div>
 	)
