@@ -1,7 +1,7 @@
 import {useState} from 'react'
 
 
-function Institute({institute,newForm}) {
+function Institute({institute}) {
 
 const [show, setShow] = useState(true);
 
@@ -20,12 +20,12 @@ setShow(false)
 				<div className=' w-25'> 
 					<label  className="form-label">Status</label>
 					<select name='status'  class="form-select form-select mb-3" required>
-						<option selected={newForm ? true : false} >select</option>
+						<option selected >select</option>
 						<option value="1"  selected={institute && institute.status == 1 ? true : false} >Currently In</option>
 						<option value="2"  selected={institute && institute.status == 2 ? true : false} >Went out</option>
 					</select>
 				</div>
-				 {newForm && <div className='clearInput' onClick={(e)=> {removeForm(e)}}><i className='fa-solid fa-x'></i></div> }
+				  <div className='clearInput' onClick={(e)=> {removeForm(e)}}><i className='fa-solid fa-x'></i></div> 
 			</div>
 		}
 		</>
