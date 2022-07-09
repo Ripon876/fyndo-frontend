@@ -1,7 +1,5 @@
-import React,{useEffect} from 'react'
 import {useRecoilState,useRecoilValue} from 'recoil';
-import {thredAtom,userAtom,messeagesAtom,unseenMsgAtom} from '../../store/store';
-import { useSearchParams } from 'react-router-dom';
+import {thredAtom,userAtom,messeagesAtom,unseenMsgAtom,chatingWithAtom} from '../../store/store';
 import axios from 'axios';
 
 
@@ -14,7 +12,9 @@ const [thred,setThred] = useRecoilState(thredAtom);
 const [messages,setMessages] = useRecoilState(messeagesAtom); 
 const c_user =  useRecoilValue(userAtom);
 const [unseenMsg,setUnseenMsg] =  useRecoilState(unseenMsgAtom);
-const [searchParams,setSearchParams] = useSearchParams();
+const [chatingWith,setChatingWith] = useRecoilState(chatingWithAtom);
+
+
 
 
 function getThreadId(){ 
@@ -26,11 +26,9 @@ function getThreadId(){
 
 
 const changeThred = () => {
-// console.log(thred)
-
 
  if(unseenMsg.id === user._id){
-setUnseenMsg({id : '',msg : ''})
+    setUnseenMsg({id : '',msg : ''})
  }
 
 socket.emit('leave_room',thred);
@@ -41,16 +39,16 @@ socket.emit('leave_room',thred);
 
     {withCredentials: true })
         .then((data)=> {
- 
+
+            setChatingWith(data.data.cw)
             setThred(data.data.id);
             setMessages(data.data.messages);
             socket.emit('room', {thread : data.data.id,uId : c_user.id});
-            // console.log(data.data.id)
+         
     })
 
 
 }
-
 
 	return (
 		<li className="clearfix" onClick={changeThred} key={user._id} >

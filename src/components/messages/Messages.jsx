@@ -33,10 +33,12 @@ function getThreadId(){
 }
 
 let myFriends;
+let currentUser;
 
 useEffect(() => {
 
     var user = jwt_decode(token);
+    currentUser = user;
     setUser(user);
 
     axios.get('http://localhost:5000/friends',{withCredentials: true })
@@ -50,21 +52,17 @@ useEffect(() => {
 
     if(getThreadId() && getThreadId().length !== 0){
         setThred(getThreadId());
-    
 
         axios.post('http://localhost:5000/thread?id='+ getThreadId(),
         {
-        users: [c_user.id,user._id]
+        userId: currentUser.id
         },
 
         {withCredentials: true })
         .then((data)=> {
 
-                setMessages(data.data.messages);
-            
-                var chating_withuser =  myFriends?.find((f)=> f.threads.includes(data.data.id));
-              
-                setChatingWith(chating_withuser);
+                setMessages(data?.data.messages);
+                setChatingWith(data?.data.cw);
                 socket.emit('room', {thread : data.data.id,uId : user.id});
 
         })
@@ -79,7 +77,7 @@ useEffect(() => {
 useEffect(() => {
     
 socket.on('receive_message_not_seen',(data)=> {
-    console.log('this message not seen yet : ',data)
+    // console.log('this message not seen yet : ',data)
     var newUnseenMsg = {
         id : data.from.id,
         msg : data.msg

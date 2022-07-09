@@ -1,7 +1,6 @@
 
 function ProfileInfo({user}) {
 
-console.log(user?.education)
 	return (
 			<div className="col-4">
 			    <div className="bio p-2 border-start mt-0">
