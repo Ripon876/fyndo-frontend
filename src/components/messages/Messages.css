@@ -33,8 +33,33 @@
 .people-list .chat-list li {
     padding: 10px 15px;
     list-style: none;
-    border-radius: 3px;
+    border-radius: 5px;
     color: #9ca3af;
+}
+
+
+
+.selectedChat{
+    background: #1212125e !important;
+}
+span.listImg{
+    width: 45px;
+    display: block;
+    height: 45px;
+    position: relative;
+    float: left;
+}
+
+span.listImg.active::after {
+    background: #4caf50 !important;
+    display: block;
+    width: 10px;
+    height: 12px;
+    content: '';
+    border-radius: 50%;
+    position: absolute;
+    bottom: 1px;
+    right: 1px;
 }
 
 .people-list .chat-list li:hover {

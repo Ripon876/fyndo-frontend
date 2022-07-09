@@ -51,8 +51,11 @@ socket.emit('leave_room',thred);
 }
 
 	return (
-		<li className="clearfix" onClick={changeThred} key={user._id} >
-            <img src="https://via.placeholder.com/50" alt="avatar" />
+		<li className={`clearfix  ${user._id  === chatingWith._id ? 'selectedChat' : ''}`} onClick={changeThred} key={user._id} >
+           <span className='listImg'>
+                <img src="https://via.placeholder.com/50" alt="avatar" />
+                <div className="activeStatus"></div>
+           </span>
             <div className="about">
                 <div className="name" 
 
