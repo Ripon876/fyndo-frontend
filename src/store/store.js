@@ -74,7 +74,12 @@ const userPostsAtom = atom({
 const fileAtom = atom({
 	key : 'file',
 	default : ''
-})
+});
+
+const activerUsersAtom = atom({
+	key : 'activeUsers',
+	default : []
+});
 
 
 
@@ -90,5 +95,6 @@ const fileAtom = atom({
  	postsAtom,
  	userPostsAtom,
  	fileAtom,
- 	lastMsgAtom
+ 	lastMsgAtom,
+ 	activerUsersAtom
  }

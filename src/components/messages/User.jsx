@@ -1,6 +1,11 @@
 import {useEffect} from 'react';
 import {useRecoilState,useRecoilValue} from 'recoil';
-import {thredAtom,userAtom,messeagesAtom,unseenMsgAtom,chatingWithAtom} from '../../store/store';
+import {thredAtom,
+        userAtom,
+        messeagesAtom,
+        unseenMsgAtom,
+        chatingWithAtom,
+        activerUsersAtom} from '../../store/store';
 import axios from 'axios';
 
 
@@ -12,6 +17,7 @@ function User({user,socket}) {
 const [thred,setThred] = useRecoilState(thredAtom); 
 const [messages,setMessages] = useRecoilState(messeagesAtom); 
 const c_user =  useRecoilValue(userAtom);
+const activerUsers =  useRecoilValue(activerUsersAtom);
 const [unseenMsg,setUnseenMsg] =  useRecoilState(unseenMsgAtom);
 const [chatingWith,setChatingWith] = useRecoilState(chatingWithAtom);
 
@@ -51,16 +57,11 @@ socket.emit('leave_room',thred);
 
 }
 
-useEffect(() => {
-    socket.emit("getActiveUsers",(users)=> {
-        console.log(users)
-    })
 
-}, [])
 
 	return (
 		<li className={`clearfix  ${user._id  === chatingWith._id ? 'selectedChat' : ''}`} onClick={changeThred} key={user._id} >
-           <span className='listImg'>
+           <span className={`listImg ${activerUsers?.includes(user._id) ? 'active' : ''} `}>
                 <img src="https://via.placeholder.com/50" alt="avatar" />
                 <div className="activeStatus"></div>
            </span>

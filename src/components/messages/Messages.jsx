@@ -1,5 +1,12 @@
 import {useEffect,useState,useRef} from 'react';
-import {authToken,friendsAtom,userAtom,thredAtom,messeagesAtom,chatingWithAtom,unseenMsgAtom} from '../../store/store';
+import {authToken,
+        friendsAtom,
+        userAtom,
+        thredAtom,
+        messeagesAtom,
+        chatingWithAtom,
+        unseenMsgAtom,
+        activerUsersAtom} from '../../store/store';
 import {useRecoilValue,useRecoilState} from 'recoil';
 import jwt_decode from "jwt-decode";
 import axios from 'axios';
@@ -19,6 +26,7 @@ const token  = useRecoilValue(authToken);
 const [friends,setFriends] = useRecoilState(friendsAtom);
 const [user, setUser] = useRecoilState(userAtom);
 const [unseenMsg, setUnseenMsg] = useRecoilState(unseenMsgAtom);
+const [activerUsers, setActiverUsers] = useRecoilState(activerUsersAtom);
 const messagesEndRef = useRef(null);
 
 const [thred,setThred] = useRecoilState(thredAtom); 
@@ -91,6 +99,12 @@ socket.on('receive_message_not_seen',(data)=> {
 
 
 
+useEffect(() => {
+    socket.emit("getActiveUsers",(users)=> {
+        setActiverUsers(users.filter((user)=>  user !== currentUser.id ))
+    })
+
+}, [])
 
 
 
