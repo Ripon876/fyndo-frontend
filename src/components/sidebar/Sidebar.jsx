@@ -4,7 +4,7 @@ import {Link,useNavigate} from 'react-router-dom';
 import {authToken,userPostsAtom} from  '../../store/store';
 import {useRecoilValue,useRecoilState} from  'recoil';
 import jwt_decode from "jwt-decode";
-
+import socket from '../../socket/socket';
 
 
 function Sidebar({l}) {
@@ -17,7 +17,7 @@ const user = jwt_decode(token);
 const logOut = ()=> {
 	axios.get('http://localhost:5000/logout',{withCredentials: true })
     .then((res)=> {
-    
+    	socket.disconnect();
     	navigate('/login');
     })
 }

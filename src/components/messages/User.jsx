@@ -1,3 +1,4 @@
+import {useEffect} from 'react';
 import {useRecoilState,useRecoilValue} from 'recoil';
 import {thredAtom,userAtom,messeagesAtom,unseenMsgAtom,chatingWithAtom} from '../../store/store';
 import axios from 'axios';
@@ -49,6 +50,13 @@ socket.emit('leave_room',thred);
 
 
 }
+
+useEffect(() => {
+    socket.emit("getActiveUsers",(users)=> {
+        console.log(users)
+    })
+
+}, [])
 
 	return (
 		<li className={`clearfix  ${user._id  === chatingWith._id ? 'selectedChat' : ''}`} onClick={changeThred} key={user._id} >

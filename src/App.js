@@ -13,6 +13,11 @@ import NotFound from './components/notfound/NotFound';
 
 function App() {
 
+useEffect(() => {
+  console.log('reloaded');
+}, [])
+
+
 
   return ( 
         <Routes>

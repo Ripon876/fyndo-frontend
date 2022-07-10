@@ -3,8 +3,8 @@ import {authToken} from '../store/store';
 import {useRecoilState} from 'recoil';
 import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
-
-
+import socket  from '../socket/socket';
+import jwt_decode from "jwt-decode";
 
 function AuthProtected({children,path}) {
 
@@ -14,7 +14,7 @@ const [isLoading, setIsLoading] = useState(true);
 const navigate = useNavigate();
 
 useEffect(() => {
-	 
+
 
 axios.get('http://localhost:5000/refreshtoken',{withCredentials: true })
 .then((data) => {
@@ -24,6 +24,13 @@ axios.get('http://localhost:5000/refreshtoken',{withCredentials: true })
 
 	setAuth(data.data.token);
 	setIsLoading(false)
+	 
+	const user = jwt_decode(data.data.token);
+
+	socket.emit('active',user.id);
+
+
+
 
 	}else{
 		
