@@ -385,7 +385,7 @@ span.listImg.active::after {
 }
 .addEmoji{
     position: absolute;
-    right: 10px;
+    right: 7%;
     top: 45% !important;
     left: 90% !important;
     transform: translate(0, -50%);
