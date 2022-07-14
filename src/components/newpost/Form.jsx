@@ -78,10 +78,13 @@ const post = () => {
 						<div className="modal-body">
 							<div>
 								<div className="mb-3">
-								<label for="exampleInputPassword1" className="form-label">Write what you want</label>
-               
-             	 				<EmojiPopUp f={addEmoji} />
-								<textarea autoFocus  onChange={(e) => setInput(  e.target.value)} className='form-control' id="" cols="30" rows="10" value={input} />
+									<label for="exampleInputPassword1" className="form-label">Write what you want</label>
+              					 	<i  className="fa-solid fa-image float-end addImgToPost"></i>
+             	 					<EmojiPopUp f={addEmoji} />
+									<textarea autoFocus  onChange={(e) => setInput(  e.target.value)} className='form-control' id="" cols="30" rows="10" value={input} />
+									<div class="mt-2">
+										<img src="https://via.placeholder.com/200x200" class="img-thumbnail m-1" style={{width : '70px',  backgroundColor: '#121212',border: '1px solid #121212'}} />
+									</div>
 								</div>
 								<button  onClick={post} className="btn t-btn">Post</button>
 							</div>

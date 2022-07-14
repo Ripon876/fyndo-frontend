@@ -53,3 +53,10 @@
     border: 0.25em solid rgb(156 163 175 / 36%) !important;
  
 }
+
+.addImgToPost{
+    color: #000000;
+    font-size: 30px;
+    padding: 5px; 
+    cursor: pointer;
+}

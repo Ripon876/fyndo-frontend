@@ -1,4 +1,3 @@
-import React,{useState,useEffect} from "react";
 import axios from 'axios';
 import {Routes,Route} from 'react-router-dom';
 import Login from  './components/login/Login';
@@ -11,11 +10,10 @@ import AuthProtected from './auth/AuthProtected';
 import NotFound from './components/notfound/NotFound';
 
 
+
+
 function App() {
 
-useEffect(() => {
-  console.log('reloaded');
-}, [])
 
 
 
