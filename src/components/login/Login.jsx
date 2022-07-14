@@ -7,8 +7,6 @@ import './Login.css';
 import Toast from '../../utils/ToastAlert';
 
 
-
-
 function Login() {
 
 const [username, setUn] = useState('');
@@ -28,7 +26,8 @@ const handleSubmit = async (e) => {
 		    setAuth(data.data.token);
 		}).then(()=> {
 
-			state?.prvUrl ? navigate(state.prvUrl) : navigate('/');
+			// state?.prvUrl ? navigate(state.prvUrl) : navigate('/');
+			state?.prvUrl ? window.location = state.prvUrl : window.location = '/';
 
 
 			
