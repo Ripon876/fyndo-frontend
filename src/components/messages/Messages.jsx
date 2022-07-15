@@ -94,8 +94,9 @@ socket.on('receive_message_not_seen',(data)=> {
 })
 
 
-socket.on('sadfdsf33',(users)=> {
-    console.log(users);
+socket.on('currentlyActiveUsers',(users)=> {
+    // console.log(users);
+    setActiverUsers(users.filter((user)=>  user !== currentUser.id ))
 })
 
 
