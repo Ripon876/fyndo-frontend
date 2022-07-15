@@ -21,7 +21,7 @@ const handleSubmit = async (e) => {
 	 if(username && password){
 
 
-		axios.post('http://localhost:5000/login',{username,password},{withCredentials: true })
+		axios.post(process.env.REACT_APP_HOST  + '/login',{username,password},{withCredentials: true })
 		.then((data)=> {
 		    setAuth(data.data.token);
 		}).then(()=> {

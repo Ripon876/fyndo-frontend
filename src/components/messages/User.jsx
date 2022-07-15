@@ -39,7 +39,7 @@ const changeThred = () => {
  }
 
 socket.emit('leave_room',thred);
-    axios.post('http://localhost:5000/thread',
+    axios.post( process.env.REACT_APP_HOST  + '/thread',
     {
     users: [c_user.id,user._id]
     },

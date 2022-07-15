@@ -19,7 +19,7 @@ const navigate = useNavigate();
 useEffect(() => {
 
 
-axios.get('http://localhost:5000/refreshtoken',{withCredentials: true })
+axios.get(process.env.REACT_APP_HOST + '/refreshtoken',{withCredentials: true })
 .then((data) => {
  
 

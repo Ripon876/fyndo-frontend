@@ -47,9 +47,9 @@ useEffect(() => {
 
     var user = jwt_decode(token);
     currentUser = user;
-    setUser(user);
+    setUser(user); 
 
-    axios.get('http://localhost:5000/friends',{withCredentials: true })
+    axios.get(process.env.REACT_APP_HOST  + '/friends',{withCredentials: true })
     .then((data)=> {
 
      var fns =  data?.data.filter((u)=> {  return u._id !== user.id    })
@@ -61,7 +61,7 @@ useEffect(() => {
     if(getThreadId() && getThreadId().length !== 0){
         setThred(getThreadId());
 
-        axios.post('http://localhost:5000/thread?id='+ getThreadId(),
+        axios.post(process.env.REACT_APP_HOST  + '/thread?id='+ getThreadId(),
         {
         userId: currentUser.id
         },

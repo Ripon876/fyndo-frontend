@@ -15,7 +15,7 @@ const token = useRecoilValue(authToken);
 const user = jwt_decode(token);
 
 const logOut = ()=> {
-	axios.get('http://localhost:5000/logout',{withCredentials: true })
+	axios.get(process.env.REACT_APP_HOST  + '/logout',{withCredentials: true })
     .then((res)=> {
     	socket.disconnect();
     	navigate('/login');

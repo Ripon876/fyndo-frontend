@@ -11,9 +11,9 @@ const Layout = Component => ({ ...props }) => {
 console.log('Layout used')
 
 
-	console.log(socket)
+	// console.log(socket)
 
-axios.get('http://localhost:5000/refreshtoken',{withCredentials: true })
+axios.get(process.env.REACT_APP_HOST + '/refreshtoken',{withCredentials: true })
 .then((data) => {
  
 

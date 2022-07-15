@@ -17,7 +17,7 @@ const handleSubmit = (e) => {
 	e.preventDefault()
 	 if(first_name && password && username){
 
-		axios.post('http://localhost:5000/signup',
+		axios.post(process.env.REACT_APP_HOST  + '/signup',
 			{
 			first_name,
 			last_name,

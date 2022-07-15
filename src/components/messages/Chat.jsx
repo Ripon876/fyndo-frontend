@@ -75,13 +75,6 @@ useEffect(() => {
 
 
 
-/*useEffect(() => {
-    
-
-
-}, [selectedImg])*/
-
-
 
 	return (
 		   <div className="chat-history">
@@ -94,9 +87,11 @@ useEffect(() => {
 
                         {  chatingWith && messages?.map((msg) => 
                             <li className="clearfix">
-                                <div className="message-data">
-                                      <span className="message-data-time"></span>
-                                </div>
+                                {/*  
+                                    <div className="message-data">
+                                          <span className="message-data-time"></span>
+                                    </div>
+                               */}
                                 <div className={`message  ${  msg?.from?.id  == chatingWith?._id ? 'other-message' : 'my-message float-right'} ${msg.type === 'emoji' ? 'emoji' : ''} `}>
 
                                 {msg.type === 'text' ?  msg.msg  : 
