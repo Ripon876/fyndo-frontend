@@ -62,7 +62,7 @@ socket.emit('leave_room',thred);
 }, [])
 */
 	return (
-		<li className={`clearfix  ${user._id  === chatingWith._id ? 'selectedChat' : ''}`} onClick={changeThred} key={user._id} >
+		<li className={`clearfix  ${user?._id  === chatingWith._id ? 'selectedChat' : ''}`} onClick={changeThred} key={user?._id} >
            <span className={`listImg ${activerUsers?.includes(user._id) ? 'active' : ''} `}>
                 <img src="https://via.placeholder.com/50" alt="avatar" />
                 <div className="activeStatus"></div>
@@ -75,7 +75,7 @@ socket.emit('leave_room',thred);
 
                   >{user?.first_name} {user.last_name}</div>
                 {/*{(unseenMsg !== {} ) && <h1>dsfdsfdsfsdfds</h1>}*/}
-               {(unseenMsg.id === user._id) && <div className="status">New message </div>}  {/*<i className="fa fa-circle offline"></i>*/}                                             
+               {(unseenMsg.id === user?._id) && <div className="status">New message </div>}  {/*<i className="fa fa-circle offline"></i>*/}                                             
             </div>
         </li>
 	)

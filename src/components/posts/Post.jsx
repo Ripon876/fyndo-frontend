@@ -27,7 +27,7 @@ const user = jwt_decode(token);
 					           </div>
 				           	   <div className='align-items-center d-flex row'>
 					           	    <Link to={`/profile?id=${post?.creator?._id}`} >
-					           	   		<h5 className='userName'>{post?.creator.first_name} {post?.creator.last_name}</h5>
+					           	   		<h5 className='userName'>{post?.creator?.first_name} {post?.creator?.last_name}</h5>
 					           	    </Link>
 				           	   	    <span className="postTime"><Moment fromNow>{post?.creationDate}</Moment></span>
 				           	   </div>
