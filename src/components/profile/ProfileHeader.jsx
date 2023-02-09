@@ -1,15 +1,23 @@
 import React from 'react'
+import UpdateImg from './UpdateImg';
+import {decompressFromUTF16} from 'lz-string';
+
 
 function ProfileHeader({user}) {
+
+
+
 	return (
 		<>
 			<div className="profileHeader position-relative">
 				<div className='coverPhoto position-relative'>
-					<img src="https://via.placeholder.com/650x300" className='img-fluid w-100 rounded-top' alt="Cover Photo" />
+					<img style={{ height: '360px',objectFit: 'cover'}} src={ user?.cover_photo ? decompressFromUTF16(user?.cover_photo) : "https://via.placeholder.com/650x300"} className='img-fluid w-100 rounded-top' alt="Cover Photo" />
 				    <div className='bottom-0 coverFadeBottom position-absolute w-100'></div>
+				    <div className='profile_img_uploader'><UpdateImg id={user?._id}  type='cover_photo' /></div>
 				</div>
 				<div className='profilePhoto'>
-					<img src="https://via.placeholder.com/200x200" alt=""  className='rounded-circle w-100' />
+					<img  src={ user?.profile_photo ? decompressFromUTF16(user?.profile_photo) : "https://via.placeholder.com/200x200"} alt="Profile photo"  className='rounded-circle w-100' />
+					<div className='profile_img_uploader'><UpdateImg  id={user?._id} type='profile_photo' /></div>
 				</div>
 			</div>
 			<div className='my-2 mb-5 pt-4 text-center userName'>

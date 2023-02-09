@@ -57,8 +57,10 @@ socket.emit('leave_room',thred);
 
 }
 
-
-
+/*useEffect(() => {
+    console.log(user)
+}, [])
+*/
 	return (
 		<li className={`clearfix  ${user._id  === chatingWith._id ? 'selectedChat' : ''}`} onClick={changeThred} key={user._id} >
            <span className={`listImg ${activerUsers?.includes(user._id) ? 'active' : ''} `}>

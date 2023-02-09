@@ -25,3 +25,12 @@
 .bio p {
     font-weight: bold;
 }
+
+.profile_img_uploader {
+    font-size: 34px;
+    color: #9e9e9e;
+    position: absolute;
+    right: 15px;
+    bottom: 5px;
+    cursor: pointer;
+}
