@@ -1,34 +1,34 @@
 .settingSections {
-    color: #9ca3af;
-    font-weight: bold;
-    background: #1e1e1e;
+  color: #9ca3af;
+  font-weight: bold;
+  background: #1e1e1e;
 }
 
 .settingSections input {
-    background: #121212 !important;
+  background: #121212 !important;
 }
 .settingSections textarea {
-    background: #121212 !important;
+  background: #121212 !important;
 }
 
 .formSubBtn {
-    background: #9ca3af !important;
-    color: #121212 !important;
-    font-weight: bold !important;
+  background: #9ca3af !important;
+  color: #121212 !important;
+  font-weight: bold !important;
 }
 .btn:focus {
-    box-shadow: 4px 1px 15px 0px rgb(18 18 18) !important;
+  box-shadow: 4px 1px 15px 0px rgb(18 18 18) !important;
 }
-.form-select{
-    background: #121212 !important;
-    border: none !important;
-    margin: 0 !important;
-    color: #9ca3af !important;
+.form-select {
+  background: #121212 !important;
+  border: none !important;
+  margin: 0 !important;
+  color: #9ca3af !important;
 }
 .form-select:focus {
-    /* box-shadow: 0 0 0 0.25rem rgb(156 163 175 / 18%) !important; */
-    box-shadow: 0px 0px 10px 0px rgb(18 18 18) !important;
+  /* box-shadow: 0 0 0 0.25rem rgb(156 163 175 / 18%) !important; */
+  box-shadow: 0px 0px 10px 0px rgb(18 18 18) !important;
 }
-.clearInput{
-    cursor: pointer;
+.clearInput {
+  cursor: pointer;
 }

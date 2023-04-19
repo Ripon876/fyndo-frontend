@@ -6,12 +6,12 @@ function SearchBar() {
     <div>
       <div className="container py-3">
         <div className="row height d-flex justify-content-center align-items-center">
-          <div class="col-md-2">
+          <div className="col-5 col-md-2">
             <div>
               <img src="./logo.png" alt="Fyndo Logo" className="img-fluid" />
             </div>
           </div>
-          <div className="col-md-6">
+          <div className="col-9 col-md-6">
             <div className="form">
               <i className="fa fa-search"></i>
               <input

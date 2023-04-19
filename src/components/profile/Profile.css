@@ -1,36 +1,45 @@
-.coverFadeBottom{
-/*	background: linear-gradient(0deg, #121212, #cccccc);
+.coverFadeBottom {
+  /*	background: linear-gradient(0deg, #121212, #cccccc);
     height: 75px;*/
-    background: linear-gradient(0deg, #121212, #cccccc00);
-    height: 100%;
-    bottom: -7px !important;
+  background: linear-gradient(0deg, #121212, #cccccc00);
+  height: 100%;
+  bottom: -7px !important;
 }
 
-.profilePhoto{
-	position: absolute;
-    bottom: -5%;
-    left: 50%;
-    transform: translate(-50%, 0);
-    width: 25%;
+@media screen and (max-width: 680px) {
+  .coverPhoto img {
+    height: 200px !important;
+    object-fit: contain !important;
+  }
 }
-.bio{
-	background: #1e1e1e;
-    color: #9ca3af;
-    margin-top: 20px;
+.profilePhoto {
+  position: absolute;
+  bottom: -5%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  width: 25%;
 }
-.userPosts{
-	background: #1e1e1e;
-    color: #9ca3af;
+.bio {
+  background: #1e1e1e;
+  color: #9ca3af;
+  margin-top: 20px;
 }
 .bio p {
-    font-weight: bold;
+  font-size: 15px;
+}
+.userPosts {
+  background: #1e1e1e;
+  color: #9ca3af;
+}
+.bio p {
+  font-weight: bold;
 }
 
 .profile_img_uploader {
-    font-size: 34px;
-    color: #9e9e9e;
-    position: absolute;
-    right: 15px;
-    bottom: 5px;
-    cursor: pointer;
+  font-size: 34px;
+  color: #9e9e9e;
+  position: absolute;
+  right: 15px;
+  bottom: 5px;
+  cursor: pointer;
 }

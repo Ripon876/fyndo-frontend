@@ -1,12 +1,13 @@
+import { useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { Outlet, Navigate } from "react-router-dom";
 
-function AuthProtected() {
+function UnProtected() {
   const [cookies, setCookie] = useCookies([]);
 
   // console.log(cookies.token);
 
-  return cookies.token ? <Outlet /> : <Navigate to="/login" />;
+  return cookies.token ? <Navigate to="/" /> : <Outlet />;
 }
 
-export default AuthProtected;
+export default UnProtected;

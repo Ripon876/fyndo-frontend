@@ -1,29 +1,32 @@
-import React from 'react';
-import Sidebar from '../sidebar/Sidebar';
-import NewPost from '../newpost/NewPost';
-import SearchBar from '../search/SearchBar';
-import Posts from '../posts/Posts';
-import Layout from '../layout/Layout';
-
-
-
+import { useEffect, useState } from "react";
+import jwt_decode from "jwt-decode";
+import { useCookies } from "react-cookie";
+import Sidebar from "../sidebar/Sidebar";
+import NewPost from "../newpost/NewPost";
+import SearchBar from "../search/SearchBar";
+import Posts from "../posts/Posts";
+import socket from "../../socket/socket";
 
 function Dashboard() {
+  const [userData, setUserData] = useState({});
+  const [cookies, setCookie] = useCookies([]);
+  const user = jwt_decode(cookies.token);
 
+  useEffect(() => {
+    socket.emit("getProfileInfo", user?.id, (data) => {
+      let { post, ...ud } = data?.data;
+      setUserData(ud);
+    });
+  }, [user]);
 
-	return (
-		<div>
-	    <SearchBar />
-	    <NewPost />
-	    <Posts />
-	    <Sidebar />
-			{/*<h1>this is the Dashboard</h1>*/}
-		</div>
-	)
+  return (
+    <div>
+      <SearchBar />
+      <NewPost user={userData} />
+      <Posts />
+      <Sidebar />
+    </div>
+  );
 }
-
-
-// const  Dashboard = Layout(DashboardPage); 
-
 
 export default Dashboard;

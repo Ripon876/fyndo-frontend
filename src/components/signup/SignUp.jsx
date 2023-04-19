@@ -21,8 +21,8 @@ function SignUp() {
             last_name,
             username,
             password,
-          },
-          { withCredentials: true }
+          }
+          // { withCredentials: true }
         )
 
         .then((data) => {

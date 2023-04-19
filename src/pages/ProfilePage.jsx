@@ -1,14 +1,13 @@
-import Profile from '../components/profile/Profile';
-import Sidebar from '../components/sidebar/Sidebar';
-
+import Profile from "../components/profile/Profile";
+import Sidebar from "../components/sidebar/Sidebar";
 
 function ProfilePage() {
-	return (
-		<>
-			<Sidebar />
-			<Profile />
-		</>
-	)
+  return (
+    <>
+      <Sidebar />
+      <Profile />
+    </>
+  );
 }
 
 export default ProfilePage;

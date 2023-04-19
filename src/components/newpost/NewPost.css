@@ -1,35 +1,35 @@
-.profileImg{
-    border-radius: 50%;
+.profileImg {
+  border-radius: 50%;
 }
-.modal-content{
-    background: #1e1e1e !important;
-    color: #9ca3af !important;
+.modal-content {
+  background: #1e1e1e !important;
+  color: #9ca3af !important;
 }
-.closeModal{
-    cursor: pointer;
-}
-
-.modal input{
-        background: #121212 !important;
-}
-.modal  textarea{
-        background: #121212 !important;
-}
-.icon {  
-  height: 40px;  
-  width: 40px;  
+.closeModal {
+  cursor: pointer;
 }
 
-.button {  
-  background: transparent !important;  
-  outline: none !important;  
-  border: none !important;  
-}  
+.modal input {
+  background: #121212 !important;
+}
+.modal textarea {
+  background: #121212 !important;
+}
+.icon {
+  color: #9ca3af;
+  height: 40px;
+  width: 40px;
+}
 
-.emojiPicker{
-    left: 45% !important;
-    top: 5% !important;
+.button {
+  background: transparent !important;
+  outline: none !important;
+  border: none !important;
+}
 
+.emojiPicker {
+  left: 45% !important;
+  top: 5% !important;
 }
 
 .colored-toast .swal2-icon-success {
@@ -44,19 +44,16 @@
 }
 
 .swal2-timer-progress-bar {
-  
-    background: rgb(156 163 175) !important;
+  background: rgb(156 163 175) !important;
 }
 
 .swal2-icon.swal2-success .swal2-success-ring {
-
-    border: 0.25em solid rgb(156 163 175 / 36%) !important;
- 
+  border: 0.25em solid rgb(156 163 175 / 36%) !important;
 }
 
-.addImgToPost{
-    color: #000000;
-    font-size: 30px;
-    padding: 5px; 
-    cursor: pointer;
+.addImgToPost {
+  color: #9ca3af;
+  font-size: 30px;
+  padding: 5px;
+  cursor: pointer;
 }

@@ -1,14 +1,13 @@
-import Messages from '../components/messages/Messages';
-import Sidebar from '../components/sidebar/Sidebar';
-
+import Messages from "../components/messages/Messages";
+import Sidebar from "../components/sidebar/Sidebar";
 
 function MessagesPage() {
-	return (
-		<>
-			<Sidebar />
-			<Messages />
-		</>
-	)
+  return (
+    <>
+      <Sidebar />
+      <Messages />
+    </>
+  );
 }
 
 export default MessagesPage;

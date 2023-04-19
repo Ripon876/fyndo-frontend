@@ -1,36 +1,51 @@
-import {useState} from 'react';
-import {Link} from 'react-router-dom';
-import './NewPost.css';
-import Form  from './Form';
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { decompressFromUTF16 } from "lz-string";
+import "./NewPost.css";
+import Form from "./Form";
 
-function NewPost({profile}) {
+function NewPost({ profile, user }) {
+  const [showModal, setShowModal] = useState(false);
 
-const [showModal, setShowModal] = useState(false);
+  const closeModal = () => {
+    setShowModal(!showModal);
+  };
 
-
-const closeModal = () => {
-  setShowModal(!showModal);
-} 
-
-
-
-	return (
+  return (
     <>
-		<div>
-			<div className={profile ? '' : 'container py-3'} >
-            <div className="row height d-flex justify-content-center align-items-center">
-              <div className={profile ? '' : 'col-md-6 col-sm-9'}>
-                <div className="form d-flex">
-                  <Link to='/profile' ><img className='me-2 p-1 profileImg' src="https://via.placeholder.com/50" alt="Id name" /></Link>
-                  <input type="text" className="form-control form-input" placeholder="Write something.." onClick={()=> { setShowModal(!showModal) }} />
-                </div>
+      <div>
+        <div className={profile ? "" : "container py-3"}>
+          <div className="row height d-flex justify-content-center align-items-center">
+            <div className={profile ? "" : "col-9 col-md-6 col-sm-9"}>
+              <div className="form d-flex">
+                <Link to={"/profile/?id=" + user?._id}>
+                  <img
+                    className="me-2 p-1 profileImg"
+                    style={{ height: "50px", width: "50px" }}
+                    src={
+                      user?.profile_photo
+                        ? user?.profile_photo
+                        : "https://via.placeholder.com/200x200"
+                    }
+                    alt="Id name"
+                  />
+                </Link>
+                <input
+                  type="text"
+                  className="form-control form-input"
+                  placeholder="Write something.."
+                  onClick={() => {
+                    setShowModal(!showModal);
+                  }}
+                />
               </div>
             </div>
           </div>
-		</div>
-    {showModal && <Form close={closeModal} profile  /> }
+        </div>
+      </div>
+      {showModal && <Form close={closeModal} profile />}
     </>
-		)
+  );
 }
 
 export default NewPost;

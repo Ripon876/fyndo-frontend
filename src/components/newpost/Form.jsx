@@ -1,100 +1,116 @@
-import {useState,useEffect} from 'react';
-import {Fade} from 'react-reveal';
-import EmojiPopUp from '../../utils/EmojiPopUp';
-import {userAtom,authToken,postsAtom,userPostsAtom} from '../../store/store';
-import {useRecoilValue,useRecoilState} from 'recoil';
-import socket from '../../socket/socket';
+import { useState, useEffect } from "react";
+import { Fade } from "react-reveal";
+import EmojiPopUp from "../../utils/EmojiPopUp";
+import { userAtom, postsAtom, userPostsAtom } from "../../store/store";
+import { useRecoilValue, useRecoilState } from "recoil";
+import socket from "../../socket/socket";
 import jwt_decode from "jwt-decode";
-import Toast from '../../utils/ToastAlert';
+import Toast from "../../utils/ToastAlert";
+import { useCookies } from "react-cookie";
 
+function Form({ close, profile }) {
+  const [cookies, setCookie] = useCookies([]);
+  const [input, setInput] = useState("");
+  const c_user = useRecoilValue(userAtom);
+  const [posts, setPost] = useRecoilState(postsAtom);
+  const [userPosts, setUserPost] = useRecoilState(userPostsAtom);
 
+  var user = jwt_decode(cookies.token);
 
-
-
-function Form({close,profile}) {
-
-
-const [input, setInput] = useState("");   
-const c_user =  useRecoilValue(userAtom);
-const token =  useRecoilValue(authToken);
-const [posts, setPost] = useRecoilState(postsAtom);
-const [userPosts, setUserPost] = useRecoilState(userPostsAtom);
-
- var user = jwt_decode(token)
-
-const addEmoji = (e) => {  
-    setInput(input + e.native);  
-  
+  const addEmoji = (e) => {
+    setInput(input + e.native);
   };
 
+  const post = () => {
+    if (input !== "") {
+      var postData = {
+        creator: user.id,
+        content: input,
+      };
 
-const post = () => {
-		 
-	if(input !== ''){
+      socket.emit("post", postData, async (res) => {
+        if (res.status) {
+          setInput("");
+          close();
 
-		var postData = {
-			creator : user.id,
-			content : input
-		}
+          await Toast({
+            type: "success",
+            icon: "success",
+            title: "Post created successfully",
+          });
 
-		socket.emit('post',postData, async(res) => {
+          setPost((prvPosts) => [res.post, ...posts]);
 
-			if(res.status){
+          if (profile) {
+            setUserPost((prvPosts) => [res.post, ...userPosts]);
+          }
+        }
+      });
+    } else {
+      Toast({
+        type: "warning",
+        icon: "warning",
+        title: "Please write something",
+      });
+    }
+  };
 
-		        setInput('');
-		        close();
-				
-				await Toast({
-				  type: 'success',
-				  icon : 'success',
-				  title: 'Post created successfully'
-				})
-
-			setPost((prvPosts) => [res.post,...posts] );  
-
-				if(profile){
-					setUserPost((prvPosts) => [res.post,...userPosts])
-				}
-			}
-		});
-	}else{
-		 Toast({
-			  type: 'warning',
-			  icon : 'warning',
-			  title: 'Please write something'
-			})
-	}
-		
-};
-
-
-	return (
-		<>
-		<Fade duration={500} >
-			<div className="modal d-block row" id="exampleModalCenter" tabindex="-1" >
-				<div className="col-md-7 col-sm-10 m-auto modal-dialog-centered px-5" role="document">
-					<div className="modal-content p-3">
-						<h1 className='small text-end closeModal'  onClick={close} ><i class="fa-solid fa-xmark"></i></h1>
-						<div className="modal-body">
-							<div>
-								<div className="mb-3">
-									<label for="exampleInputPassword1" className="form-label">Write what you want</label>
-              					 	<i  className="fa-solid fa-image float-end addImgToPost"></i>
-             	 					<EmojiPopUp f={addEmoji} />
-									<textarea autoFocus  onChange={(e) => setInput(  e.target.value)} className='form-control' id="" cols="30" rows="10" value={input} />
-									<div class="mt-2">
-										<img src="https://via.placeholder.com/200x200" class="img-thumbnail m-1" style={{width : '70px',  backgroundColor: '#121212',border: '1px solid #121212'}} />
-									</div>
-								</div>
-								<button  onClick={post} className="btn t-btn">Post</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</Fade>
-		</>
-	)
+  return (
+    <>
+      <Fade duration={500}>
+        <div
+          className="modal d-block row"
+          id="exampleModalCenter"
+          tabindex="-1"
+        >
+          <div
+            className="col-md-7 col-sm-10 m-auto modal-dialog-centered px-5"
+            role="document"
+          >
+            <div className="modal-content p-3">
+              <h1 className="small text-end closeModal" onClick={close}>
+                <i class="fa-solid fa-xmark"></i>
+              </h1>
+              <div className="modal-body">
+                <div>
+                  <div className="mb-3">
+                    <label for="exampleInputPassword1" className="form-label">
+                      Write what you want
+                    </label>
+                    <i className="fa-solid fa-image float-end addImgToPost"></i>
+                    <EmojiPopUp f={addEmoji} />
+                    <textarea
+                      autoFocus
+                      onChange={(e) => setInput(e.target.value)}
+                      className="form-control"
+                      id=""
+                      cols="30"
+                      rows="10"
+                      value={input}
+                    />
+                    <div class="mt-2">
+                      <img
+                        src="https://via.placeholder.com/200x200"
+                        class="img-thumbnail m-1"
+                        style={{
+                          width: "70px",
+                          backgroundColor: "#121212",
+                          border: "1px solid #121212",
+                        }}
+                      />
+                    </div>
+                  </div>
+                  <button onClick={post} className="btn t-btn">
+                    Post
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Fade>
+    </>
+  );
 }
 
 export default Form;

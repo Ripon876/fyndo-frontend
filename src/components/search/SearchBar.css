@@ -1,51 +1,43 @@
-
-.form{
-
-    position: relative;
+.form {
+  position: relative;
 }
 
-.form .fa-search{
-
-    position: absolute;
-    top:20px;
-    left: 20px;
-    color: #9ca3af;
-
+.form .fa-search {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  color: #9ca3af;
 }
 
-.form span{
-
-        position: absolute;
-    right: 17px;
-    top: 13px;
-    padding: 2px;
-    border-left: 1px solid #d1d5db;
-
+.form span {
+  position: absolute;
+  right: 17px;
+  top: 13px;
+  padding: 2px;
+  border-left: 1px solid #d1d5db;
 }
 
-.left-pan{
-    padding-left: 7px;
+.left-pan {
+  padding-left: 7px;
 }
 
-.left-pan i{
-   color: #9ca3af;
-   padding-left: 10px;
+.left-pan i {
+  color: #9ca3af;
+  padding-left: 10px;
 }
 
-.form-input{
-
-    height: 55px;
-    text-indent: 33px;
-    border-radius: 10px;
+.form-input {
+  height: 55px;
+  text-indent: 33px;
+  border-radius: 10px;
 }
 
-.form-input:focus{
-
-    box-shadow: none !important;
-    border:none ;
+.form-input:focus {
+  box-shadow: none !important;
+  border: none;
 }
-.form-control{
-    color: #9ca3af !important;
-    background-color: #1e1e1e !important;
-    border: 2px solid #1e1e1e !important;
+.form-control {
+  color: #9ca3af !important;
+  background-color: #1e1e1e !important;
+  border: 2px solid #1e1e1e !important;
 }

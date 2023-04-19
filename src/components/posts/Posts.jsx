@@ -1,45 +1,30 @@
-import {useEffect} from 'react';
-import Post from './Post';
-import './Posts.css';
-import socket from '../../socket/socket';
-import {authToken,postsAtom} from '../../store/store';
-import {useRecoilValue,useRecoilState} from 'recoil';
+import { useEffect } from "react";
+import Post from "./Post";
+import "./Posts.css";
+import socket from "../../socket/socket";
+import { postsAtom } from "../../store/store";
+import { useCookies } from "react-cookie";
+import { useRecoilState } from "recoil";
 import jwt_decode from "jwt-decode";
-import InfiniteScroll from "react-infinite-scroll-component";
-
-
-
 
 function Posts() {
+  const [posts, setPost] = useRecoilState(postsAtom);
+  const [cookies, setCookie] = useCookies([]);
+  const user = jwt_decode(cookies.token);
 
-const token =  useRecoilValue(authToken);
-const [posts, setPost] = useRecoilState(postsAtom)
+  useEffect(() => {
+    socket.emit("getPost", user?.id, (data) => {
+      setPost(data.reverse());
+    });
+  }, []);
 
- var user = jwt_decode(token);
-
-
-
-useEffect(() => {
-	
-   socket.emit('getPost',user.id,(data)=> {
-      	setPost(data.reverse());
-   })
-
-}, [])
-
-
-	return (
-		<>
-
-		{posts?.map((post)=> 
-
-		<Post post={post} />
-
-		)}
-
-				
-		</>
-	)
+  return (
+    <>
+      {posts?.map((post, i) => (
+        <Post post={post} key={"post" + i} />
+      ))}
+    </>
+  );
 }
- 
+
 export default Posts;

@@ -1,32 +1,26 @@
-import React, { useState, useEffect } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { useCookies } from "react-cookie";
 import axios from "axios";
-import { authToken } from "../../store/store";
-import { useRecoilState } from "recoil";
 import "./Login.css";
 import Toast from "../../utils/ToastAlert";
 
 function Login() {
   const [username, setUn] = useState("");
   const [password, setPwd] = useState("");
-  const [auth, setAuth] = useRecoilState(authToken);
-  const navigate = useNavigate();
+  const [cookies, setCookie] = useCookies([]);
+
   const { state } = useLocation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (username && password) {
       axios
-        .post(
-          process.env.REACT_APP_HOST + "/login",
-          { username, password },
-          { withCredentials: true }
-        )
+        .post(process.env.REACT_APP_HOST + "/login", { username, password })
         .then((data) => {
-          setAuth(data.data.token);
+          setCookie("token", data.data.token, { path: "/" });
         })
         .then(() => {
-          // state?.prvUrl ? navigate(state.prvUrl) : navigate('/');
           state?.prvUrl
             ? (window.location = state.prvUrl)
             : (window.location = "/");
@@ -52,7 +46,10 @@ function Login() {
               <div className="section pb-5 pt-5 pt-sm-2 text-center">
                 <div className="card-3d-wrap mx-auto">
                   <div className="card-3d-wrapper">
-                    <div className="card-front" style={{backgroundImage: "url(form-bg.svg)"}}>
+                    <div
+                      className="card-front"
+                      style={{ backgroundImage: "url(form-bg.svg)" }}
+                    >
                       <div className="center-wrap">
                         <div className="section text-center">
                           <form onSubmit={handleSubmit}>
