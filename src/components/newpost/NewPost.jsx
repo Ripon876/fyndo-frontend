@@ -18,13 +18,13 @@ function NewPost({ profile, user }) {
           <div className="row height d-flex justify-content-center align-items-center">
             <div className={profile ? "" : "col-9 col-md-6 col-sm-9"}>
               <div className="form d-flex">
-                <Link to={"/profile/?id=" + user?._id}>
+                <Link to={"/profile/?id=" + user?.id}>
                   <img
                     className="me-2 p-1 profileImg"
                     style={{ height: "50px", width: "50px" }}
                     src={
-                      user?.profile_photo
-                        ? user?.profile_photo
+                      user?.profilePhoto
+                        ? user?.profilePhoto
                         : "https://via.placeholder.com/200x200"
                     }
                     alt="Id name"

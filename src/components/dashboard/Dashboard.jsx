@@ -5,24 +5,30 @@ import Sidebar from "../sidebar/Sidebar";
 import NewPost from "../newpost/NewPost";
 import SearchBar from "../search/SearchBar";
 import Posts from "../posts/Posts";
-import socket from "../../socket/socket";
+import { useQuery, gql } from "@apollo/client";
+import { Circle2 } from "react-preloaders2";
 
 function Dashboard() {
   const [userData, setUserData] = useState({});
   const [cookies, setCookie] = useCookies([]);
   const user = jwt_decode(cookies.token);
+  const query = gql`
+    {
+      user {
+        id
+        profilePhoto
+      }
+    }
+  `;
 
-  useEffect(() => {
-    socket.emit("getProfileInfo", user?.id, (data) => {
-      let { post, ...ud } = data?.data;
-      setUserData(ud);
-    });
-  }, [user]);
+  const { loading, error, data } = useQuery(query);
 
+  console.log(data);
   return (
     <div>
+      {loading && <Circle2 color={"#9ca3af"} />}
       <SearchBar />
-      <NewPost user={userData} />
+      <NewPost user={data?.user} />
       <Posts />
       <Sidebar />
     </div>

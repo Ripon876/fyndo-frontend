@@ -1,47 +1,38 @@
-import { useEffect, useState } from "react";
-import socket from "../../socket/socket";
-import { useRecoilValue } from "recoil";
-import { useCookies } from "react-cookie";
-import jwt_decode from "jwt-decode";
+import { useQuery, gql } from "@apollo/client";
 import "./Profile.css";
 import ProfileHeader from "./ProfileHeader";
 import ProfilePosts from "./ProfilePosts";
 import ProfileInfo from "./ProfileInfo";
-import { useLocation } from "react-router-dom";
-import { fileAtom } from "../../store/store";
+import { Circle2 } from "react-preloaders2";
 
 function Profile() {
-  const [cookies, setCookie] = useCookies([]);
-  const user = jwt_decode(cookies.token);
-  const file = useRecoilValue(fileAtom);
-
-  const [userData, setUserData] = useState({});
-  const location = useLocation();
-
-  useEffect(() => {
-    socket.emit("getProfileInfo", getUserId(), (data) => {
-      if (data?.data) {
-        let { post, ...ud } = data?.data;
-        setUserData(ud);
+  const query = gql`
+    {
+      user {
+        id
+        firstName
+        lastName
+        bio
+        email
+        phone
+        address
+        profilePhoto
+        coverPhoto
       }
-    });
-    console.log("file changed");
-  }, [location, file]);
+    }
+  `;
 
-  function getUserId() {
-    let params = new URLSearchParams(document.location.search);
-    return params.get("id");
-  }
-
+  const { loading, error, data } = useQuery(query);
+  
   return (
     <div className="profile py-4">
       <div className="container">
         <div className="row">
           <div className="col-10 m-auto">
-            <ProfileHeader user={userData} />
+            <ProfileHeader user={data?.user} />
             <div className="row">
-              <ProfileInfo user={userData} />
-              <ProfilePosts userData={userData} />
+              <ProfileInfo user={data?.user} />
+              <ProfilePosts userData={data?.user} />
             </div>
           </div>
         </div>

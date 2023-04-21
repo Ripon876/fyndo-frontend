@@ -1,57 +1,66 @@
 import { useState, useEffect } from "react";
-import { useCookies } from "react-cookie";
+import { Circle2 } from "react-preloaders2";
+import { gql, useMutation } from "@apollo/client";
 import jwt_decode from "jwt-decode";
 import socket from "../../socket/socket";
 import Toast from "../../utils/ToastAlert";
 
-function BasicInfo() {
-  const [cookies, setCookie] = useCookies([]);
-  const user = jwt_decode(cookies.token);
+function BasicInfo({ user }) {
   const [basicInfo, setBasicInfo] = useState({
-    first_name: "",
-    last_name: "",
+    firstName: "",
+    lastName: "",
     bio: "",
   });
 
   useEffect(() => {
-    socket.emit("getUserInfo", user.id, (res) => {
-      if (res.status) {
-        setBasicInfo({
-          first_name: res.data?.first_name,
-          last_name: res.data?.last_name,
-          bio: res.data?.bio ? res.data?.bio : "",
-        });
-      }
+    setBasicInfo({
+      firstName: user?.firstName,
+      lastName: user?.lastName,
+      bio: user?.bio,
     });
-  }, []);
+  }, [user]);
+
+  const props = Object.keys(basicInfo)
+    .map((key) => `${key}: ${"$" + key}`)
+    .join(",");
+
+  const query = gql`
+      mutation {
+       updateUser (${props}){
+         firstName
+         lastName
+         bio
+       }
+     }
+     `;
+
+  const [updateInfo, { data, loading, error }] = useMutation(query);
 
   const saveBasicInfo = () => {
     if (Object.values(basicInfo).some((i) => i !== "")) {
-      socket.emit("saveBasicInfo", user.id, basicInfo, (res) => {
-        if (res.status) {
-          setBasicInfo({
-            first_name: res.data?.first_name,
-            last_name: res.data?.last_name,
-            bio: res.data?.bio ? res.data?.bio : "",
-          });
-          Toast({
-            type: "success",
-            icon: "success",
-            title: "Basic Information updated",
-          });
-        } else {
-          Toast({
-            type: "error",
-            icon: "error",
-            title: "Something went wrong",
-          });
-        }
-      });
+      updateInfo({ variables: { ...basicInfo } });
+
+      if (error) {
+        Toast({
+          type: "error",
+          icon: "error",
+          title: "Something went wrong",
+        });
+      }
+      if (data) {
+        Toast({
+          type: "success",
+          icon: "success",
+          title: "Basic Information updated",
+        });
+      }
     }
   };
 
   return (
     <div className="row">
+      {!user && <Circle2 color={"#9ca3af"} />}
+
       <div className="col-10 m-auto">
         <div className="row">
           <div className="col-12 col-md-8 p-5 settingSections">
@@ -63,18 +72,18 @@ function BasicInfo() {
               <div className="d-flex gap-3">
                 <input
                   type="text"
-                  defaultValue={basicInfo?.first_name}
+                  defaultValue={basicInfo?.firstName}
                   onChange={(e) => {
-                    setBasicInfo({ ...basicInfo, first_name: e.target.value });
+                    setBasicInfo({ ...basicInfo, firstName: e.target.value });
                   }}
                   className="form-control"
                   placeholder="First Name"
                 />
                 <input
                   type="text"
-                  defaultValue={basicInfo?.last_name}
+                  defaultValue={basicInfo?.lastName}
                   onChange={(e) => {
-                    setBasicInfo({ ...basicInfo, last_name: e.target.value });
+                    setBasicInfo({ ...basicInfo, lastName: e.target.value });
                   }}
                   className="form-control"
                   placeholder="Last Name"

@@ -10,8 +10,8 @@ function ProfileHeader({ user }) {
           <img
             style={{ height: "360px", objectFit: "cover" }}
             src={
-              user?.cover_photo
-                ? user?.cover_photo
+              user?.coverPhoto
+                ? user?.coverPhoto
                 : "https://via.placeholder.com/650x300"
             }
             className="img-fluid w-100 rounded-top"
@@ -25,8 +25,8 @@ function ProfileHeader({ user }) {
         <div className="profilePhoto">
           <img
             src={
-              user?.profile_photo
-                ? user?.profile_photo
+              user?.profilePhoto
+                ? user?.profilePhoto
                 : "https://via.placeholder.com/200x200"
             }
             alt="Profile photo"
@@ -39,7 +39,7 @@ function ProfileHeader({ user }) {
       </div>
       <div className="my-2 mb-5 pt-4 text-center userName">
         <h1>
-          {user?.first_name} {user?.last_name}
+          {user?.firstName} {user?.lastName}
         </h1>
       </div>
     </>
