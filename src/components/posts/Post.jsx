@@ -2,15 +2,8 @@ import React from "react";
 import Moment from "react-moment";
 import PostOptions from "./PostOptions";
 import { Link } from "react-router-dom";
-import jwt_decode from "jwt-decode";
-import { decompressFromUTF16 } from "lz-string";
-import { useCookies } from "react-cookie";
 
 function Post({ post, profile, showOptions, rp }) {
-  const [cookies, setCookie] = useCookies([]);
-  const user = jwt_decode(cookies.token);
-
-
   return (
     <>
       <div className={profile ? "" : "container"}>
@@ -34,7 +27,7 @@ function Post({ post, profile, showOptions, rp }) {
                   </Link>
                 </div>
                 <div className="align-items-center d-flex row">
-                  <Link to={`/profile?id=${post?.creator?._id}`}>
+                  <Link to={`/profile?id=${post?.creator?.id}`}>
                     <h5 className="userName mb-0">
                       {post?.creator?.firstName} {post?.creator?.lastName}
                     </h5>

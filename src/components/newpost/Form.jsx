@@ -1,16 +1,14 @@
 import { useState, useEffect } from "react";
 import { Fade } from "react-reveal";
 import EmojiPopUp from "../../utils/EmojiPopUp";
-import { postsAtom, userPostsAtom } from "../../store/store";
-import { useRecoilState } from "recoil";
 import { gql, useMutation } from "@apollo/client";
 import { ShowError, ShowSuceess } from "../../utils/Alerts";
 import { Circle2 } from "react-preloaders2";
+import { useDispatch } from "react-redux";
 
 function Form({ close, profile }) {
   const [input, setInput] = useState("");
-  const [posts, setPost] = useRecoilState(postsAtom);
-  const [userPosts, setUserPost] = useRecoilState(userPostsAtom);
+  const dispatch = useDispatch();
 
   const addEmoji = (e) => {
     setInput(input + e.native);
@@ -40,11 +38,16 @@ function Form({ close, profile }) {
     }
   };
 
-  if (data) {
-    setPost((prvPosts) => [data.createPost, ...posts]);
-    setInput("");
-    close();
-  }
+  useEffect(() => {
+    if (data?.createPost) {
+      dispatch({
+        type: "ADD_POST",
+        post: data.createPost,
+      });
+      setInput("");
+      close();
+    }
+  }, [data]);
 
   return (
     <>
