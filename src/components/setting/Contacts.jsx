@@ -1,57 +1,48 @@
 import { useState, useEffect } from "react";
-import { useCookies } from "react-cookie";
-import jwt_decode from "jwt-decode";
-import socket from "../../socket/socket";
-import Toast from "../../utils/ToastAlert";
+import { gql, useMutation } from "@apollo/client";
+import { Circle2 } from "react-preloaders2";
+import { ShowError, ShowSuceess } from "../../utils/Alerts";
 
-function Contacts() {
-  const [cookies, setCookie] = useCookies([]);
-  const user = jwt_decode(cookies.token);
+function Contacts({ user }) {
   const [contacts, setContacts] = useState({
-    phone_num: "",
+    phone: "",
     email: "",
     address: "",
   });
 
   useEffect(() => {
-    socket.emit("getUserInfo", user.id, (res) => {
-      if (res.status) {
-        setContacts({
-          phone_num: res.data?.contacts?.phone_num ?? "",
-          email: res.data?.contacts?.email ?? "",
-          address: res.data?.contacts?.address ?? "",
-        });
-      }
+    setContacts({
+      phone: user?.phone,
+      email: user?.email,
+      address: user?.address,
     });
-  }, []);
+ 
+  }, [user]);
+
+  const query = gql`
+    mutation UpdateUser($phone: String!, $email: String!, $address: String!) {
+      updateUser(phone: $phone, email: $email, address: $address) {
+        firstName
+        lastName
+        bio
+      }
+    }
+  `;
+
+  const [updateInfo, { data, loading, error }] = useMutation(query);
 
   const saveContacts = () => {
     if (Object.values(contacts).some((i) => i !== "")) {
-      socket.emit("saveContacts", user.id, contacts, (res) => {
-        if (res.status) {
-          setContacts({
-            phone_num: res.data?.contacts?.phone_num,
-            email: res.data?.contacts?.email,
-            address: res.data?.contacts?.address,
-          });
-          Toast({
-            type: "success",
-            icon: "success",
-            title: "Contacts updated",
-          });
-        } else {
-          Toast({
-            type: "error",
-            icon: "error",
-            title: "Something went wrong",
-          });
-        }
-      });
+      updateInfo({ variables: { ...contacts } });
     }
   };
 
   return (
     <div className="row mt-5">
+      {loading && <Circle2 color={"#9ca3af"} />}
+      {error && <ShowError />}
+      {error && <ShowError />}
+      {data && <ShowSuceess msg="Contact details updated" />}
       <div className="col-10 m-auto">
         <div className="row">
           <div className=" settingSections col-12 col-md-8 p-5">
@@ -63,9 +54,9 @@ function Contacts() {
               <div className="d-flex gap-3">
                 <input
                   type="number"
-                  defaultValue={contacts?.phone_num}
+                  defaultValue={contacts?.phone}
                   onChange={(e) => {
-                    setContacts({ ...contacts, phone_num: e.target.value });
+                    setContacts({ ...contacts, phone: e.target.value });
                   }}
                   className="form-control"
                   placeholder="number"

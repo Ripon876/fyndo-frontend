@@ -1,14 +1,11 @@
 import { useState, useEffect } from "react";
-import { useCookies } from "react-cookie";
-import jwt_decode from "jwt-decode";
+import { gql, useMutation } from "@apollo/client";
 import Institute from "./Institute";
-import socket from "../../socket/socket";
-import Toast from "../../utils/ToastAlert";
+import { Circle2 } from "react-preloaders2";
+import { ShowError, ShowSuceess } from "../../utils/Alerts";
 
-function Education() {
+function Education({ user }) {
   const [formsList, setFormsList] = useState([]);
-  const [cookies, setCookie] = useCookies([]);
-  const user = jwt_decode(cookies.token);
   const [institutes, setInstitutes] = useState([]);
 
   const onAddBtnClick = () => {
@@ -24,40 +21,33 @@ function Education() {
     return parsedData.filter((i) => i);
   };
 
+  useEffect(() => {
+    setInstitutes(user?.education);
+  }, [user]);
+
+  const query = gql`
+    mutation UpdateUser($education: String) {
+      updateUser(education: $education) {
+        firstName
+      }
+    }
+  `;
+
+  const [updateInfo, { data, loading, error }] = useMutation(query);
   const handleSubmit = (e) => {
     e.preventDefault();
-
     const data = new FormData(e.target);
     const values = [...data.entries()];
-    // console.log(parseData(values))
-
-    socket.emit("saveEducationInfo", user.id, parseData(values), (res) => {
-      if (res.status) {
-        Toast({
-          type: "success",
-          icon: "success",
-          title: "Education updated",
-        });
-      } else {
-        Toast({
-          type: "error",
-          icon: "error",
-          title: "Something went wrong",
-        });
-      }
-    });
+    console.log(parseData(values));
+    updateInfo({ variables: { education: JSON.stringify(parseData(values)) } });
   };
-
-  useEffect(() => {
-    socket.emit("getUserInfo", user.id, (res) => {
-      if (res.status) {
-        setInstitutes(res.data.education);
-      }
-    });
-  }, []);
 
   return (
     <div className="row mt-5">
+      {loading && <Circle2 color={"#9ca3af"} />}
+      {error && <ShowError />}
+      {error && <ShowError />}
+      {data && <ShowSuceess msg="Education details updated" />}
       <div className="col-10 m-auto">
         <div className="row">
           <div className="settingSections col-12 col-md-8 p-5">

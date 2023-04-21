@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react";
 import { Circle2 } from "react-preloaders2";
 import { gql, useMutation } from "@apollo/client";
-import jwt_decode from "jwt-decode";
-import socket from "../../socket/socket";
-import Toast from "../../utils/ToastAlert";
+import { ShowError, ShowSuceess } from "../../utils/Alerts";
 
 function BasicInfo({ user }) {
   const [basicInfo, setBasicInfo] = useState({
@@ -20,47 +18,35 @@ function BasicInfo({ user }) {
     });
   }, [user]);
 
-  const props = Object.keys(basicInfo)
-    .map((key) => `${key}: ${"$" + key}`)
-    .join(",");
-
   const query = gql`
-      mutation {
-       updateUser (${props}){
-         firstName
-         lastName
-         bio
-       }
-     }
-     `;
+    mutation UpdateUser(
+      $firstName: String!
+      $lastName: String!
+      $bio: String!
+    ) {
+      updateUser(firstName: $firstName, lastName: $lastName, bio: $bio) {
+        firstName
+        lastName
+        bio
+      }
+    }
+  `;
 
   const [updateInfo, { data, loading, error }] = useMutation(query);
 
   const saveBasicInfo = () => {
+  
     if (Object.values(basicInfo).some((i) => i !== "")) {
       updateInfo({ variables: { ...basicInfo } });
-
-      if (error) {
-        Toast({
-          type: "error",
-          icon: "error",
-          title: "Something went wrong",
-        });
-      }
-      if (data) {
-        Toast({
-          type: "success",
-          icon: "success",
-          title: "Basic Information updated",
-        });
-      }
     }
   };
 
   return (
     <div className="row">
-      {!user && <Circle2 color={"#9ca3af"} />}
-
+      {loading && <Circle2 color={"#9ca3af"} />}
+      {error && <ShowError />}
+      {error && <ShowError />}
+      {data && <ShowSuceess msg="Basic info updated" />}
       <div className="col-10 m-auto">
         <div className="row">
           <div className="col-12 col-md-8 p-5 settingSections">

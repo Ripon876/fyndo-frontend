@@ -27,14 +27,18 @@ function Institute({ institute }) {
             <select name="status" class="form-select form-select mb-3" required>
               <option selected>select</option>
               <option
-                value="1"
-                selected={institute && institute.status == 1 ? true : false}
+                value="Currently In"
+                selected={
+                  institute && institute.status == "Currently In" ? true : false
+                }
               >
                 Currently In
               </option>
               <option
-                value="2"
-                selected={institute && institute.status == 2 ? true : false}
+                value="Went out"
+                selected={
+                  institute && institute.status == "Went out" ? true : false
+                }
               >
                 Went out
               </option>
