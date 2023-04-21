@@ -9,10 +9,14 @@ import { useQuery, gql } from "@apollo/client";
 import { Circle2 } from "react-preloaders2";
 import cookie from "cookie";
 
+
 function Dashboard() {
   const [userData, setUserData] = useState({});
   const [cookies, setCookie] = useCookies([]);
   const user = jwt_decode(cookies.token);
+
+
+
 
   const query = gql`
     {

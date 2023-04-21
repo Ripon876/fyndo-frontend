@@ -10,6 +10,7 @@ function Post({ post, profile, showOptions, rp }) {
   const [cookies, setCookie] = useCookies([]);
   const user = jwt_decode(cookies.token);
 
+
   return (
     <>
       <div className={profile ? "" : "container"}>

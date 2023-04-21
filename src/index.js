@@ -14,6 +14,9 @@ import {
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import cookie from "cookie";
+import { Provider } from "react-redux";
+import store from "./store_v2";
+
 const root = createRoot(document.getElementById("root"));
 
 const httpLink = createHttpLink({
@@ -38,11 +41,13 @@ const client = new ApolloClient({
 root.render(
   <RecoilRoot>
     <RecoilNexus />
-    <ApolloProvider client={client}>
-      <Router>
-        <App />
-      </Router>
-    </ApolloProvider>
+    <Provider store={store}>
+      <ApolloProvider client={client}>
+        <Router>
+          <App />
+        </Router>
+      </ApolloProvider>
+    </Provider>
   </RecoilRoot>
 );
 

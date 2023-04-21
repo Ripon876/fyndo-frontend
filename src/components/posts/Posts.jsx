@@ -4,10 +4,11 @@ import "./Posts.css";
 import { useQuery, gql } from "@apollo/client";
 import { postsAtom } from "../../store/store";
 import { useRecoilState } from "recoil";
+import { useSelector, useDispatch } from "react-redux";
 
 function Posts() {
-  const [posts, setPost] = useRecoilState(postsAtom);
-
+  const posts = useSelector((state) => state.posts);
+  const dispatch = useDispatch();
   const query = gql`
     {
       posts {
@@ -25,11 +26,12 @@ function Posts() {
   `;
   const { loading, error, data } = useQuery(query);
 
-  // useEffect(() => {
-  //   if (data) {
-  //     setPost(data.posts.reverse());
-  //   }
-  // }, [data]);
+  useEffect(() => {
+    if (data?.posts) {
+      let posts = [...data.posts].reverse();
+      dispatch({ type: "ADD_POSTS", posts });
+    }
+  }, [data]);
 
   return (
     <>
