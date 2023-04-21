@@ -6,12 +6,6 @@
   bottom: -7px !important;
 }
 
-@media screen and (max-width: 680px) {
-  .coverPhoto img {
-    height: 200px !important;
-    object-fit: contain !important;
-  }
-}
 .profilePhoto {
   position: absolute;
   bottom: -5%;
@@ -19,6 +13,24 @@
   transform: translate(-50%, 0);
   width: 25%;
 }
+.profilePhoto img {
+  width: 225px !important;
+  height: 225px !important;
+  object-fit: cover;
+}
+
+@media screen and (max-width: 680px) {
+  .coverPhoto img {
+    height: 200px !important;
+    object-fit: contain !important;
+  }
+  .profilePhoto img {
+    width: 150px !important;
+    height: 150px !important;
+    object-fit: cover;
+  }
+}
+
 .bio {
   background: #1e1e1e;
   color: #9ca3af;

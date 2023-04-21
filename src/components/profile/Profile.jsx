@@ -3,16 +3,24 @@ import "./Profile.css";
 import ProfileHeader from "./ProfileHeader";
 import ProfilePosts from "./ProfilePosts";
 import ProfileInfo from "./ProfileInfo";
-import { Circle2 } from "react-preloaders2";
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 function Profile() {
   const searchParams = new URLSearchParams(window.location.search);
   const id = searchParams.get("id");
+  const location = useLocation();
 
+  useEffect(() => {
+    console.log("id updated");
+    if (!id || id.length !== 21) {
+      return (window.location = "/");
+    }
+  }, [location]);
 
   const query = gql`
-    {
-      user(id: "${id}") {
+    query GetUser($id: ID!) {
+      user(id: $id) {
         id
         firstName
         lastName
@@ -26,12 +34,10 @@ function Profile() {
     }
   `;
 
-  const { loading, error, data } = useQuery(query);
-  
-  if (!id || id.length !== 21) {
-    return window.location = "/";
-   }
- 
+  const { loading, error, data, refetch } = useQuery(query, {
+    variables: { id },
+  });
+
   return (
     <div className="profile py-4">
       <div className="container">
