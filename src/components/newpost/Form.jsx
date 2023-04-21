@@ -1,59 +1,50 @@
 import { useState, useEffect } from "react";
 import { Fade } from "react-reveal";
 import EmojiPopUp from "../../utils/EmojiPopUp";
-import { userAtom, postsAtom, userPostsAtom } from "../../store/store";
-import { useRecoilValue, useRecoilState } from "recoil";
-import socket from "../../socket/socket";
-import jwt_decode from "jwt-decode";
-import Toast from "../../utils/ToastAlert";
-import { useCookies } from "react-cookie";
+import { postsAtom, userPostsAtom } from "../../store/store";
+import { useRecoilState } from "recoil";
+import { gql, useMutation } from "@apollo/client";
+import { ShowError, ShowSuceess } from "../../utils/Alerts";
+import { Circle2 } from "react-preloaders2";
 
 function Form({ close, profile }) {
-  const [cookies, setCookie] = useCookies([]);
   const [input, setInput] = useState("");
-  const c_user = useRecoilValue(userAtom);
   const [posts, setPost] = useRecoilState(postsAtom);
   const [userPosts, setUserPost] = useRecoilState(userPostsAtom);
-
-  var user = jwt_decode(cookies.token);
 
   const addEmoji = (e) => {
     setInput(input + e.native);
   };
 
+  const query = gql`
+    mutation createPost($content: String!) {
+      createPost(content: $content) {
+        id
+        content
+        createdAt
+        creator {
+          id
+          firstName
+          lastName
+          profilePhoto
+        }
+      }
+    }
+  `;
+
+  const [createPost, { data, loading, error }] = useMutation(query);
+
   const post = () => {
     if (input !== "") {
-      var postData = {
-        creator: user.id,
-        content: input,
-      };
-
-      socket.emit("post", postData, async (res) => {
-        if (res.status) {
-          setInput("");
-          close();
-
-          await Toast({
-            type: "success",
-            icon: "success",
-            title: "Post created successfully",
-          });
-
-          setPost((prvPosts) => [res.post, ...posts]);
-
-          if (profile) {
-            setUserPost((prvPosts) => [res.post, ...userPosts]);
-          }
-        }
-      });
-    } else {
-      Toast({
-        type: "warning",
-        icon: "warning",
-        title: "Please write something",
-      });
+      createPost({ variables: { content: input } });
     }
   };
+
+  if (data) {
+    setPost((prvPosts) => [data.createPost, ...posts]);
+    setInput("");
+    close();
+  }
 
   return (
     <>
@@ -63,6 +54,9 @@ function Form({ close, profile }) {
           id="exampleModalCenter"
           tabindex="-1"
         >
+          {loading && <Circle2 color={"#9ca3af"} />}
+          {error && <ShowError />}
+          {data && <ShowSuceess msg="Post created" />}
           <div
             className="col-md-7 col-sm-10 m-auto modal-dialog-centered px-5"
             role="document"

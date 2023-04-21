@@ -25,7 +25,6 @@ function Dashboard() {
 
   const { loading, error, data } = useQuery(query);
 
-  console.log(data);
   return (
     <div>
       {loading && <Circle2 color={"#9ca3af"} />}

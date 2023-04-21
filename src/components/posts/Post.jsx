@@ -18,12 +18,12 @@ function Post({ post, profile, showOptions, rp }) {
             <div className="g-mb-30 media media-comment position-relative postContainer">
               <div className="d-flex py-3 ps-4">
                 <div className="ppimg">
-                  <Link to={`/profile?id=${post?.creator?._id}`}>
+                  <Link to={`/profile?id=${post?.creator?.id}`}>
                     <img
                       className="d-flex rounded-circle g-mt-3 g-mr-15"
                       src={
-                        post.creator?.profile_photo
-                          ? post.creator?.profile_photo
+                        post.creator?.profilePhoto
+                          ? post.creator?.profilePhoto
                           : "https://via.placeholder.com/200x200"
                       }
                       width={"45px"}
@@ -35,11 +35,11 @@ function Post({ post, profile, showOptions, rp }) {
                 <div className="align-items-center d-flex row">
                   <Link to={`/profile?id=${post?.creator?._id}`}>
                     <h5 className="userName mb-0">
-                      {post?.creator?.first_name} {post?.creator?.last_name}
+                      {post?.creator?.firstName} {post?.creator?.lastName}
                     </h5>
                   </Link>
                   <span className="postTime">
-                    <Moment fromNow>{post?.creationDate}</Moment>
+                    <Moment fromNow>{post?.createdAt}</Moment>
                   </span>
                 </div>
               </div>

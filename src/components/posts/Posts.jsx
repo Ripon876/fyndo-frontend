@@ -1,22 +1,35 @@
 import { useEffect } from "react";
 import Post from "./Post";
 import "./Posts.css";
-import socket from "../../socket/socket";
+import { useQuery, gql } from "@apollo/client";
 import { postsAtom } from "../../store/store";
-import { useCookies } from "react-cookie";
 import { useRecoilState } from "recoil";
-import jwt_decode from "jwt-decode";
 
 function Posts() {
   const [posts, setPost] = useRecoilState(postsAtom);
-  const [cookies, setCookie] = useCookies([]);
-  const user = jwt_decode(cookies.token);
 
-  useEffect(() => {
-    socket.emit("getPost", user?.id, (data) => {
-      setPost(data.reverse());
-    });
-  }, []);
+  const query = gql`
+    {
+      posts {
+        id
+        content
+        createdAt
+        creator {
+          id
+          firstName
+          lastName
+          profilePhoto
+        }
+      }
+    }
+  `;
+  const { loading, error, data } = useQuery(query);
+
+  // useEffect(() => {
+  //   if (data) {
+  //     setPost(data.posts.reverse());
+  //   }
+  // }, [data]);
 
   return (
     <>

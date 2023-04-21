@@ -45,7 +45,6 @@ function BasicInfo({ user }) {
     <div className="row">
       {loading && <Circle2 color={"#9ca3af"} />}
       {error && <ShowError />}
-      {error && <ShowError />}
       {data && <ShowSuceess msg="Basic info updated" />}
       <div className="col-10 m-auto">
         <div className="row">
