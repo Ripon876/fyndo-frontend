@@ -1,16 +1,12 @@
 import { useEffect, useState } from "react";
-// import { compressToUTF16, decompressFromUTF16 } from "lz-string";
 import Toast from "../../utils/ToastAlert";
-import { fileAtom } from "../../store/store";
-import { useRecoilState } from "recoil";
 import { Bars } from "react-loader-spinner";
-import { Fade } from "react-reveal";
 import ClickOutside from "react-click-outside";
-import socket from "../../socket/socket";
 import axios from "axios";
+import cookie from "cookie";
 
-function UpdateImg({ id, type }) {
-  // const [file, setFile] = useRecoilState(fileAtom);
+
+function UpdateImg({ id, type, ul, sul }) {
   const [file, setFile] = useState();
   const [showLoader, setShowLoader] = useState(false);
   const [showUploader, setShowUploader] = useState(false);
@@ -19,12 +15,19 @@ function UpdateImg({ id, type }) {
   const savePhoto = () => {
     setShowUploader(false);
     console.log(file);
-
-    socket.emit("savePhoto", { type, file }, id, (res) => {
-      console.log(res, "============");
-
-      if (res.status) {
-        console.log(res);
+    let formData = new FormData();
+    formData.append("file", file);
+    formData.append("type", type);
+    sul((old) => !old);
+    axios
+      .post(process.env.REACT_APP_HOST + "/updatePhoto", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          authtoken: cookie.parse(document.cookie).token,
+        },
+      })
+      .then((res) => {
+        sul((old) => !old);
         Toast({
           type: "success",
           icon: "success",
@@ -33,8 +36,15 @@ function UpdateImg({ id, type }) {
         setTimeout(() => {
           window.location.reload();
         }, 1500);
-      }
-    });
+      })
+      .catch((err) => {
+        console.log(err);
+        Toast({
+          type: "error",
+          icon: "error",
+          title: "Something went wrong",
+        });
+      });
   };
 
   const getImg = (file) => {
