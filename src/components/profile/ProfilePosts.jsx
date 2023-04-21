@@ -35,7 +35,8 @@ function ProfilePosts({ userData }) {
 
   return (
     <div className="col-8">
-      <NewPost profile user={userData} />
+
+      {getUserId() === user.id  && <NewPost profile user={userData} />}
       {userPosts?.map((post) => (
         <Post
           post={post}

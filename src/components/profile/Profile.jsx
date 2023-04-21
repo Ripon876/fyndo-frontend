@@ -6,9 +6,13 @@ import ProfileInfo from "./ProfileInfo";
 import { Circle2 } from "react-preloaders2";
 
 function Profile() {
+  const searchParams = new URLSearchParams(window.location.search);
+  const id = searchParams.get("id");
+
+
   const query = gql`
     {
-      user {
+      user(id: "${id}") {
         id
         firstName
         lastName
@@ -24,6 +28,10 @@ function Profile() {
 
   const { loading, error, data } = useQuery(query);
   
+  if (!id || id.length !== 21) {
+    return window.location = "/";
+   }
+ 
   return (
     <div className="profile py-4">
       <div className="container">

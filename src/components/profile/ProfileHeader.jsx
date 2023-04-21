@@ -1,8 +1,11 @@
 import React from "react";
 import UpdateImg from "./UpdateImg";
-import { decompressFromUTF16 } from "lz-string";
+import jwtDecode from "jwt-decode";
+import cookie from "cookie";
 
 function ProfileHeader({ user }) {
+  const decode = jwtDecode(cookie.parse(document.cookie).token);
+
   return (
     <>
       <div className="profileHeader position-relative">
@@ -18,9 +21,11 @@ function ProfileHeader({ user }) {
             alt="Cover Photo"
           />
           <div className="bottom-0 coverFadeBottom position-absolute w-100"></div>
-          <div className="profile_img_uploader">
-            <UpdateImg id={user?._id} type="cover_photo" />
-          </div>
+          {decode?.id === user?.id && (
+            <div className="profile_img_uploader">
+              <UpdateImg id={user.id} type="cover_photo" />
+            </div>
+          )}
         </div>
         <div className="profilePhoto">
           <img
@@ -32,9 +37,11 @@ function ProfileHeader({ user }) {
             alt="Profile photo"
             className="rounded-circle w-100"
           />
-          <div className="profile_img_uploader">
-            <UpdateImg id={user?._id} type="profile_photo" />
-          </div>
+          {decode?.id === user?.id && (
+            <div className="profile_img_uploader">
+              <UpdateImg id={user?.id} type="profile_photo" />
+            </div>
+          )}
         </div>
       </div>
       <div className="my-2 mb-5 pt-4 text-center userName">
