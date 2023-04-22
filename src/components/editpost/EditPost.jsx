@@ -1,61 +1,72 @@
 import { useState, useEffect } from "react";
 import { Fade } from "react-reveal";
 import EmojiPopUp from "../newpost/EmojiPopUp";
-import { userPostsAtom } from "../../store/store";
-import { useRecoilState } from "recoil";
-import socket from "../../socket/socket";
 import Toast from "../../utils/ToastAlert";
+import { useQuery, useMutation, gql } from "@apollo/client";
+import { Circle2 } from "react-preloaders2";
+import { ShowError, ShowSuceess } from "../../utils/Alerts";
 
 function EditPost({ id, setShowModal }) {
   const [input, setInput] = useState("");
-  const [userPosts, setUserPost] = useRecoilState(userPostsAtom);
 
   const addEmoji = (e) => {
     setInput(input + e.native);
-  };
-
-  const getPost = () => {
-    socket.emit("getPostToEdit", id, (post) => {
-      setInput(post.content);
-    });
   };
 
   const closeModal = () => {
     setShowModal(false);
   };
 
+  const query = gql`
+    query GetPost($id: ID!) {
+      post(id: $id) {
+        content
+      }
+    }
+  `;
+
+  const { loading, error, data } = useQuery(query, {
+    variables: { id: id },
+  });
+
   useEffect(() => {
-    getPost();
-  }, []);
+    console.log(error);
+    if (data) {
+      console.log(data);
+      setInput(data.post.content);
+    }
+  }, [data, error]);
+
+  const upQuery = gql`
+    mutation UpdatePost($id: ID!, $content: String!) {
+      updatePost(id: $id, content: $content) {
+        id
+        content
+        createdAt
+        creator {
+          id
+          firstName
+          lastName
+          profilePhoto
+        }
+      }
+    }
+  `;
+
+  const [updatePost, { data: upData, loading: upLoading, error: upError }] =
+    useMutation(upQuery);
 
   const editPost = () => {
-    socket.emit("editPost", id, input, (res) => {
-      console.log(res);
-
-      if (res.status) {
-        var posts = [...userPosts];
-        const index = posts.findIndex((post) => post._id === res.post._id);
-        posts.splice(index, 1, res.post);
-        // console.log(posts);
-
-        setUserPost(posts);
-        setShowModal(false);
-
-        Toast({
-          type: "success",
-          icon: "success",
-          title: "Post Edited successfully",
-        });
-      } else {
-        setShowModal(false);
-        Toast({
-          type: "error",
-          icon: "error",
-          title: "Something went wrong",
-        });
-      }
+    updatePost({
+      variables: {
+        id,
+        content: input,
+      },
     });
   };
+  if (upData || upError) {
+    setShowModal(false);
+  }
 
   return (
     <>
@@ -65,6 +76,9 @@ function EditPost({ id, setShowModal }) {
           id="exampleModalCenter"
           tabindex="-1"
         >
+          {(error || upError) && <ShowError />}
+          {upData && <ShowSuceess msg="Post Edited successfully" />}
+          {(loading || upLoading) && <Circle2 color={"#9ca3af"} />}
           <div
             className="col-md-7 col-sm-10 m-auto modal-dialog-centered px-5"
             role="document"

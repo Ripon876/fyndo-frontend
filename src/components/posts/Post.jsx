@@ -54,7 +54,7 @@ function Post({ post, profile, showOptions, rp }) {
                 </div>
               </div>
 
-              {showOptions && <PostOptions id={post._id} rp={rp} />}
+              {showOptions && <PostOptions id={post.id} rp={rp} />}
             </div>
           </div>
         </div>
