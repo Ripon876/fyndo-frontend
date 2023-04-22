@@ -1,5 +1,21 @@
 import { gql } from "@apollo/client";
 
+const GET_ALL_POSTS = gql`
+  {
+    posts {
+      id
+      content
+      createdAt
+      creator {
+        id
+        firstName
+        lastName
+        profilePhoto
+      }
+    }
+  }
+`;
+
 const CREATE_POST = gql`
   mutation createPost($content: String!) {
     createPost(content: $content) {
@@ -16,6 +32,4 @@ const CREATE_POST = gql`
   }
 `;
 
-export {
-    CREATE_POST
-}
+export { GET_ALL_POSTS, CREATE_POST };

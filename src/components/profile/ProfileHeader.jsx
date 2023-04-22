@@ -1,11 +1,10 @@
 import { useState } from "react";
 import UpdateImg from "./UpdateImg";
-import jwtDecode from "jwt-decode";
-import cookie from "cookie";
 import { Circle2 } from "react-preloaders2";
+import { useSelector } from "react-redux";
 
 function ProfileHeader({ user }) {
-  const decode = jwtDecode(cookie.parse(document.cookie).token);
+  const uId = useSelector((state) => state.user.id);
   const [upaloading, setUpaloading] = useState(false);
 
   return (
@@ -24,10 +23,10 @@ function ProfileHeader({ user }) {
             alt="Cover Photo"
           />
           <div className="bottom-0 coverFadeBottom position-absolute w-100"></div>
-          {decode?.id === user?.id && (
+          {uId === user?.id && (
             <div className="profile_img_uploader">
               <UpdateImg
-                id={user.id}
+                id={user?.id}
                 type="coverPhoto"
                 ul={upaloading}
                 sul={setUpaloading}
@@ -45,7 +44,7 @@ function ProfileHeader({ user }) {
             alt="Profile photo"
             className="rounded-circle w-100"
           />
-          {decode?.id === user?.id && (
+          {uId === user?.id && (
             <div className="profile_img_uploader">
               <UpdateImg
                 id={user?.id}

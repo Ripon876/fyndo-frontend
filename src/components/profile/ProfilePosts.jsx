@@ -1,13 +1,12 @@
-import { useCookies } from "react-cookie";
-import jwt_decode from "jwt-decode";
+import { useSelector } from "react-redux";
 import Post from "../posts/Post";
 import NewPost from "../newpost/NewPost";
-import { useSelector } from "react-redux";
 
 function ProfilePosts({ userData, posts }) {
-  const [cookies, setCookie] = useCookies([]);
-  const user = jwt_decode(cookies.token);
-  // const posts = useSelector((state) => state.userPosts);
+  const uId = useSelector((state) => state.user.id);
+  const state = useSelector((state) => state);
+
+  console.log(state);
   let postsWithCreator = posts.map((post) => {
     const pwc = {
       ...post,
@@ -27,14 +26,15 @@ function ProfilePosts({ userData, posts }) {
     return params.get("id");
   }
 
+  console.log(uId, getUserId());
   return (
     <div className="col-8">
-      {getUserId() === user.id && <NewPost profile user={userData} />}
+      {getUserId() === uId && <NewPost profile user={userData} />}
       {postsWithCreator?.map((post) => (
         <Post
           post={post}
           profile
-          showOptions={getUserId() === user.id ? true : false}
+          showOptions={getUserId() === uId ? true : false}
         />
       ))}
     </div>

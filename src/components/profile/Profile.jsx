@@ -26,7 +26,7 @@ function Profile() {
 
   const { loading, error, data } = useQuery(GET_USER_DATA, {
     variables: { id },
-    fetchPolicy: "network-only",
+    // fetchPolicy: "network-only",
   });
 
   return (

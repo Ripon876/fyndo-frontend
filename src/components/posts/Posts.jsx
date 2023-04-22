@@ -1,30 +1,13 @@
 import { useEffect } from "react";
+import { useQuery, gql } from "@apollo/client";
 import Post from "./Post";
 import "./Posts.css";
-import { useQuery, gql } from "@apollo/client";
-import { postsAtom } from "../../store/store";
-import { useRecoilState } from "recoil";
-import { useSelector, useDispatch } from "react-redux";
+import { GET_ALL_POSTS } from "../../queries/post";
 
 function Posts() {
-  const posts = useSelector((state) => state.posts);
-  const dispatch = useDispatch();
-  const query = gql`
-    {
-      posts {
-        id
-        content
-        createdAt
-        creator {
-          id
-          firstName
-          lastName
-          profilePhoto
-        }
-      }
-    }
-  `;
-  const { loading, error, data } = useQuery(query);
+ 
+
+  const { loading, error, data } = useQuery(GET_ALL_POSTS);
 
   return (
     <>

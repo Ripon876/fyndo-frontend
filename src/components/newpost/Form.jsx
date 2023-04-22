@@ -5,7 +5,8 @@ import { useMutation } from "@apollo/client";
 import { ShowError, ShowSuceess } from "../../utils/Alerts";
 import { Circle2 } from "react-preloaders2";
 import { useDispatch, useSelector } from "react-redux";
-import { CREATE_POST } from "../../queries/post";
+import { GET_ALL_POSTS, CREATE_POST } from "../../queries/post";
+import { GET_USER_DATA } from "../../queries/profile";
 
 function Form({ close, profile }) {
   const [input, setInput] = useState("");
@@ -16,7 +17,39 @@ function Form({ close, profile }) {
     setInput(input + e.native);
   };
 
-  const [createPost, { data, loading, error }] = useMutation(CREATE_POST);
+  const [createPost, { data, loading, error }] = useMutation(CREATE_POST, {
+    update: (cache, { data: { createPost } }) => {
+      // read the current cache data for the user
+      const result = cache.readQuery({
+        query: GET_USER_DATA,
+        variables: { id },
+      });
+      const { posts } = cache.readQuery({
+        query: GET_ALL_POSTS,
+      });
+
+      cache.writeQuery({
+        query: GET_ALL_POSTS,
+        data: {
+          posts: [createPost, ...posts],
+        },
+      });
+
+      if (!result) {
+        return;
+      } else {
+        const { user } = result;
+        cache.writeQuery({
+          query: GET_USER_DATA,
+          variables: { id },
+          data: {
+            user: { ...user, posts: [createPost, ...user.posts] },
+          },
+        });
+        return;
+      }
+    },
+  });
 
   const post = () => {
     if (input !== "") {
@@ -28,9 +61,9 @@ function Form({ close, profile }) {
     if (data?.createPost) {
       setInput("");
       close();
-      setTimeout(() => {
-        window.location.reload();
-      }, 500);
+      // setTimeout(() => {
+      //   window.location.reload();
+      // }, 500);
     }
   }, [data]);
 
