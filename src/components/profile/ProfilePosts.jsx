@@ -4,23 +4,23 @@ import jwt_decode from "jwt-decode";
 import { useLocation } from "react-router-dom";
 import Post from "../posts/Post";
 import NewPost from "../newpost/NewPost";
-import socket from "../../socket/socket";
+import { useQuery, gql } from "@apollo/client";
 import { userPostsAtom } from "../../store/store";
 import { useRecoilState } from "recoil";
 
-function ProfilePosts({ userData }) {
+function ProfilePosts({ userData,posts }) {
+ 
+  const location = useLocation();
   const [cookies, setCookie] = useCookies([]);
   const user = jwt_decode(cookies.token);
-  const [userPosts, setUserPosts] = useRecoilState(userPostsAtom);
-  const location = useLocation();
 
   useEffect(() => {
-    socket.emit("getProfileInfo", getUserId(), (data) => {
-      if (data?.data) {
-        let { post, ...ud } = data?.data;
-        setUserPosts(post.reverse());
-      }
-    });
+    // socket.emit("getProfileInfo", getUserId(), (data) => {
+    //   if (data?.data) {
+    //     let { post, ...ud } = data?.data;
+    //     setUserPosts(post.reverse());
+    //   }
+    // });
   }, [location]);
 
   function getUserId() {
@@ -29,15 +29,15 @@ function ProfilePosts({ userData }) {
   }
 
   const removePost = (id) => {
-    const posts = userPosts.filter((post) => post._id !== id);
-    setUserPosts(posts);
+    // const posts = userPosts.filter((post) => post._id !== id);
+    // setUserPosts(posts);
   };
 
   return (
     <div className="col-8">
 
       {getUserId() === user.id  && <NewPost profile user={userData} />}
-      {userPosts?.map((post) => (
+      {posts?.map((post) => (
         <Post
           post={post}
           profile

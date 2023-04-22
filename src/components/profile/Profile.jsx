@@ -5,6 +5,7 @@ import ProfilePosts from "./ProfilePosts";
 import ProfileInfo from "./ProfileInfo";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { Circle2 } from "react-preloaders2";
 
 function Profile() {
   const searchParams = new URLSearchParams(window.location.search);
@@ -30,23 +31,48 @@ function Profile() {
         address
         profilePhoto
         coverPhoto
+        posts {
+          id
+          content
+          createdAt
+        }
       }
     }
   `;
 
-  const { loading, error, data, refetch } = useQuery(query, {
+  const { loading, error, data } = useQuery(query, {
     variables: { id },
   });
+  let postsWithCreator;
+  if (data) {
+    const { posts, ...userData } = data.user;
+    postsWithCreator = posts.map((post) => {
+      const pwc = {
+        ...post,
+        creator: {
+          id: userData.id,
+          firstName: userData.firstName,
+          lastName: userData.lastName,
+          profilePhoto: userData.profilePhoto,
+        },
+      };
+
+      return pwc;
+    });
+  }
 
   return (
     <div className="profile py-4">
+      {loading && <Circle2 color={"#9ca3af"} />}
       <div className="container">
         <div className="row">
           <div className="col-10 m-auto">
             <ProfileHeader user={data?.user} />
             <div className="row">
               <ProfileInfo user={data?.user} />
-              <ProfilePosts userData={data?.user} />
+              {data && (
+                <ProfilePosts userData={data?.user} posts={postsWithCreator} />
+              )}
             </div>
           </div>
         </div>
