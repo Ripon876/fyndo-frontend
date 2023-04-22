@@ -1,4 +1,4 @@
-import { useQuery, gql } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import "./Profile.css";
 import ProfileHeader from "./ProfileHeader";
 import ProfilePosts from "./ProfilePosts";
@@ -6,11 +6,16 @@ import ProfileInfo from "./ProfileInfo";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Circle2 } from "react-preloaders2";
+import { useSelector, useDispatch } from "react-redux";
+import { GET_USER_DATA } from "../../queries/profile";
 
 function Profile() {
   const searchParams = new URLSearchParams(window.location.search);
   const id = searchParams.get("id");
   const location = useLocation();
+
+  const dispacth = useDispatch();
+  const posts = useSelector((state) => state.userPosts);
 
   useEffect(() => {
     console.log("id updated");
@@ -19,47 +24,10 @@ function Profile() {
     }
   }, [location]);
 
-  const query = gql`
-    query GetUser($id: ID!) {
-      user(id: $id) {
-        id
-        firstName
-        lastName
-        bio
-        email
-        phone
-        address
-        profilePhoto
-        coverPhoto
-        posts {
-          id
-          content
-          createdAt
-        }
-      }
-    }
-  `;
-
-  const { loading, error, data } = useQuery(query, {
+  const { loading, error, data } = useQuery(GET_USER_DATA, {
     variables: { id },
+    fetchPolicy: "network-only",
   });
-  let postsWithCreator;
-  if (data) {
-    const { posts, ...userData } = data.user;
-    postsWithCreator = posts.map((post) => {
-      const pwc = {
-        ...post,
-        creator: {
-          id: userData.id,
-          firstName: userData.firstName,
-          lastName: userData.lastName,
-          profilePhoto: userData.profilePhoto,
-        },
-      };
-
-      return pwc;
-    });
-  }
 
   return (
     <div className="profile py-4">
@@ -71,7 +39,7 @@ function Profile() {
             <div className="row">
               <ProfileInfo user={data?.user} />
               {data && (
-                <ProfilePosts userData={data?.user} posts={postsWithCreator} />
+                <ProfilePosts userData={data?.user} posts={data?.user.posts} />
               )}
             </div>
           </div>

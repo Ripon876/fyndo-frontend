@@ -3,7 +3,7 @@ import Moment from "react-moment";
 import PostOptions from "./PostOptions";
 import { Link } from "react-router-dom";
 
-function Post({ post, profile, showOptions, rp }) {
+function Post({ post, profile, showOptions }) {
   return (
     <>
       <div className={profile ? "" : "container"}>
@@ -54,7 +54,7 @@ function Post({ post, profile, showOptions, rp }) {
                 </div>
               </div>
 
-              {showOptions && <PostOptions id={post.id} rp={rp} />}
+              {showOptions && <PostOptions id={post.id}  />}
             </div>
           </div>
         </div>

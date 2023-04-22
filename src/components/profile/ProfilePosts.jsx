@@ -1,48 +1,40 @@
-import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import jwt_decode from "jwt-decode";
-import { useLocation } from "react-router-dom";
 import Post from "../posts/Post";
 import NewPost from "../newpost/NewPost";
-import { useQuery, gql } from "@apollo/client";
-import { userPostsAtom } from "../../store/store";
-import { useRecoilState } from "recoil";
+import { useSelector } from "react-redux";
 
-function ProfilePosts({ userData,posts }) {
- 
-  const location = useLocation();
+function ProfilePosts({ userData, posts }) {
   const [cookies, setCookie] = useCookies([]);
   const user = jwt_decode(cookies.token);
+  // const posts = useSelector((state) => state.userPosts);
+  let postsWithCreator = posts.map((post) => {
+    const pwc = {
+      ...post,
+      creator: {
+        id: userData.id,
+        firstName: userData.firstName,
+        lastName: userData.lastName,
+        profilePhoto: userData.profilePhoto,
+      },
+    };
 
-  useEffect(() => {
-    // socket.emit("getProfileInfo", getUserId(), (data) => {
-    //   if (data?.data) {
-    //     let { post, ...ud } = data?.data;
-    //     setUserPosts(post.reverse());
-    //   }
-    // });
-  }, [location]);
+    return pwc;
+  });
 
   function getUserId() {
     let params = new URLSearchParams(document.location.search);
     return params.get("id");
   }
 
-  const removePost = (id) => {
-    // const posts = userPosts.filter((post) => post._id !== id);
-    // setUserPosts(posts);
-  };
-
   return (
     <div className="col-8">
-
-      {getUserId() === user.id  && <NewPost profile user={userData} />}
-      {posts?.map((post) => (
+      {getUserId() === user.id && <NewPost profile user={userData} />}
+      {postsWithCreator?.map((post) => (
         <Post
           post={post}
           profile
           showOptions={getUserId() === user.id ? true : false}
-          rp={removePost}
         />
       ))}
     </div>

@@ -1,36 +1,22 @@
 import { useState, useEffect } from "react";
 import { Fade } from "react-reveal";
 import EmojiPopUp from "../../utils/EmojiPopUp";
-import { gql, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { ShowError, ShowSuceess } from "../../utils/Alerts";
 import { Circle2 } from "react-preloaders2";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { CREATE_POST } from "../../queries/post";
 
 function Form({ close, profile }) {
   const [input, setInput] = useState("");
   const dispatch = useDispatch();
+  const id = useSelector((state) => state.user.id);
 
   const addEmoji = (e) => {
     setInput(input + e.native);
   };
 
-  const query = gql`
-    mutation createPost($content: String!) {
-      createPost(content: $content) {
-        id
-        content
-        createdAt
-        creator {
-          id
-          firstName
-          lastName
-          profilePhoto
-        }
-      }
-    }
-  `;
-
-  const [createPost, { data, loading, error }] = useMutation(query);
+  const [createPost, { data, loading, error }] = useMutation(CREATE_POST);
 
   const post = () => {
     if (input !== "") {
@@ -40,18 +26,17 @@ function Form({ close, profile }) {
 
   useEffect(() => {
     if (data?.createPost) {
-      dispatch({
-        type: "ADD_POST",
-        post: data.createPost,
-      });
       setInput("");
       close();
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
     }
   }, [data]);
 
   return (
     <>
-      <Fade duration={500}>
+      <Fade duration={350}>
         <div
           className="modal d-block row"
           id="exampleModalCenter"

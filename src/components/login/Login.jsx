@@ -4,11 +4,14 @@ import { useCookies } from "react-cookie";
 import axios from "axios";
 import "./Login.css";
 import Toast from "../../utils/ToastAlert";
+import jwt_decode from "jwt-decode";
+import { useDispatch } from "react-redux";
 
 function Login() {
   const [username, setUn] = useState("");
   const [password, setPwd] = useState("");
   const [cookies, setCookie] = useCookies([]);
+  const dispatch = useDispatch();
 
   const { state } = useLocation();
 
@@ -18,6 +21,11 @@ function Login() {
       axios
         .post(process.env.REACT_APP_HOST + "/login", { username, password })
         .then((data) => {
+          const user = jwt_decode(data.data.token);
+          dispatch({
+            type: "ADD_USER",
+            user,
+          });
           setCookie("token", data.data.token, { path: "/" });
         })
         .then(() => {

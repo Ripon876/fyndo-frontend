@@ -26,18 +26,10 @@ function Posts() {
   `;
   const { loading, error, data } = useQuery(query);
 
-  useEffect(() => {
-    if (data?.posts) {
-      let posts = [...data.posts].reverse();
-      dispatch({ type: "ADD_POSTS", posts });
-    }
-  }, [data]);
-
   return (
     <>
-      {posts?.map((post, i) => (
-        <Post post={post} key={"post" + i} />
-      ))}
+      {data &&
+        data.posts?.map((post, i) => <Post post={post} key={"post" + i} />)}
     </>
   );
 }
