@@ -10,7 +10,7 @@ const postsReducer = (state = initialPosts, action) => {
 
     case "REMOVE_POST":
       let posts = [...state];
-      let filteredPost = posts.filter((post) => post.id != action.id);
+      let filteredPost = posts.filter((post) => post.id !== action.id);
       return [filteredPost];
 
     default:

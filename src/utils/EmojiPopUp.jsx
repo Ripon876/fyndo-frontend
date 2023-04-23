@@ -11,7 +11,7 @@ function EmojiPopUp({ f, children }) {
 
     useEffect(() => {
       new Picker({ ...props, data, ref });
-    }, []);
+    }, [props]);
 
     return (
       <div

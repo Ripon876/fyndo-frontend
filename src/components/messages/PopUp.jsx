@@ -9,7 +9,7 @@ function PopUp({ imgSrc, closePopUP }) {
           <div>
             <i className="fa fa-xmark mb-2 clearImg" onClick={closePopUP}></i>
             <div className="w-75 m-auto">
-              <img src={imgSrc} className="img-fluid" />
+              <img src={imgSrc} className="img-fluid" alt="" />
             </div>
           </div>
         </ClickOutside>

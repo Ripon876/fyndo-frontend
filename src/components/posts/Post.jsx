@@ -22,7 +22,7 @@ function Post({ post, profile, showOptions }) {
                       }
                       width={"45px"}
                       height={"45px"}
-                      alt="Image Description"
+                      alt=""
                     />
                   </Link>
                 </div>
@@ -54,7 +54,7 @@ function Post({ post, profile, showOptions }) {
                 </div>
               </div>
 
-              {showOptions && <PostOptions id={post.id}  />}
+              {showOptions && <PostOptions id={post.id} />}
             </div>
           </div>
         </div>
