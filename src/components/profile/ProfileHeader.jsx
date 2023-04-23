@@ -2,6 +2,7 @@ import { useState } from "react";
 import UpdateImg from "./UpdateImg";
 import { Circle2 } from "react-preloaders2";
 import { useSelector } from "react-redux";
+import FriendShipStatus from "./FriendShipStatus";
 
 function ProfileHeader({ user }) {
   const uId = useSelector((state) => state.user.id);
@@ -60,10 +61,8 @@ function ProfileHeader({ user }) {
         <h1>
           {user?.firstName} {user?.lastName}
         </h1>
-        <div className="text-end">
-          <button className="btn p-btn">Add Friend</button>
-          {/* <button className="btn p-btn">Add Friend</button> */}
-        </div>
+
+        {user && user?.id !== uId && <FriendShipStatus user={user} />}
       </div>
     </>
   );

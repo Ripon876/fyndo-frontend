@@ -21,4 +21,16 @@ const GET_USER_DATA = gql`
   }
 `;
 
-export { GET_USER_DATA };
+const FRIENDSHIP_STATUS = gql`
+  query ($id: ID!) {
+    friendshipStatus(id: $id)
+  }
+`;
+
+const ADD_FRIEND = gql`
+  mutation ADD_FRIEND($id: ID!) {
+    addFriend(id: $id)
+  }
+`;
+
+export { GET_USER_DATA, FRIENDSHIP_STATUS, ADD_FRIEND };
