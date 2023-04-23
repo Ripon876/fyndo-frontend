@@ -1,33 +1,24 @@
-import { useEffect, useState } from "react";
-import jwt_decode from "jwt-decode";
-import { useCookies } from "react-cookie";
 import Sidebar from "../sidebar/Sidebar";
 import NewPost from "../newpost/NewPost";
 import SearchBar from "../search/SearchBar";
 import Posts from "../posts/Posts";
 import { useQuery, gql } from "@apollo/client";
 import { Circle2 } from "react-preloaders2";
-import cookie from "cookie";
-
+import { useSelector } from "react-redux";
 
 function Dashboard() {
-  const [userData, setUserData] = useState({});
-  const [cookies, setCookie] = useCookies([]);
-  const user = jwt_decode(cookies.token);
-
-
-
+  const uId = useSelector((state) => state.user.id);
 
   const query = gql`
     {
-      user(id: "${user.id}") {
+      user(id: "${uId}") {
         id
         profilePhoto
       }
     }
   `;
 
-  const { loading, error, data } = useQuery(query);
+  const { loading, data } = useQuery(query);
 
   return (
     <div>

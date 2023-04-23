@@ -29,7 +29,7 @@ function Institute({ institute }) {
               <option
                 value="Currently In"
                 selected={
-                  institute && institute.status == "Currently In" ? true : false
+                  institute && institute.status === "Currently In" ? true : false
                 }
               >
                 Currently In
@@ -37,7 +37,7 @@ function Institute({ institute }) {
               <option
                 value="Went out"
                 selected={
-                  institute && institute.status == "Went out" ? true : false
+                  institute && institute.status === "Went out" ? true : false
                 }
               >
                 Went out

@@ -6,18 +6,16 @@ import {
   messeagesAtom,
 } from "../../store/store";
 import { useRecoilValue, useRecoilState } from "recoil";
-import { useSearchParams } from "react-router-dom";
 import FileUploader from "../../utils/FileUploader";
 import EmojiPopUp from "../../utils/EmojiPopUp";
 
 function Input({ messagesEndRef, socket }) {
   const [msg, setMsg] = useState("");
   const [showUploader, setShowUploader] = useState(false);
-  const [messages, setMessages] = useRecoilState(messeagesAtom);
+  const [, setMessages] = useRecoilState(messeagesAtom);
   const thred = useRecoilValue(thredAtom);
   const chatingWith = useRecoilValue(chatingWithAtom);
   const user = useRecoilValue(userAtom);
-  const [searchParams, setSearchParams] = useSearchParams();
 
   const emojiRegex = /\p{Emoji}/u;
 
@@ -70,12 +68,12 @@ function Input({ messagesEndRef, socket }) {
         setMessages((prev) => [...prev, data]);
       }
     });
-  }, [socket]);
+  }, [socket, scrollToBottom, setMessages]);
 
   useEffect(() => {
     scrollToBottom();
     scrollToBottom();
-  }, []);
+  }, [scrollToBottom]);
 
   const addEmoji = (e) => {
     setMsg(msg + e.native);

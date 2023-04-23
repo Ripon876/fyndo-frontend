@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { decompressFromUTF16 } from "lz-string";
 import "./NewPost.css";
 import Form from "./Form";
 
@@ -20,6 +19,7 @@ function NewPost({ profile, user }) {
               <div className="form d-flex">
                 <Link to={"/profile?id=" + user?.id}>
                   <img
+                    alt=""
                     className="me-2 p-1 profileImg"
                     style={{ height: "50px", width: "50px" }}
                     src={
@@ -27,7 +27,6 @@ function NewPost({ profile, user }) {
                         ? user?.profilePhoto
                         : "https://via.placeholder.com/200x200"
                     }
-                    alt="Id name"
                   />
                 </Link>
                 <input

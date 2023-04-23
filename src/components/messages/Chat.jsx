@@ -34,7 +34,7 @@ function Chat({ messagesEndRef }) {
   useEffect(() => {
     scrollToBottom();
     scrollToBottom();
-  }, [lm]);
+  }, [lm, scrollToBottom]);
 
   const handleScroll = (e) => {
     if (e.target.scrollTop === 0) {
@@ -60,7 +60,7 @@ function Chat({ messagesEndRef }) {
         }
       });
     }
-  }, [pnum]);
+  }, [pnum, setMessages, thred]);
 
   return (
     <div className="chat-history">
@@ -80,7 +80,7 @@ function Chat({ messagesEndRef }) {
                                */}
               <div
                 className={`message  ${
-                  msg?.from?.id == chatingWith?._id
+                  msg?.from?.id === chatingWith?._id
                     ? "other-message"
                     : "my-message float-right"
                 } ${msg.type === "emoji" ? "emoji" : ""} `}
@@ -90,6 +90,7 @@ function Chat({ messagesEndRef }) {
                 ) : (
                   <>
                     <img
+                      alt=""
                       src={decompressFromUTF16(msg?.msg)}
                       onClick={(e) => {
                         setSelectedImg(e.target.src);

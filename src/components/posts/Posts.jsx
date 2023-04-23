@@ -1,13 +1,10 @@
-import { useEffect } from "react";
-import { useQuery, gql } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import Post from "./Post";
 import "./Posts.css";
 import { GET_ALL_POSTS } from "../../queries/post";
 
 function Posts() {
- 
-
-  const { loading, error, data } = useQuery(GET_ALL_POSTS);
+  const { data } = useQuery(GET_ALL_POSTS);
 
   return (
     <>

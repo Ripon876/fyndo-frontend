@@ -4,13 +4,13 @@ import EmojiPopUp from "../../utils/EmojiPopUp";
 import { useMutation } from "@apollo/client";
 import { ShowError, ShowSuceess } from "../../utils/Alerts";
 import { Circle2 } from "react-preloaders2";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { GET_ALL_POSTS, CREATE_POST } from "../../queries/post";
 import { GET_USER_DATA } from "../../queries/profile";
 
 function Form({ close, profile }) {
   const [input, setInput] = useState("");
-  const dispatch = useDispatch();
+
   const id = useSelector((state) => state.user.id);
 
   const addEmoji = (e) => {
@@ -65,7 +65,7 @@ function Form({ close, profile }) {
       //   window.location.reload();
       // }, 500);
     }
-  }, [data]);
+  }, [data,close]);
 
   return (
     <>
@@ -105,6 +105,7 @@ function Form({ close, profile }) {
                     />
                     <div class="mt-2">
                       <img
+                      alt=""
                         src="https://via.placeholder.com/200x200"
                         class="img-thumbnail m-1"
                         style={{

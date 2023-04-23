@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Fade } from "react-reveal";
 import EmojiPopUp from "../newpost/EmojiPopUp";
-import Toast from "../../utils/ToastAlert";
 import { useQuery, useMutation, gql } from "@apollo/client";
 import { Circle2 } from "react-preloaders2";
 import { ShowError, ShowSuceess } from "../../utils/Alerts";

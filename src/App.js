@@ -1,4 +1,3 @@
-import axios from "axios";
 import { Routes, Route } from "react-router-dom";
 import Login from "./components/login/Login";
 import SignUp from "./components/signup/SignUp";

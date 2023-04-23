@@ -6,7 +6,6 @@ import ProfileInfo from "./ProfileInfo";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Circle2 } from "react-preloaders2";
-import { useSelector, useDispatch } from "react-redux";
 import { GET_USER_DATA } from "../../queries/profile";
 
 function Profile() {
@@ -14,17 +13,17 @@ function Profile() {
   const id = searchParams.get("id");
   const location = useLocation();
 
-  const dispacth = useDispatch();
-  const posts = useSelector((state) => state.userPosts);
+
+
 
   useEffect(() => {
     console.log("id updated");
     if (!id || id.length !== 21) {
       return (window.location = "/");
     }
-  }, [location]);
+  }, [location,id]);
 
-  const { loading, error, data } = useQuery(GET_USER_DATA, {
+  const { loading, data } = useQuery(GET_USER_DATA, {
     variables: { id },
     // fetchPolicy: "network-only",
   });

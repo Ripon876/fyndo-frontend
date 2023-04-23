@@ -11,7 +11,7 @@ function EmojiPopUp({ f }) {
 
     useEffect(() => {
       new Picker({ ...props, data, ref });
-    }, []);
+    }, [props]);
 
     return <div className="position-absolute emojiPicker" ref={ref} />;
   }

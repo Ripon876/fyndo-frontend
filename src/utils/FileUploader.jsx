@@ -68,7 +68,7 @@ function FileUploader({ su, u, t, cw, sm }) {
   };
 
   useEffect(() => {
-    if (file != "") {
+    if (file !== "") {
       setShowLoader(false);
     }
   }, [file]);

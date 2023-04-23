@@ -10,7 +10,7 @@ import { useDispatch } from "react-redux";
 function Login() {
   const [username, setUn] = useState("");
   const [password, setPwd] = useState("");
-  const [cookies, setCookie] = useCookies([]);
+  const [, setCookie] = useCookies([]);
   const dispatch = useDispatch();
 
   const { state } = useLocation();

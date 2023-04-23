@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { thredAtom, chatingWithAtom } from "../../store/store";
-import { useRecoilValue, useRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import { useNavigate } from "react-router-dom";
 
 function ChatHeader() {
@@ -15,19 +15,19 @@ function ChatHeader() {
         search: `?thredId=${thred}`,
       });
     }
-  }, [thred]);
+  }, [thred, navigate]);
 
   return (
     <div className="chat-header clearfix">
       <div className="row">
         <div className="col-lg-6">
-          <a href="#" data-toggle="modal" data-target="#view_info">
+          <p data-toggle="modal" data-target="#view_info">
             <img
               src="https://via.placeholder.com/50"
               alt="avatar"
               style={{ visibility: `${!chatingWith ? "hidden" : ""}` }}
             />
-          </a>
+          </p>
           <div className="chat-about">
             <h6 className="m-b-0">
               {chatingWith?.first_name} {chatingWith?.last_name}

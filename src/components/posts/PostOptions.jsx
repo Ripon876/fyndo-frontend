@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Fade } from "react-reveal";
 import ClickOutside from "react-click-outside";
 import socket from "../../socket/socket";
-import Toast from "../../utils/ToastAlert";
 import EditPost from "../editpost/EditPost";
 import { useMutation, gql } from "@apollo/client";
 import { Circle2 } from "react-preloaders2";
@@ -11,12 +10,6 @@ import { ShowError, ShowSuceess } from "../../utils/Alerts";
 function PostOptions({ id }) {
   const [show, setShow] = useState(false);
   const [edit, setEdit] = useState(false);
-
-  const editPost = () => {
-    socket.emit("editPost", id, (data) => {
-      console.log(data);
-    });
-  };
 
   const query = gql`
     mutation DeletePost($id: ID!) {

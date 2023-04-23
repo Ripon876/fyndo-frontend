@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { decompressFromUTF16 } from "lz-string";
 import {
@@ -13,16 +12,12 @@ import axios from "axios";
 
 function User({ user, socket }) {
   const [thred, setThred] = useRecoilState(thredAtom);
-  const [messages, setMessages] = useRecoilState(messeagesAtom);
+  const [, setMessages] = useRecoilState(messeagesAtom);
   const c_user = useRecoilValue(userAtom);
   const activerUsers = useRecoilValue(activerUsersAtom);
   const [unseenMsg, setUnseenMsg] = useRecoilState(unseenMsgAtom);
   const [chatingWith, setChatingWith] = useRecoilState(chatingWithAtom);
 
-  function getThreadId() {
-    let params = new URLSearchParams(document.location.search);
-    return params.get("thredId");
-  }
 
   const changeThred = () => {
     if (unseenMsg.id === user._id) {

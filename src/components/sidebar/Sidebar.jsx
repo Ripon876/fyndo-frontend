@@ -1,16 +1,11 @@
-import axios from "axios";
 import { useCookies } from "react-cookie";
-import { Link, useNavigate } from "react-router-dom";
-import { authToken } from "../../store/store";
-import { useRecoilValue } from "recoil";
+import { Link } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import socket from "../../socket/socket";
 import "./Sidebar.css";
 
 function Sidebar({ l }) {
-  const navigate = useNavigate();
-
-  const [cookies, setCookie, removeCookie] = useCookies([]);
+  const [cookies, , removeCookie] = useCookies([]);
   const user = jwt_decode(cookies.token);
 
   const logOut = () => {

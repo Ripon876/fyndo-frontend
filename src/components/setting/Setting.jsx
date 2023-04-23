@@ -24,7 +24,7 @@ function Setting() {
     }
   `;
 
-  const { loading, error, data } = useQuery(query);
+  const { loading, data } = useQuery(query);
 
   useEffect(() => {
     window.scrollTo({

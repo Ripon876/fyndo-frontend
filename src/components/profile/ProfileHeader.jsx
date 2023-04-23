@@ -20,7 +20,7 @@ function ProfileHeader({ user }) {
                 : "https://via.placeholder.com/650x300"
             }
             className="img-fluid w-100 rounded-top"
-            alt="Cover Photo"
+            alt="Cover"
           />
           <div className="bottom-0 coverFadeBottom position-absolute w-100"></div>
           {uId === user?.id && (
@@ -41,7 +41,7 @@ function ProfileHeader({ user }) {
                 ? user?.profilePhoto
                 : "https://via.placeholder.com/200x200"
             }
-            alt="Profile photo"
+            alt="Profile"
             className="rounded-circle w-100"
           />
           {uId === user?.id && (

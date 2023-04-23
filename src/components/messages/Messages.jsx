@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef } from "react";
 import {
   friendsAtom,
   userAtom,
@@ -8,7 +8,7 @@ import {
   unseenMsgAtom,
   activerUsersAtom,
 } from "../../store/store";
-import { useRecoilValue, useRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { useCookies } from "react-cookie";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
@@ -20,30 +20,26 @@ import "./Messages.css";
 import socket from "../../socket/socket";
 
 function Messages() {
-  const [cookies, setCookie] = useCookies([]);
+  const [cookies] = useCookies([]);
   const token = cookies.token;
+  const currentUser = jwt_decode(token);
+
   const [friends, setFriends] = useRecoilState(friendsAtom);
   const [user, setUser] = useRecoilState(userAtom);
-  const [unseenMsg, setUnseenMsg] = useRecoilState(unseenMsgAtom);
-  const [activerUsers, setActiverUsers] = useRecoilState(activerUsersAtom);
+  const [, setUnseenMsg] = useRecoilState(unseenMsgAtom);
+  const [, setActiverUsers] = useRecoilState(activerUsersAtom);
   const messagesEndRef = useRef(null);
 
-  const [thred, setThred] = useRecoilState(thredAtom);
-  const [messages, setMessages] = useRecoilState(messeagesAtom);
-  const c_user = useRecoilValue(userAtom);
-  const [chatingWith, setChatingWith] = useRecoilState(chatingWithAtom);
+  const [, setThred] = useRecoilState(thredAtom);
+  const [, setMessages] = useRecoilState(messeagesAtom);
+  const [, setChatingWith] = useRecoilState(chatingWithAtom);
 
   function getThreadId() {
     let params = new URLSearchParams(document.location.search);
     return params.get("thredId");
   }
 
-  let myFriends;
-  let currentUser;
-
   useEffect(() => {
-    var user = jwt_decode(token);
-    currentUser = user;
     setUser(user);
 
     axios
@@ -55,7 +51,6 @@ function Messages() {
           return u._id !== user.id;
         });
         setFriends(fns);
-        myFriends = fns;
       })
       .then(() => {
         if (getThreadId() && getThreadId().length !== 0) {
@@ -80,7 +75,15 @@ function Messages() {
             });
         }
       });
-  }, []);
+  }, [
+    currentUser.id,
+    setChatingWith,
+    setFriends,
+    setMessages,
+    setThred,
+    setUser,
+    user,
+  ]);
 
   useEffect(() => {
     socket.on("receive_message_not_seen", (data) => {
@@ -96,13 +99,13 @@ function Messages() {
       // console.log(users);
       setActiverUsers(users.filter((user) => user !== currentUser.id));
     });
-  }, [socket]);
+  }, [socket, currentUser.id, setActiverUsers, setUnseenMsg]);
 
   useEffect(() => {
     socket.emit("getActiveUsers", (users) => {
       setActiverUsers(users.filter((user) => user !== currentUser.id));
     });
-  }, []);
+  }, [currentUser.id, setActiverUsers]);
 
   return (
     <div className="container pt-5 messages">
