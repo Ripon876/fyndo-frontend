@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import {
   thredAtom,
   chatingWithAtom,
@@ -57,9 +57,9 @@ function Input({ messagesEndRef, socket }) {
     return params.get("thredId");
   }
 
-  const scrollToBottom = () => {
+  const scrollToBottom = useCallback(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
+  }, [messagesEndRef]);
 
   useEffect(() => {
     socket.on("receive_message", (data) => {

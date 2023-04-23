@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Fade } from "react-reveal";
 import ClickOutside from "react-click-outside";
-import socket from "../../socket/socket";
 import EditPost from "../editpost/EditPost";
 import { useMutation, gql } from "@apollo/client";
 import { Circle2 } from "react-preloaders2";

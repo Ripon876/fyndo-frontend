@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import {
   thredAtom,
   chatingWithAtom,
@@ -23,9 +23,10 @@ function Chat({ messagesEndRef }) {
   const [showPopUp, setShowPopUp] = useState(false);
   const [selectedImg, setSelectedImg] = useState("");
 
-  const scrollToBottom = () => {
+
+  const scrollToBottom = useCallback(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
+  }, [messagesEndRef]);
 
   const closePopUP = () => {
     setShowPopUp();

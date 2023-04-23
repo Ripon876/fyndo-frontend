@@ -99,7 +99,7 @@ function Messages() {
       // console.log(users);
       setActiverUsers(users.filter((user) => user !== currentUser.id));
     });
-  }, [socket, currentUser.id, setActiverUsers, setUnseenMsg]);
+  }, [currentUser.id, setActiverUsers, setUnseenMsg]);
 
   useEffect(() => {
     socket.emit("getActiveUsers", (users) => {
