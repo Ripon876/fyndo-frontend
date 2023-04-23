@@ -60,6 +60,10 @@ function ProfileHeader({ user }) {
         <h1>
           {user?.firstName} {user?.lastName}
         </h1>
+        <div className="text-end">
+          <button className="btn p-btn">Add Friend</button>
+          {/* <button className="btn p-btn">Add Friend</button> */}
+        </div>
       </div>
     </>
   );

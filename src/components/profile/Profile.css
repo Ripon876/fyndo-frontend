@@ -13,21 +13,19 @@
   transform: translate(-50%, 0);
   width: 25%;
 }
-.profilePhoto img {
-  width: 225px !important;
-  height: 225px !important;
-  object-fit: cover;
+
+.p-btn {
+  background: #03dac6 !important;
+  padding: 3px 10px !important;
+  font-weight: 500 !important;
+  margin: 0 5px;
 }
 
 @media screen and (max-width: 680px) {
-  .coverPhoto img {
-    height: 200px !important;
-    object-fit: contain !important;
-  }
-  .profilePhoto img {
-    width: 150px !important;
-    height: 150px !important;
-    object-fit: cover;
+}
+@media screen and (min-width: 992px) {
+  .profilePhoto {
+    width: 16%;
   }
 }
 

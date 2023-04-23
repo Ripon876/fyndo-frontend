@@ -28,7 +28,7 @@ function ProfilePosts({ userData, posts }) {
 
   console.log(uId, getUserId());
   return (
-    <div className="col-8">
+    <div className="col-12 col-md-8">
       {getUserId() === uId && <NewPost profile user={userData} />}
       {postsWithCreator?.map((post) => (
         <Post

@@ -1,6 +1,6 @@
 function ProfileInfo({ user }) {
   return (
-    <div className="col-4">
+    <div className="col-sm-4 d-none d-md-block">
       <div className="bio p-2 border-start mt-0">
         <h5 className="ps-2">Intro</h5>
         <p className="font-monospace text-center lead ">{user?.bio}</p>
