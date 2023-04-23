@@ -23,7 +23,11 @@ const GET_USER_DATA = gql`
 
 const FRIENDSHIP_STATUS = gql`
   query ($id: ID!) {
-    friendshipStatus(id: $id)
+    friendshipStatus(id: $id) {
+      id
+      status
+      sender
+    }
   }
 `;
 
@@ -33,4 +37,10 @@ const ADD_FRIEND = gql`
   }
 `;
 
-export { GET_USER_DATA, FRIENDSHIP_STATUS, ADD_FRIEND };
+const ACCEPT_REQUEST = gql`
+  mutation ACCEPT_REQUEST($id: ID!) {
+    acceptRequest(id: $id)
+  }
+`;
+
+export { GET_USER_DATA, FRIENDSHIP_STATUS, ADD_FRIEND, ACCEPT_REQUEST };

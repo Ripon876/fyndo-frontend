@@ -1,6 +1,10 @@
 import { useMutation, useQuery } from "@apollo/client";
-import { ADD_FRIEND, FRIENDSHIP_STATUS } from "../../queries/profile";
-import { ShowError, ShowSuceess } from "../../utils/Alerts";
+import {
+  ADD_FRIEND,
+  FRIENDSHIP_STATUS,
+  ACCEPT_REQUEST,
+} from "../../queries/profile";
+import { ShowError } from "../../utils/Alerts";
 import { Circle2 } from "react-preloaders2";
 
 function FriendShipStatus({ user }) {
@@ -9,31 +13,62 @@ function FriendShipStatus({ user }) {
     fetchPolicy: "network-only",
   });
 
-  const [addFriend, { data, error, loading }] = useMutation(ADD_FRIEND, {
+  const [addFriend, { error, loading }] = useMutation(ADD_FRIEND, {
     update: (cache, { data: { addFriend } }) => {
+      const { friendshipStatus } = cache.readQuery({
+        query: FRIENDSHIP_STATUS,
+        variables: { id: user?.id },
+      });
       cache.writeQuery({
         query: FRIENDSHIP_STATUS,
         variables: { id: user?.id },
         data: {
-          friendshipStatus: addFriend === "Cancel Request" ? "pending" : null,
+          friendshipStatus:
+            addFriend !== "Cancel Request"
+              ? null
+              : {
+                  ...friendshipStatus,
+                  status: "pending",
+                },
         },
       });
     },
   });
+
+  const [acceptRequest, { loading: arLoading }] = useMutation(ACCEPT_REQUEST, {
+    update: (cache, { data: { acceptRequest } }) => {
+      const { friendshipStatus } = cache.readQuery({
+        query: FRIENDSHIP_STATUS,
+        variables: { id: user?.id },
+      });
+      cache.writeQuery({
+        query: FRIENDSHIP_STATUS,
+        variables: { id: user?.id },
+        data: {
+          friendshipStatus: {
+            ...friendshipStatus,
+            status: acceptRequest ? "accepted" : "pending",
+          },
+        },
+      });
+    },
+  });
+
   const sendRequest = () => {
     addFriend({
       variables: { id: user?.id },
     });
   };
+  const acceptFriendRequest = () => {
+    acceptRequest({
+      variables: { id: fsData?.friendshipStatus?.id },
+    });
+  };
+
   return (
     <div>
-      {loading && <Circle2 color={"#9ca3af"} />}
+      {(loading || arLoading) && <Circle2 color={"#9ca3af"} />}
       {error && <ShowError />}
-      {data && (
-        <ShowSuceess
-          msg={fsData?.friendshipStatus ? "Request sent" : "Request canceled"}
-        />
-      )}
       {!fsLoading && (
         <div className="text-end">
           {!fsData?.friendshipStatus && (
@@ -41,12 +76,20 @@ function FriendShipStatus({ user }) {
               Add Friend
             </button>
           )}
-          {fsData && fsData.friendshipStatus === "pending" && (
-            <button className="btn p-btn" onClick={sendRequest}>
-              Cancel Request
-            </button>
+          {fsData && fsData.friendshipStatus?.status === "pending" && (
+            <>
+              <button className="btn p-btn" onClick={sendRequest}>
+                Cancel Request
+              </button>
+
+              {fsData.friendshipStatus?.sender === user?.id && (
+                <button className="btn p-btn" onClick={acceptFriendRequest}>
+                  Accept Request
+                </button>
+              )}
+            </>
           )}
-          {fsData && fsData.friendshipStatus === "accepted" && (
+          {fsData && fsData.friendshipStatus?.status === "accepted" && (
             <button className="btn p-btn" onClick={sendRequest}>
               Friends
             </button>
