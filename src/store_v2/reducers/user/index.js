@@ -1,8 +1,14 @@
 import cookie from "cookie";
 import jwtDecode from "jwt-decode";
+let user;
 
-const token = cookie.parse(document.cookie).token;
-const user = jwtDecode(token);
+if (!cookie.parse(document.cookie).token) {
+  console.log("no user");
+  user = {};
+} else {
+  user = jwtDecode(cookie.parse(document.cookie).token);
+}
+
 const initialData = { ...user };
 
 const userReducer = (state = initialData, action) => {
