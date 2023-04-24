@@ -1,16 +1,19 @@
 import { gql } from "@apollo/client";
 
 const GET_ALL_POSTS = gql`
-  {
-    posts {
-      id
-      content
-      createdAt
-      creator {
+  query GET_ALL_POSTS($page: Int!, $limit: Int!) {
+    getPosts(page: $page, limit: $limit) {
+      total
+      posts {
         id
-        firstName
-        lastName
-        profilePhoto
+        content
+        createdAt
+        creator {
+          id
+          firstName
+          lastName
+          profilePhoto
+        }
       }
     }
   }
