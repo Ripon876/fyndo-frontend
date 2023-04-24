@@ -65,7 +65,7 @@ function Form({ close, profile }) {
       //   window.location.reload();
       // }, 500);
     }
-  }, [data,close]);
+  }, [data, close]);
 
   return (
     <>
@@ -105,7 +105,7 @@ function Form({ close, profile }) {
                     />
                     <div class="mt-2">
                       <img
-                      alt=""
+                        alt=""
                         src="https://via.placeholder.com/200x200"
                         class="img-thumbnail m-1"
                         style={{

@@ -18,4 +18,17 @@ const postsReducer = (state = initialPosts, action) => {
   }
 };
 
-export { postsReducer };
+const pageReducer = (state = 1, action) => {
+  switch (action.type) {
+    case "INCREASE_PAGE":
+      return state + 1;
+    case "DECREASE_PAGE":
+      return state - 1;
+    case "DEFAULT":
+      return 1;
+    default:
+      return state;
+  }
+};
+
+export { postsReducer, pageReducer };
