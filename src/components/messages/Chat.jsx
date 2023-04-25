@@ -23,7 +23,6 @@ function Chat({ messagesEndRef }) {
   const [showPopUp, setShowPopUp] = useState(false);
   const [selectedImg, setSelectedImg] = useState("");
 
-
   const scrollToBottom = useCallback(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messagesEndRef]);
@@ -64,50 +63,87 @@ function Chat({ messagesEndRef }) {
   }, [pnum, setMessages, thred]);
 
   return (
-    <div className="chat-history">
+    <div className="chat-history" onScroll={handleScroll} ref={listInnerRef}>
       {showPopUp && <PopUp imgSrc={selectedImg} closePopUP={closePopUP} />}
-      <ul className="m-b-0  px-4" onScroll={handleScroll} ref={listInnerRef}>
-        <div className="msgLoadingAnm">
-          {msgLoader && <TailSpin color="#9CA3AF" height={80} width={80} />}
-        </div>
 
-        {chatingWith &&
-          messages?.map((msg, i) => (
-            <li className="clearfix" key={"sd433dsf" + i}>
-              {/*  
+      <div className="msgLoadingAnm">
+        {msgLoader && <TailSpin color="#9CA3AF" height={80} width={80} />}
+      </div>
+
+      <div className="clearfix">
+        <div className="message other-message">first msg</div>
+      </div>
+      <div className="clearfix">
+        <div className="message my-message">asdf sdfasdfdasf adsfasd</div>
+      </div>
+      <div className="clearfix">
+        <div className="message other-message">asdf sdfasdfdasf adsfasd</div>
+      </div>
+      <div className="clearfix">
+        <div className="message my-message">asdf sdfasdfdasf adsfasd</div>
+      </div>
+      <div className="clearfix">
+        <div className="message other-message">asdf sdfasdfdasf adsfasd</div>
+      </div>
+      <div className="clearfix">
+        <div className="message other-message">asdf sdfasdfdasf adsfasd</div>
+      </div>
+      <div className="clearfix">
+        <div className="message my-message">asdf sdfasdfdasf adsfasd</div>
+      </div>
+      <div className="clearfix">
+        <div className="message my-message">asdf sdfasdfdasf adsfasd</div>
+      </div>
+      <div className="clearfix">
+        <div className="message other-message">asdf sdfasdfdasf adsfasd</div>
+      </div>
+      <div className="clearfix">
+        <div className="message other-message">asdf sdfasdfdasf adsfasd</div>
+      </div>
+      <div className="clearfix">
+        <div className="message my-message">asdf sdfasdfdasf adsfasd</div>
+      </div>
+      <div className="clearfix">
+        <div className="message my-message">last msg</div>
+      </div>
+       
+
+      {chatingWith &&
+        messages?.map((msg, i) => (
+          <li className="clearfix" key={"sd433dsf" + i}>
+            {/*  
                                     <div className="message-data">
                                           <span className="message-data-time"></span>
                                     </div>
                                */}
-              <div
-                className={`message  ${
-                  msg?.from?.id === chatingWith?._id
-                    ? "other-message"
-                    : "my-message float-right"
-                } ${msg.type === "emoji" ? "emoji" : ""} `}
-              >
-                {msg.type === "text" ? (
-                  msg.msg
-                ) : (
-                  <>
-                    <img
-                      alt=""
-                      src={decompressFromUTF16(msg?.msg)}
-                      onClick={(e) => {
-                        setSelectedImg(e.target.src);
-                        setShowPopUp(!showPopUp);
-                      }}
-                      className="img-fluid"
-                    />
-                  </>
-                )}
-                {msg.type === "emoji" ? msg.msg : ""}
-              </div>
-            </li>
-          ))}
+            <div
+              className={`message  ${
+                msg?.from?.id === chatingWith?._id
+                  ? "other-message"
+                  : "my-message float-right"
+              } ${msg.type === "emoji" ? "emoji" : ""} `}
+            >
+              {msg.type === "text" ? (
+                msg.msg
+              ) : (
+                <>
+                  <img
+                    alt=""
+                    src={decompressFromUTF16(msg?.msg)}
+                    onClick={(e) => {
+                      setSelectedImg(e.target.src);
+                      setShowPopUp(!showPopUp);
+                    }}
+                    className="img-fluid"
+                  />
+                </>
+              )}
+              {msg.type === "emoji" ? msg.msg : ""}
+            </div>
+          </li>
+        ))}
 
-        <div ref={messagesEndRef} />
-      </ul>
+      <div ref={messagesEndRef} />
     </div>
   );
 }

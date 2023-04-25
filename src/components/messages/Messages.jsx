@@ -113,7 +113,7 @@ function Messages() {
       <div className="row">
         <div className="col-lg-12">
           <div className="card chat-app">
-            <div id="plist" className="people-list">
+            <div id="plist" className="m-auto people-list pe-0">
               <div className="d-none input-group">
                 <div className="input-group-prepend">
                   <span className="input-group-text">
@@ -127,6 +127,9 @@ function Messages() {
                 />
               </div>
               <ul className="list-unstyled chat-list mt-2 mb-0">
+                {new Array(20).fill("d").map(() => (
+                  <U />
+                ))}
                 {friends?.map((friend, i) => (
                   <>
                     {user?.id !== friend._id && (
@@ -136,7 +139,7 @@ function Messages() {
                 ))}
               </ul>
             </div>
-            <div className="chat">
+            <div className="chat ms-auto">
               <ChatHeader />
               <Chat messagesEndRef={messagesEndRef} />
               <Input messagesEndRef={messagesEndRef} socket={socket} />
@@ -149,3 +152,28 @@ function Messages() {
 }
 
 export default Messages;
+
+const U = () => {
+  return (
+    <li
+      className="clearfix"
+      
+    >
+      <span className="listImg active">
+        <img src="https://via.placeholder.com/200x200" alt="avatar" />
+        <div className="activeStatus"></div>
+      </span>
+      <div className="about">
+        <div
+          className="name"
+          style={{
+            color: "9ca3af",
+          }}
+        >
+          MD Ripon Islam
+        </div>
+        <div className="status">New message </div>
+      </div>
+    </li>
+  );
+};

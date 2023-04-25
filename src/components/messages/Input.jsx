@@ -92,7 +92,7 @@ function Input({ messagesEndRef, socket }) {
       )}
       {chatingWith && (
         <div className="msgInput p-3">
-          <div className="d-flex position-relative">
+          <div className="align-items-center d-flex position-relative">
             <div>
               <h1
                 className="fileChoserIcon p-1 mx-2"
@@ -112,14 +112,15 @@ function Input({ messagesEndRef, socket }) {
                   send_Msg(e);
                 }}
               />
+              <div className="addEmoji sendBtn">
+                <span>
+                  <EmojiPopUp f={addEmoji}>
+                    <i className="fa-solid fa-face-grin"></i>{" "}
+                  </EmojiPopUp>
+                </span>
+              </div>
             </div>
-            <div className="addEmoji sendBtn">
-              <span>
-                <EmojiPopUp f={addEmoji}>
-                  <i className="fa-solid fa-face-grin"></i>{" "}
-                </EmojiPopUp>
-              </span>
-            </div>
+
             <div className="sendBtn">
               <button onClick={sendMsg}>
                 <i className="fa-solid fa-paper-plane"></i>
