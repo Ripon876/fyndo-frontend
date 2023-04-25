@@ -2,20 +2,52 @@ import { useState } from "react";
 import { Fade } from "react-reveal";
 import ClickOutside from "react-click-outside";
 import EditPost from "../editpost/EditPost";
-import { useMutation, gql } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { Circle2 } from "react-preloaders2";
 import { ShowError, ShowSuceess } from "../../utils/Alerts";
+import { GET_ALL_POSTS, DELETE_POST } from "../../queries/post";
+import { GET_USER_DATA } from "../../queries/profile";
+import { useSelector } from "react-redux";
 
 function PostOptions({ id }) {
   const [show, setShow] = useState(false);
   const [edit, setEdit] = useState(false);
+  const uId = useSelector((state) => state.user.id);
 
-  const query = gql`
-    mutation DeletePost($id: ID!) {
-      deletePost(id: $id)
-    }
-  `;
-  const [DeletePost, { data, loading, error }] = useMutation(query);
+  const [DeletePost, { data, loading, error }] = useMutation(DELETE_POST, {
+    update: (cache) => {
+      const { user } = cache.readQuery({
+        query: GET_USER_DATA,
+        variables: { id: uId },
+      });
+      const { posts } = cache.readQuery({
+        query: GET_ALL_POSTS,
+      });
+
+      if (user) {
+        const postsNowExists = user?.posts.filter((post) => post.id !== id);
+        cache.writeQuery({
+          query: GET_USER_DATA,
+          variables: { id: uId },
+          data: {
+            user: {
+              ...user,
+              posts: [...postsNowExists],
+            },
+          },
+        });
+      }
+      if (posts) {
+        const postsNowExistsOnHome = posts.filter((post) => post.id !== id);
+        cache.writeQuery({
+          query: GET_ALL_POSTS,
+          data: {
+            posts: [...postsNowExistsOnHome],
+          },
+        });
+      }
+    },
+  });
 
   const deletePost = () => {
     DeletePost({
@@ -24,7 +56,7 @@ function PostOptions({ id }) {
   };
 
   if (data) {
-    window.location.reload();
+    // window.location.reload();
   }
   return (
     <div class="float-end position-absolute postOption">

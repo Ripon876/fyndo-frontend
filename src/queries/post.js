@@ -32,4 +32,10 @@ const CREATE_POST = gql`
   }
 `;
 
-export { GET_ALL_POSTS, CREATE_POST };
+const DELETE_POST = gql`
+  mutation DeletePost($id: ID!) {
+    deletePost(id: $id)
+  }
+`;
+
+export { GET_ALL_POSTS, CREATE_POST ,DELETE_POST};
