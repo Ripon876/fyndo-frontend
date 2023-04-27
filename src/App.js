@@ -14,7 +14,7 @@ function App() {
     <Routes>
       <Route element={<AuthProtected />}>
         <Route path="/" element={<Dashboard />} />
-        <Route path="/messages" element={<MessagesPage />} />
+        <Route path="/messages/:id" element={<MessagesPage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/settings" element={<SettingPage />} />
       </Route>

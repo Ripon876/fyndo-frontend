@@ -15,6 +15,7 @@
 }
 
 .p-btn {
+  color: black !important;
   background: #03dac6 !important;
   padding: 3px 10px !important;
   font-weight: 500 !important;

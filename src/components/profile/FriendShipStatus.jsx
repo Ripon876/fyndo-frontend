@@ -6,8 +6,9 @@ import {
 } from "../../queries/profile";
 import { ShowError } from "../../utils/Alerts";
 import { Circle2 } from "react-preloaders2";
+import { Link } from "react-router-dom";
 
-function FriendShipStatus({ user }) {
+function FriendShipStatus({ user, uId }) {
   const { loading: fsLoading, data: fsData } = useQuery(FRIENDSHIP_STATUS, {
     variables: { id: user?.id },
     fetchPolicy: "network-only",
@@ -90,9 +91,14 @@ function FriendShipStatus({ user }) {
             </>
           )}
           {fsData && fsData.friendshipStatus?.status === "accepted" && (
-            <button className="btn p-btn" onClick={sendRequest}>
-              Friends
-            </button>
+            <>
+              <button className="btn p-btn" onClick={sendRequest}>
+                Friends
+              </button>
+              <Link className="btn p-btn" to={"/messages/" + user?.id}>
+                Message
+              </Link>
+            </>
           )}
         </div>
       )}
