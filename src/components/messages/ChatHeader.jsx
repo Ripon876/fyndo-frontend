@@ -1,4 +1,4 @@
-import React, { useEffect, Suspense } from "react";
+import React, { useEffect } from "react";
 import { thredAtom, chatingWithAtom } from "../../store/store";
 import { useRecoilValue } from "recoil";
 import { useNavigate } from "react-router-dom";
@@ -20,16 +20,19 @@ function ChatHeader({ participant }) {
   return (
     <div className="chat-header clearfix">
       <div className="row">
-        <div className="col-lg-6">
-          <p data-toggle="modal" data-target="#view_info">
-            <img
-              src={participant?.profilePhoto}
-              alt="avatar"
-              style={{ visibility: `${!chatingWith ? "hidden" : ""}` }}
-            />
-          </p>
-          <div className="chat-about">
-            <h6 className="m-b-0">
+        <div className="align-items-center col-lg-6 d-flex">
+          <img
+            src={
+              participant?.profilePhoto
+                ? participant?.profilePhoto
+                : "/chatHeaderPH.png"
+            }
+            alt="avatar"
+            style={{ visibility: `${!chatingWith ? "hidden" : ""}` }}
+          />
+
+          <div className="align-items-center chat-about d-flex h-100">
+            <h6 className="m-0">
               {participant?.firstName} {participant?.lastName}
             </h6>
             {/*{chatingWith && <small>Last seen: 2 hours ago</small>}   */}

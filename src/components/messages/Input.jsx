@@ -8,8 +8,10 @@ import {
 import { useRecoilValue, useRecoilState } from "recoil";
 import FileUploader from "../../utils/FileUploader";
 import EmojiPopUp from "../../utils/EmojiPopUp";
+import { useMutation } from "@apollo/client";
+import { CREATE_MESSAGE } from "../../queries/message";
 
-function Input({ messagesEndRef, socket }) {
+function Input({ messagesEndRef, socket, participantId, conversationId }) {
   const [msg, setMsg] = useState("");
   const [showUploader, setShowUploader] = useState(false);
   const [, setMessages] = useRecoilState(messeagesAtom);
@@ -17,31 +19,22 @@ function Input({ messagesEndRef, socket }) {
   const chatingWith = useRecoilValue(chatingWithAtom);
   const user = useRecoilValue(userAtom);
 
+  const [createMessage, { loading, data, error }] = useMutation(CREATE_MESSAGE);
+
   const emojiRegex = /\p{Emoji}/u;
 
   const sendMsg = () => {
     let m = msg.replaceAll("(:", "🙂");
 
     if (msg !== "") {
-      var message = {
-        threadId: thred,
-        type: msg.length === 2 && emojiRegex.test(m) ? "emoji" : "text",
-        msg: m,
-        to: {
-          name: chatingWith.first_name + " " + chatingWith.last_name,
-          username: chatingWith.username,
-          id: chatingWith._id,
+      createMessage({
+        variables: {
+          receiver: participantId,
+          conversation: conversationId,
+          message: msg,
         },
-        from: {
-          name: user.name,
-          username: user.username,
-          id: user.id,
-        },
-      };
+      });
 
-      socket.emit("send_message", message);
-      setMessages((prev) => [...prev, message]);
-      scrollToBottom();
       setMsg("");
     }
   };
@@ -52,23 +45,9 @@ function Input({ messagesEndRef, socket }) {
     }
   };
 
-  function getThreadId() {
-    let params = new URLSearchParams(document.location.search);
-    return params.get("thredId");
-  }
-
   const scrollToBottom = useCallback(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messagesEndRef]);
-
-  useEffect(() => {
-    socket.on("receive_message", (data) => {
-      if (data.threadId === getThreadId()) {
-        scrollToBottom();
-        setMessages((prev) => [...prev, data]);
-      }
-    });
-  }, [socket, scrollToBottom, setMessages]);
 
   useEffect(() => {
     scrollToBottom();

@@ -1,25 +1,11 @@
 import { useEffect, useRef } from "react";
-import {
-  friendsAtom,
-  userAtom,
-  thredAtom,
-  messeagesAtom,
-  chatingWithAtom,
-  unseenMsgAtom,
-  activerUsersAtom,
-} from "../../store/store";
-import { useRecoilState } from "recoil";
-import { useCookies } from "react-cookie";
-import jwt_decode from "jwt-decode";
-import axios from "axios";
-import User from "./User";
 import ChatHeader from "./ChatHeader";
 import Chat from "./Chat";
 import Input from "./Input";
 import "./Messages.css";
 import socket from "../../socket/socket";
 import { GET_CONVERSATION } from "../../queries/conversation";
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { useLocation, useParams } from "react-router-dom";
 import Conversations from "./Conversations";
 
@@ -28,13 +14,19 @@ function Messages() {
   const { id } = useParams();
   const location = useLocation();
 
-  const [createConversation, { data, error: er }] =
-    useMutation(GET_CONVERSATION);
+  let [createConversation, { data }] = useMutation(GET_CONVERSATION);
+
+  const chooseCn = id === "choose-conversation" || id.length !== 21;
 
   useEffect(() => {
-    createConversation({
-      variables: { participant: id },
-    });
+    if (!chooseCn) {
+      createConversation({
+        variables: { participant: id },
+      });
+    } else {
+      console.log("choose-conversation");
+      data = null;
+    }
   }, [location]);
 
   return (
@@ -43,31 +35,29 @@ function Messages() {
       <div className="row">
         <div className="col-lg-12">
           <div className="card chat-app">
-            <div id="plist" className="m-auto people-list pe-0">
-              <div className="d-none input-group">
-                <div className="input-group-prepend">
-                  <span className="input-group-text">
-                    <i className="fa fa-search"></i>
-                  </span>
-                </div>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Search..."
+            <Conversations />
+            {!chooseCn ? (
+              <div className="chat ms-auto">
+                <ChatHeader
+                  participant={data?.getConversation?.participants[0]}
+                />
+                <Chat
+                  messagesEndRef={messagesEndRef}
+                  participantId={data?.getConversation?.participants[0]?.id}
+                  conversationId={data?.getConversation?.id}
+                />
+                <Input
+                  messagesEndRef={messagesEndRef}
+                  socket={socket}
+                  participantId={data?.getConversation?.participants[0]?.id}
+                  conversationId={data?.getConversation?.id}
                 />
               </div>
-
-              <ul className="list-unstyled chat-list mt-2 mb-0">
-                <Conversations />
-              </ul>
-            </div>
-            <div className="chat ms-auto">
-              <ChatHeader
-                participant={data?.getConversation?.participants[0]}
-              />
-              <Chat messagesEndRef={messagesEndRef} />
-              <Input messagesEndRef={messagesEndRef} socket={socket} />
-            </div>
+            ) : (
+              <div class="align-items-center chat d-flex justify-content-center ms-auto">
+                <h1 style={{ color: "#9ca3af" }}>Choose a conversation 😉</h1>
+              </div>
+            )}
           </div>
         </div>
       </div>

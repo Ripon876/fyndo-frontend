@@ -30,7 +30,7 @@ function Sidebar({ l }) {
             </Link>
           </li>
           <li>
-            <Link to="/messages">
+            <Link to="/messages/choose-conversation">
               Messages <i className="fa-brands fa-facebook-messenger"></i>
             </Link>
           </li>

@@ -1,148 +1,42 @@
-import { useEffect, useRef, useState, useCallback } from "react";
-import {
-  thredAtom,
-  chatingWithAtom,
-  messeagesAtom,
-  lastMsgAtom,
-} from "../../store/store";
-import { useRecoilValue, useRecoilState } from "recoil";
-import { decompressFromUTF16 } from "lz-string";
-import socket from "../../socket/socket";
-import Toast from "../../utils/ToastAlert";
-import { TailSpin } from "react-loader-spinner";
-import PopUp from "./PopUp";
+import { useEffect, useCallback } from "react";
+import { useQuery } from "@apollo/client";
+import { GET_MESSAGES } from "../../queries/message";
 
-function Chat({ messagesEndRef }) {
-  const chatingWith = useRecoilValue(chatingWithAtom);
-  const thred = useRecoilValue(thredAtom);
-  const [messages, setMessages] = useRecoilState(messeagesAtom);
-  const [pnum, setPnum] = useState(1);
-  const listInnerRef = useRef();
-  const lm = useRecoilValue(lastMsgAtom);
-  const [msgLoader, setMsgLoader] = useState(false);
-  const [showPopUp, setShowPopUp] = useState(false);
-  const [selectedImg, setSelectedImg] = useState("");
-
+function Chat({ messagesEndRef, participantId, conversationId }) {
   const scrollToBottom = useCallback(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messagesEndRef]);
 
-  const closePopUP = () => {
-    setShowPopUp();
-  };
-
+  const { loading, data, error } = useQuery(GET_MESSAGES, {
+    variables: { id: conversationId },
+    fetchPolicy: "network-only"
+  });
+ 
   useEffect(() => {
     scrollToBottom();
     scrollToBottom();
-  }, [lm, scrollToBottom]);
-
-  const handleScroll = (e) => {
-    if (e.target.scrollTop === 0) {
-      setPnum((prevNum) => prevNum + 1);
-    }
-  };
-
-  useEffect(() => {
-    if (pnum !== 1) {
-      setMsgLoader(true);
-      socket.emit("getOldMessages", thred, pnum, (res) => {
-        if (res.status) {
-          setMsgLoader(false);
-          console.log(res.messages);
-          setMessages((prev) => [...res.messages, ...prev]);
-        } else {
-          setMsgLoader(false);
-          Toast({
-            type: res.type,
-            icon: res.type,
-            title: res.msg,
-          });
-        }
-      });
-    }
-  }, [pnum, setMessages, thred]);
+  }, [scrollToBottom]);
 
   return (
-    <div className="chat-history" onScroll={handleScroll} ref={listInnerRef}>
-      {showPopUp && <PopUp imgSrc={selectedImg} closePopUP={closePopUP} />}
-
-      <div className="msgLoadingAnm">
-        {msgLoader && <TailSpin color="#9CA3AF" height={80} width={80} />}
-      </div>
-
-      <div className="clearfix">
+    <div className="chat-history">
+      <div className="clearfix opacity-0">
         <div className="message other-message">first msg</div>
       </div>
-      <div className="clearfix">
-        <div className="message my-message">asdf sdfasdfdasf adsfasd</div>
-      </div>
-      <div className="clearfix">
-        <div className="message other-message">asdf sdfasdfdasf adsfasd</div>
-      </div>
-      <div className="clearfix">
-        <div className="message my-message">asdf sdfasdfdasf adsfasd</div>
-      </div>
-      <div className="clearfix">
-        <div className="message other-message">asdf sdfasdfdasf adsfasd</div>
-      </div>
-      <div className="clearfix">
-        <div className="message other-message">asdf sdfasdfdasf adsfasd</div>
-      </div>
-      <div className="clearfix">
-        <div className="message my-message">asdf sdfasdfdasf adsfasd</div>
-      </div>
-      <div className="clearfix">
-        <div className="message my-message">asdf sdfasdfdasf adsfasd</div>
-      </div>
-      <div className="clearfix">
-        <div className="message other-message">asdf sdfasdfdasf adsfasd</div>
-      </div>
-      <div className="clearfix">
-        <div className="message other-message">asdf sdfasdfdasf adsfasd</div>
-      </div>
-      <div className="clearfix">
-        <div className="message my-message">asdf sdfasdfdasf adsfasd</div>
-      </div>
-      <div className="clearfix">
-        <div className="message my-message">last msg</div>
-      </div>
-       
 
-      {chatingWith &&
-        messages?.map((msg, i) => (
-          <li className="clearfix" key={"sd433dsf" + i}>
-            {/*  
-                                    <div className="message-data">
-                                          <span className="message-data-time"></span>
-                                    </div>
-                               */}
+      {data &&
+        data?.getMesseges?.map((message) => (
+          <div className="clearfix">
             <div
-              className={`message  ${
-                msg?.from?.id === chatingWith?._id
+              className={`message ${
+                message?.receiver?.id !== participantId
                   ? "other-message"
-                  : "my-message float-right"
-              } ${msg.type === "emoji" ? "emoji" : ""} `}
+                  : "my-message"
+              } `}
             >
-              {msg.type === "text" ? (
-                msg.msg
-              ) : (
-                <>
-                  <img
-                    alt=""
-                    src={decompressFromUTF16(msg?.msg)}
-                    onClick={(e) => {
-                      setSelectedImg(e.target.src);
-                      setShowPopUp(!showPopUp);
-                    }}
-                    className="img-fluid"
-                  />
-                </>
-              )}
-              {msg.type === "emoji" ? msg.msg : ""}
+              {message?.message}
             </div>
-          </li>
+          </div>
         ))}
-
       <div ref={messagesEndRef} />
     </div>
   );
