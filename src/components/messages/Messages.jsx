@@ -1,9 +1,7 @@
 import { useEffect, useRef } from "react";
 import ChatHeader from "./ChatHeader";
 import Chat from "./Chat";
-import Input from "./Input";
 import "./Messages.css";
-import socket from "../../socket/socket";
 import { GET_CONVERSATION } from "../../queries/conversation";
 import { useMutation } from "@apollo/client";
 import { useLocation, useParams } from "react-router-dom";
@@ -25,9 +23,9 @@ function Messages() {
       });
     } else {
       console.log("choose-conversation");
-      data = null;
+      // data = null;
     }
-  }, [location]);
+  }, [location, chooseCn, createConversation, id]);
 
   return (
     <div className="container pt-5 messages">
@@ -43,12 +41,6 @@ function Messages() {
                 />
                 <Chat
                   messagesEndRef={messagesEndRef}
-                  participantId={data?.getConversation?.participants[0]?.id}
-                  conversationId={data?.getConversation?.id}
-                />
-                <Input
-                  messagesEndRef={messagesEndRef}
-                  socket={socket}
                   participantId={data?.getConversation?.participants[0]?.id}
                   conversationId={data?.getConversation?.id}
                 />

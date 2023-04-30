@@ -10,16 +10,24 @@ import FileUploader from "../../utils/FileUploader";
 import EmojiPopUp from "../../utils/EmojiPopUp";
 import { useMutation } from "@apollo/client";
 import { CREATE_MESSAGE } from "../../queries/message";
+import { useSelector } from "react-redux";
 
-function Input({ messagesEndRef, socket, participantId, conversationId }) {
+function Input({
+  messagesEndRef,
+  participantId,
+  conversationId,
+  addMessage,
+  socket,
+}) {
   const [msg, setMsg] = useState("");
   const [showUploader, setShowUploader] = useState(false);
   const [, setMessages] = useRecoilState(messeagesAtom);
   const thred = useRecoilValue(thredAtom);
   const chatingWith = useRecoilValue(chatingWithAtom);
   const user = useRecoilValue(userAtom);
+  const uId = useSelector((state) => state.user.id);
 
-  const [createMessage, { loading, data, error }] = useMutation(CREATE_MESSAGE);
+  const [createMessage] = useMutation(CREATE_MESSAGE);
 
   const emojiRegex = /\p{Emoji}/u;
 
@@ -27,14 +35,26 @@ function Input({ messagesEndRef, socket, participantId, conversationId }) {
     let m = msg.replaceAll("(:", "🙂");
 
     if (msg !== "") {
-      createMessage({
-        variables: {
-          receiver: participantId,
-          conversation: conversationId,
-          message: msg,
-        },
+      socket?.emit("SEND_MESSAGE", {
+        receiver: participantId,
+        sender: uId,
+        conversation: conversationId,
+        message: msg,
       });
 
+      // createMessage({
+      //   variables: {
+      //     receiver: participantId,
+      //     conversation: conversationId,
+      //     message: msg,
+      //   },
+      // });
+      addMessage({
+        receiver: {
+          id: participantId,
+        },
+        message: msg,
+      });
       setMsg("");
     }
   };
