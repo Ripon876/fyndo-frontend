@@ -80,7 +80,7 @@ function Input({
 
   return (
     <>
-      {showUploader && (
+      {/* {showUploader && (
         <FileUploader
           su={setShowUploader}
           u={user}
@@ -88,7 +88,7 @@ function Input({
           cw={chatingWith}
           sm={setMessages}
         />
-      )}
+      )} */}
       {chatingWith && (
         <div className="msgInput p-3">
           <div className="align-items-center d-flex position-relative">
